@@ -1,0 +1,62 @@
+{
+  "language": "Python 3.11+ / HTML / CSS / JavaScript",
+  "project_shape": "fullstack",
+  "source_extensions": [
+    ".py",
+    ".html",
+    ".css",
+    ".js"
+  ],
+  "testing": "deferred",
+  "build_command": "python3 -m compileall -q pagefold examples",
+  "workflow_checks": [
+    {
+      "workflow_id": "import",
+      "command": "python3 -m examples.walkthrough import"
+    },
+    {
+      "workflow_id": "catalog",
+      "command": "python3 -m examples.walkthrough catalog"
+    },
+    {
+      "workflow_id": "rows",
+      "command": "python3 -m examples.walkthrough rows"
+    },
+    {
+      "workflow_id": "plan",
+      "command": "python3 -m examples.walkthrough plan"
+    },
+    {
+      "workflow_id": "review",
+      "command": "python3 -m examples.walkthrough review"
+    },
+    {
+      "workflow_id": "decide",
+      "command": "python3 -m examples.walkthrough decide"
+    },
+    {
+      "workflow_id": "rehearse",
+      "command": "python3 -m examples.walkthrough rehearse"
+    },
+    {
+      "workflow_id": "attempts",
+      "command": "python3 -m examples.walkthrough attempts"
+    },
+    {
+      "workflow_id": "seal",
+      "command": "python3 -m examples.walkthrough seal"
+    },
+    {
+      "workflow_id": "certificate",
+      "command": "python3 -m examples.walkthrough certificate"
+    },
+    {
+      "workflow_id": "download",
+      "command": "python3 -m examples.walkthrough download"
+    },
+    {
+      "workflow_id": "archive",
+      "command": "python3 -m examples.walkthrough archive"
+    }
+  ]
+}

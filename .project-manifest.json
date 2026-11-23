@@ -1,0 +1,313 @@
+{
+  "project_shape": "fullstack",
+  "modules": [
+    {
+      "id": "images",
+      "path": "pagefold/images.py",
+      "responsibility": "实现 register、get_image、table_page"
+    },
+    {
+      "id": "sqlite_image",
+      "path": "pagefold/sqlite_image.py",
+      "responsibility": "实现 validate_header"
+    },
+    {
+      "id": "catalog",
+      "path": "pagefold/catalog.py",
+      "responsibility": "实现 describe"
+    },
+    {
+      "id": "constraints",
+      "path": "pagefold/constraints.py",
+      "responsibility": "实现 check_database"
+    },
+    {
+      "id": "rows",
+      "path": "pagefold/rows.py",
+      "responsibility": "实现 read_image、read_table"
+    },
+    {
+      "id": "codec",
+      "path": "pagefold/codec.py",
+      "responsibility": "实现 atom、fingerprint、canonical"
+    },
+    {
+      "id": "image_views",
+      "path": "pagefold/image_views.py",
+      "responsibility": "实现 rows_page"
+    },
+    {
+      "id": "plans",
+      "path": "pagefold/plans.py",
+      "responsibility": "实现 create_plan、read_plan、expect_revision、plan_content、expect_open"
+    },
+    {
+      "id": "merge",
+      "path": "pagefold/merge.py",
+      "responsibility": "实现 calculate、selected"
+    },
+    {
+      "id": "plan_views",
+      "path": "pagefold/plan_views.py",
+      "responsibility": "实现 plan_page"
+    },
+    {
+      "id": "decisions",
+      "path": "pagefold/decisions.py",
+      "responsibility": "实现 resolve"
+    },
+    {
+      "id": "attempts",
+      "path": "pagefold/attempts.py",
+      "responsibility": "实现 rehearse、list_attempts、get_attempt"
+    },
+    {
+      "id": "replay",
+      "path": "pagefold/replay.py",
+      "responsibility": "实现 rebuild、amendments"
+    },
+    {
+      "id": "releases",
+      "path": "pagefold/releases.py",
+      "responsibility": "实现 seal、get_release"
+    },
+    {
+      "id": "api",
+      "path": "pagefold/api.py",
+      "responsibility": "实现 read"
+    },
+    {
+      "id": "archive",
+      "path": "pagefold/archive.py",
+      "responsibility": "实现 archive"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "import",
+      "name": "登记镜像",
+      "entry": "POST /api/images",
+      "success": "按字节摘要登记 SQLite，重复上传复用",
+      "failure": "无效文件或不完整的页被拒绝",
+      "verification": "python3 -m examples.walkthrough import",
+      "steps": [
+        "从公开入口取得请求 POST /api/images",
+        "按字节摘要登记 SQLite，重复上传复用"
+      ],
+      "module_ids": [
+        "images",
+        "sqlite_image",
+        "catalog",
+        "constraints"
+      ]
+    },
+    {
+      "id": "catalog",
+      "name": "读取关系目录",
+      "entry": "GET /api/images/{id}",
+      "success": "列、复合键及声明外键可回查",
+      "failure": "不存在的摘要返回未找到",
+      "verification": "python3 -m examples.walkthrough catalog",
+      "steps": [
+        "从公开入口取得请求 GET /api/images/{id}",
+        "列、复合键及声明外键可回查"
+      ],
+      "module_ids": [
+        "images",
+        "catalog",
+        "rows"
+      ]
+    },
+    {
+      "id": "rows",
+      "name": "查看类型化行",
+      "entry": "GET /api/images/{id}/rows",
+      "success": "行窗口保留复合键、NULL 和二进制值",
+      "failure": "未知关系返回未找到",
+      "verification": "python3 -m examples.walkthrough rows",
+      "steps": [
+        "从公开入口取得请求 GET /api/images/{id}/rows",
+        "行窗口保留复合键、NULL 和二进制值"
+      ],
+      "module_ids": [
+        "images",
+        "rows",
+        "codec",
+        "image_views"
+      ]
+    },
+    {
+      "id": "plan",
+      "name": "生成三方计划",
+      "entry": "POST /api/plans",
+      "success": "同模式三库按键计算自动项和冲突",
+      "failure": "结构不同返回冲突",
+      "verification": "python3 -m examples.walkthrough plan",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans",
+        "同模式三库按键计算自动项和冲突"
+      ],
+      "module_ids": [
+        "plans",
+        "merge",
+        "rows",
+        "catalog"
+      ]
+    },
+    {
+      "id": "review",
+      "name": "审阅计划项",
+      "entry": "GET /api/plans/{id}",
+      "success": "显示参与镜像、待决数及版序",
+      "failure": "未决计划无法重演",
+      "verification": "python3 -m examples.walkthrough review",
+      "steps": [
+        "从公开入口取得请求 GET /api/plans/{id}",
+        "显示参与镜像、待决数及版序"
+      ],
+      "module_ids": [
+        "plans",
+        "plan_views",
+        "merge"
+      ]
+    },
+    {
+      "id": "decide",
+      "name": "保存逐行裁决",
+      "entry": "POST /api/plans/{id}/decisions",
+      "success": "新选择推进版序，同选择重试稳定",
+      "failure": "不同选择带旧版序被拒绝",
+      "verification": "python3 -m examples.walkthrough decide",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/decisions",
+        "新选择推进版序，同选择重试稳定"
+      ],
+      "module_ids": [
+        "decisions",
+        "plans",
+        "merge"
+      ]
+    },
+    {
+      "id": "rehearse",
+      "name": "重演数据库",
+      "entry": "POST /api/plans/{id}/rehearse",
+      "success": "在祖本副本重建并校验实际行与数据库约束",
+      "failure": "独立合法分支仍可能触发唯一键冲突",
+      "verification": "python3 -m examples.walkthrough rehearse",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/rehearse",
+        "在祖本副本重建并校验实际行与数据库约束"
+      ],
+      "module_ids": [
+        "attempts",
+        "replay",
+        "constraints",
+        "merge"
+      ]
+    },
+    {
+      "id": "attempts",
+      "name": "读取重演历史",
+      "entry": "GET /api/plans/{id}/attempts",
+      "success": "旧版通过记录和当前记录分别可回查",
+      "failure": "旧版记录无法用于新版封存",
+      "verification": "python3 -m examples.walkthrough attempts",
+      "steps": [
+        "从公开入口取得请求 GET /api/plans/{id}/attempts",
+        "旧版通过记录和当前记录分别可回查"
+      ],
+      "module_ids": [
+        "attempts",
+        "plans",
+        "replay"
+      ]
+    },
+    {
+      "id": "seal",
+      "name": "封存候选",
+      "entry": "POST /api/plans/{id}/seal",
+      "success": "当前通过的候选和凭证在事务内冻结",
+      "failure": "版序过期或当前未通过时拒绝",
+      "verification": "python3 -m examples.walkthrough seal",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/seal",
+        "当前通过的候选和凭证在事务内冻结"
+      ],
+      "module_ids": [
+        "releases",
+        "attempts",
+        "plans",
+        "codec"
+      ]
+    },
+    {
+      "id": "certificate",
+      "name": "取得来源凭证",
+      "entry": "GET /api/plans/{id}/certificate",
+      "success": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "failure": "未封存不产生凭证",
+      "verification": "python3 -m examples.walkthrough certificate",
+      "steps": [
+        "从公开入口取得请求 GET /api/plans/{id}/certificate",
+        "返回绑定三种来源角色、裁决版和候选摘要的凭证"
+      ],
+      "module_ids": [
+        "releases",
+        "plans",
+        "codec"
+      ]
+    },
+    {
+      "id": "download",
+      "name": "下载候选文件",
+      "entry": "GET /api/plans/{id}/download",
+      "success": "下载字节可校验且 SQLite 可独立打开",
+      "failure": "未封存无法下载",
+      "verification": "python3 -m examples.walkthrough download",
+      "steps": [
+        "从公开入口取得请求 GET /api/plans/{id}/download",
+        "下载字节可校验且 SQLite 可独立打开"
+      ],
+      "module_ids": [
+        "api",
+        "releases",
+        "attempts",
+        "replay"
+      ]
+    },
+    {
+      "id": "archive",
+      "name": "归档计划",
+      "entry": "POST /api/plans/{id}/archive",
+      "success": "归档禁止继续写入且保留已有成果",
+      "failure": "归档后的重演请求被拒绝",
+      "verification": "python3 -m examples.walkthrough archive",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/archive",
+        "归档禁止继续写入且保留已有成果"
+      ],
+      "module_ids": [
+        "archive",
+        "plans",
+        "releases"
+      ]
+    }
+  ],
+  "complexity": {
+    "mechanisms": [
+      "resource_lifecycle",
+      "snapshot_consistency",
+      "policy_rules",
+      "lineage",
+      "concurrency",
+      "idempotency",
+      "recovery_rollback",
+      "versioning_audit",
+      "batch_transaction",
+      "export_freeze",
+      "error_propagation",
+      "state_machine"
+    ]
+  }
+}

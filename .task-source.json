@@ -1,0 +1,6215 @@
+{
+  "task_source_schema_version": 1,
+  "cc_feedback_profile": "cc-feedback-2611",
+  "project_domain": "基础设施",
+  "project_subdirection": "数据库",
+  "supported_task_types": [
+    "功能开发",
+    "功能优化",
+    "泛Agent需求",
+    "代码重构",
+    "依赖升级与迁移",
+    "质量保障",
+    "项目维护",
+    "技术讨论",
+    "问题排查与诊断",
+    "部署运维"
+  ],
+  "type_coverage": {
+    "功能开发": {
+      "status": "supported",
+      "reason": "目录、计划、重演、凭证可支持独立的数据库运用方式",
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/archive.py",
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/codec.py",
+        "pagefold/constraints.py",
+        "pagefold/decisions.py",
+        "pagefold/image_views.py",
+        "pagefold/images.py",
+        "pagefold/merge.py",
+        "pagefold/plan_views.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py",
+        "pagefold/sqlite_image.py"
+      ]
+    },
+    "功能优化": {
+      "status": "supported",
+      "reason": "现有流程有版本、引用闭合、历史证据和类型化值边界",
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/archive.py",
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/codec.py",
+        "pagefold/constraints.py",
+        "pagefold/decisions.py",
+        "pagefold/image_views.py",
+        "pagefold/images.py",
+        "pagefold/merge.py",
+        "pagefold/plan_views.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py",
+        "pagefold/sqlite_image.py"
+      ]
+    },
+    "泛Agent需求": {
+      "status": "supported",
+      "reason": "可通过直接操作 SQLite 与浏览流程形成实际样本和交接成果",
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/archive.py",
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/codec.py",
+        "pagefold/constraints.py",
+        "pagefold/decisions.py",
+        "pagefold/image_views.py",
+        "pagefold/images.py",
+        "pagefold/merge.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py",
+        "pagefold/sqlite_image.py"
+      ]
+    },
+    "代码重构": {
+      "status": "supported",
+      "reason": "当前 HTTP 边界、计划视图和约束检查跨多项职责",
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/codec.py",
+        "pagefold/constraints.py",
+        "pagefold/image_views.py",
+        "pagefold/images.py",
+        "pagefold/merge.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py"
+      ]
+    },
+    "依赖升级与迁移": {
+      "status": "supported",
+      "reason": "输入与状态有真实 SQLite API 和编码兼容接口",
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/codec.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py"
+      ]
+    },
+    "质量保障": {
+      "status": "supported",
+      "reason": "类型、引用、历史与约束均可通过真实输入进行复核",
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/codec.py",
+        "pagefold/merge.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/rows.py"
+      ]
+    },
+    "项目维护": {
+      "status": "supported",
+      "reason": "镜像准入和封存下游已有不同接入与维护场景",
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/images.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py"
+      ]
+    },
+    "技术讨论": {
+      "status": "supported",
+      "reason": "目录签名和候选持久化提供可复核的技术选择",
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/catalog.py",
+        "pagefold/images.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py",
+        "pagefold/rows.py"
+      ]
+    },
+    "问题排查与诊断": {
+      "status": "supported",
+      "reason": "约束失败和当前版本条件具有可重复观测的现场",
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ]
+    },
+    "部署运维": {
+      "status": "supported",
+      "reason": "状态库快照、事务、版本切换及候选下载组成运行边界",
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/archive.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py",
+        "pagefold/replay.py"
+      ]
+    },
+    "Bugfix": {
+      "status": "no_verified_defect",
+      "reason": "基线已跑通真实入口的成功与拒绝路径，当前没有确认的契约违例。"
+    }
+  },
+  "prompt_contract": {
+    "schema_version": 1,
+    "mode": "integrated",
+    "baseline_tier": "deep-task-ready",
+    "generation_scope": {
+      "mode": "all_supported"
+    },
+    "minimum_active_prompts": {
+      "功能开发": 20,
+      "功能优化": 20,
+      "泛Agent需求": 10,
+      "代码重构": 2,
+      "依赖升级与迁移": 2,
+      "质量保障": 2,
+      "项目维护": 2,
+      "技术讨论": 2,
+      "问题排查与诊断": 2,
+      "部署运维": 2
+    },
+    "minimum_anchors": {
+      "功能开发": 25,
+      "功能优化": 25,
+      "泛Agent需求": 15,
+      "代码重构": 15,
+      "依赖升级与迁移": 15,
+      "质量保障": 15,
+      "项目维护": 15,
+      "技术讨论": 15,
+      "问题排查与诊断": 15,
+      "部署运维": 15
+    },
+    "capacity_floor": {
+      "modules": 8,
+      "workflows": 10,
+      "mechanisms": 8,
+      "entities": 8,
+      "state_machines": 5,
+      "extension_seams": 12,
+      "tension_points": 10
+    }
+  },
+  "entities": [
+    {
+      "id": "image",
+      "label": "镜像",
+      "relations": [
+        "plan.references.image"
+      ],
+      "invariants": [
+        "同一摘要对应同一独立 SQLite 字节"
+      ]
+    },
+    {
+      "id": "catalog",
+      "label": "目录",
+      "relations": [
+        "catalog.describes.image"
+      ],
+      "invariants": [
+        "包含主库关系定义与外键次序"
+      ]
+    },
+    {
+      "id": "relation",
+      "label": "关系",
+      "relations": [
+        "relation.belongs_to.catalog"
+      ],
+      "invariants": [
+        "普通表以及有序的声明主键"
+      ]
+    },
+    {
+      "id": "row",
+      "label": "类型化行",
+      "relations": [
+        "row.belongs_to.relation"
+      ],
+      "invariants": [
+        "键比较和单元格编码语义分别明确"
+      ]
+    },
+    {
+      "id": "plan",
+      "label": "计划",
+      "relations": [
+        "plan.references.image"
+      ],
+      "invariants": [
+        "固定祖本、左支和右支，以版序绑定裁决"
+      ]
+    },
+    {
+      "id": "item",
+      "label": "计划项",
+      "relations": [
+        "item.belongs_to.plan"
+      ],
+      "invariants": [
+        "同一关系和键对应固定三方值"
+      ]
+    },
+    {
+      "id": "choice",
+      "label": "裁决",
+      "relations": [
+        "choice.resolves.item"
+      ],
+      "invariants": [
+        "裁决指向真实的来源或清除旧选择"
+      ]
+    },
+    {
+      "id": "attempt",
+      "label": "重演记录",
+      "relations": [
+        "attempt.belongs_to.plan"
+      ],
+      "invariants": [
+        "只属于记录的计划与版序"
+      ]
+    },
+    {
+      "id": "candidate",
+      "label": "候选镜像",
+      "relations": [
+        "candidate.from.attempt"
+      ],
+      "invariants": [
+        "通过重演才得到可封存的候选字节"
+      ]
+    },
+    {
+      "id": "release",
+      "label": "封存",
+      "relations": [
+        "release.references.candidate"
+      ],
+      "invariants": [
+        "原子冻结当前候选且不变更已封存内容"
+      ]
+    },
+    {
+      "id": "certificate",
+      "label": "来源凭证",
+      "relations": [
+        "certificate.belongs_to.release"
+      ],
+      "invariants": [
+        "封存后可读并携带候选摘要"
+      ]
+    }
+  ],
+  "state_machines": [
+    {
+      "subject": "image",
+      "states": [
+        "received",
+        "validated",
+        "registered",
+        "rejected"
+      ],
+      "transitions": [
+        "received->validated",
+        "received->rejected",
+        "validated->registered"
+      ],
+      "invariants": [
+        "只有通过完整性与目录检查的独立镜像登记"
+      ]
+    },
+    {
+      "subject": "plan",
+      "states": [
+        "open",
+        "sealed",
+        "archived"
+      ],
+      "transitions": [
+        "open->sealed",
+        "open->archived",
+        "sealed->archived"
+      ],
+      "invariants": [
+        "封存及归档后停止原计划写入"
+      ]
+    },
+    {
+      "subject": "choice",
+      "states": [
+        "unresolved",
+        "resolved"
+      ],
+      "transitions": [
+        "unresolved->resolved",
+        "resolved->unresolved"
+      ],
+      "invariants": [
+        "同值重试保持版序，真实变动使当前重演证据过期"
+      ]
+    },
+    {
+      "subject": "attempt",
+      "states": [
+        "absent",
+        "blocked",
+        "passed",
+        "historical"
+      ],
+      "transitions": [
+        "absent->blocked",
+        "absent->passed",
+        "passed->historical",
+        "blocked->historical"
+      ],
+      "invariants": [
+        "通过可供相同版本封存，历史记录仍可查询"
+      ]
+    },
+    {
+      "subject": "release",
+      "states": [
+        "unavailable",
+        "available",
+        "retained"
+      ],
+      "transitions": [
+        "unavailable->available",
+        "available->retained"
+      ],
+      "invariants": [
+        "只有通过的当前候选可用，归档保留下载与凭证"
+      ]
+    }
+  ],
+  "capability_families": [
+    {
+      "family": "登记镜像",
+      "occupied_by": [
+        "import"
+      ],
+      "available": true
+    },
+    {
+      "family": "读取关系目录",
+      "occupied_by": [
+        "catalog"
+      ],
+      "available": true
+    },
+    {
+      "family": "查看类型化行",
+      "occupied_by": [
+        "rows"
+      ],
+      "available": true
+    },
+    {
+      "family": "生成三方计划",
+      "occupied_by": [
+        "plan"
+      ],
+      "available": true
+    },
+    {
+      "family": "审阅计划项",
+      "occupied_by": [
+        "review"
+      ],
+      "available": true
+    },
+    {
+      "family": "保存逐行裁决",
+      "occupied_by": [
+        "decide"
+      ],
+      "available": true
+    },
+    {
+      "family": "重演数据库",
+      "occupied_by": [
+        "rehearse"
+      ],
+      "available": true
+    },
+    {
+      "family": "读取重演历史",
+      "occupied_by": [
+        "attempts"
+      ],
+      "available": true
+    },
+    {
+      "family": "封存候选",
+      "occupied_by": [
+        "seal"
+      ],
+      "available": true
+    },
+    {
+      "family": "取得来源凭证",
+      "occupied_by": [
+        "certificate"
+      ],
+      "available": true
+    },
+    {
+      "family": "下载候选文件",
+      "occupied_by": [
+        "download"
+      ],
+      "available": true
+    },
+    {
+      "family": "归档计划",
+      "occupied_by": [
+        "archive"
+      ],
+      "available": true
+    }
+  ],
+  "extension_seams": [
+    {
+      "id": "plan-entry",
+      "anchor": "pagefold/plans.py pagefold/merge.py",
+      "entry": "POST /api/plans",
+      "distinct_outcome": "同模式三库按键计算自动项和冲突",
+      "mechanism": "lineage"
+    },
+    {
+      "id": "rehearse-entry",
+      "anchor": "pagefold/attempts.py pagefold/replay.py",
+      "entry": "POST /api/plans/{id}/rehearse",
+      "distinct_outcome": "在祖本副本重建并校验实际行与数据库约束",
+      "mechanism": "recovery_rollback"
+    },
+    {
+      "id": "certificate-entry",
+      "anchor": "pagefold/releases.py pagefold/plans.py",
+      "entry": "GET /api/plans/{id}/certificate",
+      "distinct_outcome": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "mechanism": "export_freeze"
+    },
+    {
+      "id": "archive-entry",
+      "anchor": "pagefold/archive.py pagefold/plans.py",
+      "entry": "POST /api/plans/{id}/archive",
+      "distinct_outcome": "归档禁止继续写入且保留已有成果",
+      "mechanism": "state_machine"
+    },
+    {
+      "id": "review-entry",
+      "anchor": "pagefold/plans.py pagefold/plan_views.py",
+      "entry": "GET /api/plans/{id}",
+      "distinct_outcome": "显示参与镜像、待决数及版序",
+      "mechanism": "concurrency"
+    },
+    {
+      "id": "catalog-entry",
+      "anchor": "pagefold/images.py pagefold/catalog.py",
+      "entry": "GET /api/images/{id}",
+      "distinct_outcome": "列、复合键及声明外键可回查",
+      "mechanism": "snapshot_consistency"
+    },
+    {
+      "id": "download-entry",
+      "anchor": "pagefold/api.py pagefold/releases.py",
+      "entry": "GET /api/plans/{id}/download",
+      "distinct_outcome": "下载字节可校验且 SQLite 可独立打开",
+      "mechanism": "error_propagation"
+    },
+    {
+      "id": "attempts-entry",
+      "anchor": "pagefold/attempts.py pagefold/plans.py",
+      "entry": "GET /api/plans/{id}/attempts",
+      "distinct_outcome": "旧版通过记录和当前记录分别可回查",
+      "mechanism": "versioning_audit"
+    },
+    {
+      "id": "import-entry",
+      "anchor": "pagefold/images.py pagefold/sqlite_image.py",
+      "entry": "POST /api/images",
+      "distinct_outcome": "按字节摘要登记 SQLite，重复上传复用",
+      "mechanism": "resource_lifecycle"
+    },
+    {
+      "id": "seal-entry",
+      "anchor": "pagefold/releases.py pagefold/attempts.py",
+      "entry": "POST /api/plans/{id}/seal",
+      "distinct_outcome": "当前通过的候选和凭证在事务内冻结",
+      "mechanism": "batch_transaction"
+    },
+    {
+      "id": "rows-entry",
+      "anchor": "pagefold/images.py pagefold/rows.py",
+      "entry": "GET /api/images/{id}/rows",
+      "distinct_outcome": "行窗口保留复合键、NULL 和二进制值",
+      "mechanism": "policy_rules"
+    },
+    {
+      "id": "decide-entry",
+      "anchor": "pagefold/decisions.py pagefold/plans.py",
+      "entry": "POST /api/plans/{id}/decisions",
+      "distinct_outcome": "新选择推进版序，同选择重试稳定",
+      "mechanism": "idempotency"
+    }
+  ],
+  "tension_points": [
+    {
+      "workflow_id": "import",
+      "description": "独立镜像完整性先于目录与跨分支比较",
+      "observable_failure": "无效文件或不完整的页被拒绝"
+    },
+    {
+      "workflow_id": "catalog",
+      "description": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable_failure": "不存在的摘要返回未找到"
+    },
+    {
+      "workflow_id": "rows",
+      "description": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable_failure": "未知关系返回未找到"
+    },
+    {
+      "workflow_id": "plan",
+      "description": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable_failure": "结构不同返回冲突"
+    },
+    {
+      "workflow_id": "review",
+      "description": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable_failure": "未决计划无法重演"
+    },
+    {
+      "workflow_id": "decide",
+      "description": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable_failure": "不同选择带旧版序被拒绝"
+    },
+    {
+      "workflow_id": "rehearse",
+      "description": "行级选择成立并不保证最终关系约束成立",
+      "observable_failure": "独立合法分支仍可能触发唯一键冲突"
+    },
+    {
+      "workflow_id": "attempts",
+      "description": "重演事实固定而是否适用于当前裁决会变化",
+      "observable_failure": "旧版记录无法用于新版封存"
+    },
+    {
+      "workflow_id": "seal",
+      "description": "重复封存需要重认同一个发布对象",
+      "observable_failure": "版序过期或当前未通过时拒绝"
+    },
+    {
+      "workflow_id": "certificate",
+      "description": "相同候选字节可以具有不同推导来源",
+      "observable_failure": "未封存不产生凭证"
+    },
+    {
+      "workflow_id": "download",
+      "description": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable_failure": "未封存无法下载"
+    },
+    {
+      "workflow_id": "archive",
+      "description": "计划可修改资格与已经封存的阅读资格独立",
+      "observable_failure": "归档后的重演请求被拒绝"
+    }
+  ],
+  "prompt_anchors": [
+    {
+      "id": "pagefold-001",
+      "task_type": "功能开发",
+      "capability_family": "生成三方计划",
+      "subject": "有前置值的逆向包",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-002",
+      "task_type": "功能开发",
+      "capability_family": "重演数据库",
+      "subject": "外键约束的可采纳集合",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-003",
+      "task_type": "功能开发",
+      "capability_family": "取得来源凭证",
+      "subject": "离线校验交付物",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-004",
+      "task_type": "功能开发",
+      "capability_family": "生成三方计划",
+      "subject": "移植一段分支变更",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-005",
+      "task_type": "功能开发",
+      "capability_family": "归档计划",
+      "subject": "可审计的镜像回收计划",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-006",
+      "task_type": "功能开发",
+      "capability_family": "重演数据库",
+      "subject": "唯一性碰撞成因探查",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-007",
+      "task_type": "功能开发",
+      "capability_family": "生成三方计划",
+      "subject": "替代祖本并列试算",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-008",
+      "task_type": "功能开发",
+      "capability_family": "审阅计划项",
+      "subject": "冲突裁决分发包",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-009",
+      "task_type": "功能开发",
+      "capability_family": "重演数据库",
+      "subject": "可浏览的候选试用",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-010",
+      "task_type": "功能开发",
+      "capability_family": "生成三方计划",
+      "subject": "分支谱系与共同输入发现",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-011",
+      "task_type": "功能开发",
+      "capability_family": "读取关系目录",
+      "subject": "结构桥接演练",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-012",
+      "task_type": "功能开发",
+      "capability_family": "重演数据库",
+      "subject": "限定关系的成果",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-013",
+      "task_type": "功能开发",
+      "capability_family": "下载候选文件",
+      "subject": "成果读查询复核",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-014",
+      "task_type": "功能开发",
+      "capability_family": "读取重演历史",
+      "subject": "两次试算的证据差分",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-015",
+      "task_type": "功能开发",
+      "capability_family": "审阅计划项",
+      "subject": "裁决敏感性探索",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-016",
+      "task_type": "功能开发",
+      "capability_family": "登记镜像",
+      "subject": "在线 SQLite 的一致输入采集",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-017",
+      "task_type": "功能开发",
+      "capability_family": "封存候选",
+      "subject": "同批发布的多库结果",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-018",
+      "task_type": "功能开发",
+      "capability_family": "查看类型化行",
+      "subject": "从一行出发检查引用见证",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-019",
+      "task_type": "功能开发",
+      "capability_family": "下载候选文件",
+      "subject": "面向下游的逻辑增量交付",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-020",
+      "task_type": "功能开发",
+      "capability_family": "保存逐行裁决",
+      "subject": "裁决建议演练规则",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-021",
+      "task_type": "功能开发",
+      "capability_family": "取得来源凭证",
+      "subject": "交付结果的签名与交接信任",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-022",
+      "task_type": "功能优化",
+      "capability_family": "保存逐行裁决",
+      "subject": "成组裁决一次生效",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-023",
+      "task_type": "功能优化",
+      "capability_family": "审阅计划项",
+      "subject": "给不重叠的列留合流路径",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-024",
+      "task_type": "功能优化",
+      "capability_family": "保存逐行裁决",
+      "subject": "以类型为准的人工合成行",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-025",
+      "task_type": "功能优化",
+      "capability_family": "审阅计划项",
+      "subject": "计划翻页时保持观察范围",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-026",
+      "task_type": "功能优化",
+      "capability_family": "读取重演历史",
+      "subject": "同一版本的重演并发与失效",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-027",
+      "task_type": "功能优化",
+      "capability_family": "封存候选",
+      "subject": "把封存确认与重演证据绑定",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-028",
+      "task_type": "功能优化",
+      "capability_family": "登记镜像",
+      "subject": "区分同文件和同数据的登记结果",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-029",
+      "task_type": "功能优化",
+      "capability_family": "读取关系目录",
+      "subject": "把模式拒绝变成可定位对照",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-030",
+      "task_type": "功能优化",
+      "capability_family": "重演数据库",
+      "subject": "在原重演流程展示更多可行动证据",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-031",
+      "task_type": "功能优化",
+      "capability_family": "归档计划",
+      "subject": "归档前的承接流程",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-032",
+      "task_type": "功能优化",
+      "capability_family": "查看类型化行",
+      "subject": "跨页复合主键定位",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-033",
+      "task_type": "功能优化",
+      "capability_family": "生成三方计划",
+      "subject": "正式创建前确认差异代价",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-034",
+      "task_type": "功能优化",
+      "capability_family": "保存逐行裁决",
+      "subject": "冲突清空的影响预览",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-035",
+      "task_type": "功能优化",
+      "capability_family": "取得来源凭证",
+      "subject": "凭证同时交代变化范围",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-036",
+      "task_type": "功能优化",
+      "capability_family": "下载候选文件",
+      "subject": "断点续领既有封存镜像",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-037",
+      "task_type": "功能优化",
+      "capability_family": "重演数据库",
+      "subject": "将自动项退回人工复核",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-038",
+      "task_type": "功能优化",
+      "capability_family": "生成三方计划",
+      "subject": "从实体稳定键识别主键改名",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-039",
+      "task_type": "功能优化",
+      "capability_family": "审阅计划项",
+      "subject": "计划视图突出数据库层选择差异",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-040",
+      "task_type": "功能优化",
+      "capability_family": "读取重演历史",
+      "subject": "重演结果的选择追溯",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-041",
+      "task_type": "功能优化",
+      "capability_family": "登记镜像",
+      "subject": "三份来源整套登记与重试",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-042",
+      "task_type": "代码重构",
+      "capability_family": "重演数据库",
+      "subject": "隔离重演计算与版本写入",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-043",
+      "task_type": "代码重构",
+      "capability_family": "查看类型化行",
+      "subject": "重构类型键和行网格边界",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-044",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "封存候选",
+      "subject": "将不可变镜像迁移为外部内容存储",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-045",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "重演数据库",
+      "subject": "HTTP 应用迁移到 WSGI",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-046",
+      "task_type": "质量保障",
+      "capability_family": "生成三方计划",
+      "subject": "三方真值与类型的顺序验证",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-047",
+      "task_type": "质量保障",
+      "capability_family": "封存候选",
+      "subject": "封存与重演并发边界验证",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-048",
+      "task_type": "项目维护",
+      "capability_family": "读取关系目录",
+      "subject": "关系结构与行身份的兼容手册",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-049",
+      "task_type": "项目维护",
+      "capability_family": "下载候选文件",
+      "subject": "成果交接与恢复手册",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-050",
+      "task_type": "技术讨论",
+      "capability_family": "读取关系目录",
+      "subject": "讨论模式身份应如何演进",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-051",
+      "task_type": "技术讨论",
+      "capability_family": "读取重演历史",
+      "subject": "讨论存候选快照还是操作历史",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-052",
+      "task_type": "问题排查与诊断",
+      "capability_family": "重演数据库",
+      "subject": "定位两份合法镜像合成后被拦的原因",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-053",
+      "task_type": "问题排查与诊断",
+      "capability_family": "读取重演历史",
+      "subject": "查明还有通过记录却无法封存",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-054",
+      "task_type": "部署运维",
+      "capability_family": "下载候选文件",
+      "subject": "演练热备和隔离恢复",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-055",
+      "task_type": "部署运维",
+      "capability_family": "归档计划",
+      "subject": "升级时排空 SQLite 操作",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-056",
+      "task_type": "泛Agent需求",
+      "capability_family": "生成三方计划",
+      "subject": "制作三方合流培训素材",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-057",
+      "task_type": "泛Agent需求",
+      "capability_family": "取得来源凭证",
+      "subject": "为接收方整理一次完整交接包",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-058",
+      "task_type": "泛Agent需求",
+      "capability_family": "重演数据库",
+      "subject": "为数据库值班课堂制备约束样卡",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-059",
+      "task_type": "泛Agent需求",
+      "capability_family": "查看类型化行",
+      "subject": "从离线业务摘录整理可合流样本",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-060",
+      "task_type": "泛Agent需求",
+      "capability_family": "归档计划",
+      "subject": "整理裁决结束后的资料目录",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-061",
+      "task_type": "泛Agent需求",
+      "capability_family": "登记镜像",
+      "subject": "制作镜像目录的准入样件",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-062",
+      "task_type": "泛Agent需求",
+      "capability_family": "保存逐行裁决",
+      "subject": "整理多人演练的角色材料",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-063",
+      "task_type": "泛Agent需求",
+      "capability_family": "生成三方计划",
+      "subject": "为迁移评审采集合流成本样本",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-064",
+      "task_type": "泛Agent需求",
+      "capability_family": "下载候选文件",
+      "subject": "为演示制作能独立查询的结果小库",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-065",
+      "task_type": "泛Agent需求",
+      "capability_family": "读取重演历史",
+      "subject": "编制一次样例变更的案卷索引",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-066",
+      "task_type": "功能开发",
+      "capability_family": "封存候选",
+      "subject": "候选读约束清单",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-067",
+      "task_type": "功能开发",
+      "capability_family": "取得来源凭证",
+      "subject": "源差异承诺证明",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-068",
+      "task_type": "功能开发",
+      "capability_family": "查看类型化行",
+      "subject": "镜像间键覆盖推断",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-069",
+      "task_type": "功能开发",
+      "capability_family": "读取关系目录",
+      "subject": "SQLite 版本语义对照试算",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-070",
+      "task_type": "功能优化",
+      "capability_family": "生成三方计划",
+      "subject": "正式计划的输入校对笺",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-071",
+      "task_type": "功能优化",
+      "capability_family": "登记镜像",
+      "subject": "重复文件附加来源证词",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-072",
+      "task_type": "功能优化",
+      "capability_family": "读取重演历史",
+      "subject": "重演进程中断后续领",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-073",
+      "task_type": "功能优化",
+      "capability_family": "归档计划",
+      "subject": "归档前的候选保留决策",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-074",
+      "task_type": "功能优化",
+      "capability_family": "读取关系目录",
+      "subject": "目录按外键组并列阅读",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-075",
+      "task_type": "代码重构",
+      "capability_family": "登记镜像",
+      "subject": "移除镜像校验重复装配",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-076",
+      "task_type": "代码重构",
+      "capability_family": "读取关系目录",
+      "subject": "分离结构记录与展示投影",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-077",
+      "task_type": "代码重构",
+      "capability_family": "生成三方计划",
+      "subject": "重构三方集合构造",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-078",
+      "task_type": "代码重构",
+      "capability_family": "审阅计划项",
+      "subject": "中立计划展示投影",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-079",
+      "task_type": "代码重构",
+      "capability_family": "审阅计划项",
+      "subject": "拆分服务器模板组装",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-080",
+      "task_type": "代码重构",
+      "capability_family": "生成三方计划",
+      "subject": "合流输入会话职责",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-081",
+      "task_type": "代码重构",
+      "capability_family": "重演数据库",
+      "subject": "拆分候选写入与约束检查",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-082",
+      "task_type": "代码重构",
+      "capability_family": "读取重演历史",
+      "subject": "重演资质读取模型",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-083",
+      "task_type": "代码重构",
+      "capability_family": "保存逐行裁决",
+      "subject": "裁决写入契约与存储分离",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-084",
+      "task_type": "代码重构",
+      "capability_family": "封存候选",
+      "subject": "凭证结构和值来源解耦",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-085",
+      "task_type": "代码重构",
+      "capability_family": "取得来源凭证",
+      "subject": "候选读取边界重整",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-086",
+      "task_type": "代码重构",
+      "capability_family": "下载候选文件",
+      "subject": "二进制响应适配结构",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-087",
+      "task_type": "代码重构",
+      "capability_family": "归档计划",
+      "subject": "计划生命周期结构化",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-088",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "登记镜像",
+      "subject": "注册输入从整块读迁至 SQLite 临时文件",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-089",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "查看类型化行",
+      "subject": "落地镜像扫描迁至 SQLite 行迭代协议",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-090",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "生成三方计划",
+      "subject": "可迁移的计划项持久格式",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-091",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "读取关系目录",
+      "subject": "目录缓存迁至结构表",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-092",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "重演数据库",
+      "subject": "原生 SQLite 备份接替反序列化候选",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-093",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "读取重演历史",
+      "subject": "历史复制迁至分区状态库",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-094",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "保存逐行裁决",
+      "subject": "旧裁决 JSON 迁至有序事件格式",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-095",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "封存候选",
+      "subject": "凭证版本格式迁移",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-096",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "归档计划",
+      "subject": "归档冷数据迁移",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-097",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "审阅计划项",
+      "subject": "模板渲染引擎迁移",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-098",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "登记镜像",
+      "subject": "状态连接切换显式 autocommit API",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-099",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "重演数据库",
+      "subject": "部署到支持增量 BLOB 的运行时",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-100",
+      "task_type": "依赖升级与迁移",
+      "capability_family": "下载候选文件",
+      "subject": "成果的传输类型和客户端契约版本迁移",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-101",
+      "task_type": "质量保障",
+      "capability_family": "登记镜像",
+      "subject": "确认失败登记未留下任何标识",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-102",
+      "task_type": "质量保障",
+      "capability_family": "读取关系目录",
+      "subject": "对照真实键比较和目录策略",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-103",
+      "task_type": "质量保障",
+      "capability_family": "查看类型化行",
+      "subject": "分页的变形性质检查",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-104",
+      "task_type": "质量保障",
+      "capability_family": "生成三方计划",
+      "subject": "模式改动构造验证",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-105",
+      "task_type": "质量保障",
+      "capability_family": "审阅计划项",
+      "subject": "HTML 值和 JSON 语义核对",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-106",
+      "task_type": "质量保障",
+      "capability_family": "重演数据库",
+      "subject": "二阶段更新条件检查",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-107",
+      "task_type": "质量保障",
+      "capability_family": "重演数据库",
+      "subject": "候选等价性非同字节检验",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-108",
+      "task_type": "质量保障",
+      "capability_family": "重演数据库",
+      "subject": "复合外键部分 NULL 的验证集",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-109",
+      "task_type": "质量保障",
+      "capability_family": "读取重演历史",
+      "subject": "失效重演缓存的回归序列",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-110",
+      "task_type": "质量保障",
+      "capability_family": "取得来源凭证",
+      "subject": "独立校验凭证的属性测试",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-111",
+      "task_type": "质量保障",
+      "capability_family": "归档计划",
+      "subject": "归档矩阵状态保障",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-112",
+      "task_type": "质量保障",
+      "capability_family": "登记镜像",
+      "subject": "登记图片大小和关系数边界测试",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-113",
+      "task_type": "质量保障",
+      "capability_family": "下载候选文件",
+      "subject": "候选可移植性验证",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-114",
+      "task_type": "项目维护",
+      "capability_family": "登记镜像",
+      "subject": "输入检查点操作说明",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-115",
+      "task_type": "项目维护",
+      "capability_family": "读取关系目录",
+      "subject": "表和索引兼容登记册",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-116",
+      "task_type": "项目维护",
+      "capability_family": "生成三方计划",
+      "subject": "三方结果的操作术语手册",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-117",
+      "task_type": "项目维护",
+      "capability_family": "保存逐行裁决",
+      "subject": "版本错误与重试指南",
+      "state": "保存逐行裁决",
+      "invariant": "幂等重试与防止冲突覆盖使用同一条计划记录",
+      "observable": "新选择推进版序，同选择重试稳定",
+      "primary_mechanism": "idempotency",
+      "workflow_ids": [
+        "decide"
+      ],
+      "source_anchors": [
+        "pagefold/decisions.py",
+        "pagefold/plans.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/decisions.py",
+          "pagefold/plans.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "resolve",
+          "expect_revision",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "decide-entry"
+    },
+    {
+      "id": "pagefold-118",
+      "task_type": "项目维护",
+      "capability_family": "审阅计划项",
+      "subject": "HTML 和 JSON 接入检查手册",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-119",
+      "task_type": "项目维护",
+      "capability_family": "重演数据库",
+      "subject": "生产机制与约束层关系说明",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-120",
+      "task_type": "项目维护",
+      "capability_family": "读取重演历史",
+      "subject": "历史可解释性维护手册",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-121",
+      "task_type": "项目维护",
+      "capability_family": "归档计划",
+      "subject": "归档及保留生命周期文档",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-122",
+      "task_type": "项目维护",
+      "capability_family": "取得来源凭证",
+      "subject": "凭证字段兼容政策",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-123",
+      "task_type": "项目维护",
+      "capability_family": "下载候选文件",
+      "subject": "多客户端应答手册",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-124",
+      "task_type": "项目维护",
+      "capability_family": "查看类型化行",
+      "subject": "类型贴标的入门材料",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-125",
+      "task_type": "项目维护",
+      "capability_family": "封存候选",
+      "subject": "基线发布接力材料",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-126",
+      "task_type": "项目维护",
+      "capability_family": "登记镜像",
+      "subject": "示例输入版序管理",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-127",
+      "task_type": "技术讨论",
+      "capability_family": "登记镜像",
+      "subject": "内容寻址是否总是去重",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-128",
+      "task_type": "技术讨论",
+      "capability_family": "查看类型化行",
+      "subject": "按字节、逻辑键、SQL 次序比较",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-129",
+      "task_type": "技术讨论",
+      "capability_family": "审阅计划项",
+      "subject": "讨论把冲突定义到列还是整行",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-130",
+      "task_type": "技术讨论",
+      "capability_family": "重演数据库",
+      "subject": "讨论停用外键动作与延迟原生行为",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-131",
+      "task_type": "技术讨论",
+      "capability_family": "归档计划",
+      "subject": "讨论状态图与独立事实",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-132",
+      "task_type": "技术讨论",
+      "capability_family": "封存候选",
+      "subject": "讨论冻结候选还是重算并比对",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-133",
+      "task_type": "技术讨论",
+      "capability_family": "生成三方计划",
+      "subject": "讨论祖本可信性与来源反证",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-134",
+      "task_type": "技术讨论",
+      "capability_family": "读取关系目录",
+      "subject": "讨论索引等价归类",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-135",
+      "task_type": "技术讨论",
+      "capability_family": "读取重演历史",
+      "subject": "讨论跨版本可观测性成本",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-136",
+      "task_type": "技术讨论",
+      "capability_family": "登记镜像",
+      "subject": "讨论规模边界和退化策略",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-137",
+      "task_type": "技术讨论",
+      "capability_family": "取得来源凭证",
+      "subject": "讨论升级前证据格式",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-138",
+      "task_type": "技术讨论",
+      "capability_family": "生成三方计划",
+      "subject": "讨论持久化变更与重算计划",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-139",
+      "task_type": "技术讨论",
+      "capability_family": "重演数据库",
+      "subject": "讨论按关系或整个库回放",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-140",
+      "task_type": "问题排查与诊断",
+      "capability_family": "登记镜像",
+      "subject": "定位已检查源库却不能登记",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-141",
+      "task_type": "问题排查与诊断",
+      "capability_family": "读取关系目录",
+      "subject": "定位两份关系目录看起来相同却拒绝",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-142",
+      "task_type": "问题排查与诊断",
+      "capability_family": "查看类型化行",
+      "subject": "追溯查询与页面分歧的键",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-143",
+      "task_type": "问题排查与诊断",
+      "capability_family": "生成三方计划",
+      "subject": "复盘左右置换后的选择变化",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-144",
+      "task_type": "问题排查与诊断",
+      "capability_family": "生成三方计划",
+      "subject": "定位实际改了主键却出现两条记录",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-145",
+      "task_type": "问题排查与诊断",
+      "capability_family": "审阅计划项",
+      "subject": "定位页显示无行却数据库并非空",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-146",
+      "task_type": "问题排查与诊断",
+      "capability_family": "重演数据库",
+      "subject": "定位只有合成候选含孤立引用",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-147",
+      "task_type": "问题排查与诊断",
+      "capability_family": "重演数据库",
+      "subject": "诊断 SQLite 大小限制形成的受阻",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-148",
+      "task_type": "问题排查与诊断",
+      "capability_family": "读取重演历史",
+      "subject": "原因定位当前没有重演记录",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-149",
+      "task_type": "问题排查与诊断",
+      "capability_family": "归档计划",
+      "subject": "定位归档后为什么还能下载",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-150",
+      "task_type": "问题排查与诊断",
+      "capability_family": "取得来源凭证",
+      "subject": "诊断候选一致但来源凭证不同",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-151",
+      "task_type": "问题排查与诊断",
+      "capability_family": "下载候选文件",
+      "subject": "定位本地打开候选时数据库被改写",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-152",
+      "task_type": "问题排查与诊断",
+      "capability_family": "封存候选",
+      "subject": "追查重复封存值为何未改变",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-153",
+      "task_type": "部署运维",
+      "capability_family": "登记镜像",
+      "subject": "输入目录容量维护与恢复",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-154",
+      "task_type": "部署运维",
+      "capability_family": "读取关系目录",
+      "subject": "部署前 SQLite 能力检查",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-155",
+      "task_type": "部署运维",
+      "capability_family": "生成三方计划",
+      "subject": "部署版本灰度状态隔离",
+      "state": "生成三方计划",
+      "invariant": "祖本决定差异方向，两个分支各自保留来源角色",
+      "observable": "同模式三库按键计算自动项和冲突",
+      "primary_mechanism": "lineage",
+      "workflow_ids": [
+        "plan"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/merge.py",
+        "pagefold/rows.py",
+        "pagefold/catalog.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/merge.py",
+          "pagefold/rows.py",
+          "pagefold/catalog.py"
+        ],
+        "functions": [
+          "create_plan",
+          "calculate",
+          "read_image",
+          "describe"
+        ]
+      },
+      "extension_seam_id": "plan-entry"
+    },
+    {
+      "id": "pagefold-156",
+      "task_type": "部署运维",
+      "capability_family": "审阅计划项",
+      "subject": "工作区受控本机接入",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-157",
+      "task_type": "部署运维",
+      "capability_family": "重演数据库",
+      "subject": "SQLite 锁和任务超时运行处置",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-158",
+      "task_type": "部署运维",
+      "capability_family": "重演数据库",
+      "subject": "生产环境文件系统故障演练",
+      "state": "重演数据库",
+      "invariant": "行级选择成立并不保证最终关系约束成立",
+      "observable": "在祖本副本重建并校验实际行与数据库约束",
+      "primary_mechanism": "recovery_rollback",
+      "workflow_ids": [
+        "rehearse"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/replay.py",
+        "pagefold/constraints.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/replay.py",
+          "pagefold/constraints.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "rehearse",
+          "rebuild",
+          "check_database",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "rehearse-entry"
+    },
+    {
+      "id": "pagefold-159",
+      "task_type": "部署运维",
+      "capability_family": "读取重演历史",
+      "subject": "迁移窗口的运行证据保留",
+      "state": "读取重演历史",
+      "invariant": "重演事实固定而是否适用于当前裁决会变化",
+      "observable": "旧版通过记录和当前记录分别可回查",
+      "primary_mechanism": "versioning_audit",
+      "workflow_ids": [
+        "attempts"
+      ],
+      "source_anchors": [
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "list_attempts",
+          "plan_content",
+          "amendments"
+        ]
+      },
+      "extension_seam_id": "attempts-entry"
+    },
+    {
+      "id": "pagefold-160",
+      "task_type": "部署运维",
+      "capability_family": "取得来源凭证",
+      "subject": "凭证归档校验例行操作",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-161",
+      "task_type": "部署运维",
+      "capability_family": "归档计划",
+      "subject": "部署后的关闭计划保留核验",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-162",
+      "task_type": "部署运维",
+      "capability_family": "封存候选",
+      "subject": "发布入口分阶段开放",
+      "state": "封存候选",
+      "invariant": "重复封存需要重认同一个发布对象",
+      "observable": "当前通过的候选和凭证在事务内冻结",
+      "primary_mechanism": "batch_transaction",
+      "workflow_ids": [
+        "seal"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "seal",
+          "get_attempt",
+          "expect_open",
+          "fingerprint"
+        ]
+      },
+      "extension_seam_id": "seal-entry"
+    },
+    {
+      "id": "pagefold-163",
+      "task_type": "部署运维",
+      "capability_family": "登记镜像",
+      "subject": "受控镜像登记探活",
+      "state": "登记镜像",
+      "invariant": "独立镜像完整性先于目录与跨分支比较",
+      "observable": "按字节摘要登记 SQLite，重复上传复用",
+      "primary_mechanism": "resource_lifecycle",
+      "workflow_ids": [
+        "import"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/sqlite_image.py",
+        "pagefold/catalog.py",
+        "pagefold/constraints.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/sqlite_image.py",
+          "pagefold/catalog.py",
+          "pagefold/constraints.py"
+        ],
+        "functions": [
+          "register",
+          "validate_header",
+          "describe",
+          "check_database"
+        ]
+      },
+      "extension_seam_id": "import-entry"
+    },
+    {
+      "id": "pagefold-164",
+      "task_type": "部署运维",
+      "capability_family": "下载候选文件",
+      "subject": "负载下检查下载和锁等待",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    },
+    {
+      "id": "pagefold-165",
+      "task_type": "部署运维",
+      "capability_family": "查看类型化行",
+      "subject": "跨运行时升级的读兼容性巡检",
+      "state": "查看类型化行",
+      "invariant": "SQLite 键的数值比较与存储类型展示各自保留",
+      "observable": "行窗口保留复合键、NULL 和二进制值",
+      "primary_mechanism": "policy_rules",
+      "workflow_ids": [
+        "rows"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/rows.py",
+        "pagefold/codec.py",
+        "pagefold/image_views.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/rows.py",
+          "pagefold/codec.py",
+          "pagefold/image_views.py"
+        ],
+        "functions": [
+          "table_page",
+          "read_table",
+          "atom",
+          "rows_page"
+        ]
+      },
+      "extension_seam_id": "rows-entry"
+    },
+    {
+      "id": "pagefold-166",
+      "task_type": "泛Agent需求",
+      "capability_family": "取得来源凭证",
+      "subject": "给旧结果整理来源映射",
+      "state": "取得来源凭证",
+      "invariant": "相同候选字节可以具有不同推导来源",
+      "observable": "返回绑定三种来源角色、裁决版和候选摘要的凭证",
+      "primary_mechanism": "export_freeze",
+      "workflow_ids": [
+        "certificate"
+      ],
+      "source_anchors": [
+        "pagefold/releases.py",
+        "pagefold/plans.py",
+        "pagefold/codec.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/releases.py",
+          "pagefold/plans.py",
+          "pagefold/codec.py"
+        ],
+        "functions": [
+          "get_release",
+          "seal",
+          "plan_content",
+          "canonical"
+        ]
+      },
+      "extension_seam_id": "certificate-entry"
+    },
+    {
+      "id": "pagefold-167",
+      "task_type": "泛Agent需求",
+      "capability_family": "读取关系目录",
+      "subject": "为结构审查会制作可见差异样本",
+      "state": "读取关系目录",
+      "invariant": "主键位置和约束依赖必须随同一个模式摘要读取",
+      "observable": "列、复合键及声明外键可回查",
+      "primary_mechanism": "snapshot_consistency",
+      "workflow_ids": [
+        "catalog"
+      ],
+      "source_anchors": [
+        "pagefold/images.py",
+        "pagefold/catalog.py",
+        "pagefold/rows.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/images.py",
+          "pagefold/catalog.py",
+          "pagefold/rows.py"
+        ],
+        "functions": [
+          "get_image",
+          "describe",
+          "read_image"
+        ]
+      },
+      "extension_seam_id": "catalog-entry"
+    },
+    {
+      "id": "pagefold-168",
+      "task_type": "泛Agent需求",
+      "capability_family": "归档计划",
+      "subject": "制作交接证据的最小保留表",
+      "state": "归档计划",
+      "invariant": "计划可修改资格与已经封存的阅读资格独立",
+      "observable": "归档禁止继续写入且保留已有成果",
+      "primary_mechanism": "state_machine",
+      "workflow_ids": [
+        "archive"
+      ],
+      "source_anchors": [
+        "pagefold/archive.py",
+        "pagefold/plans.py",
+        "pagefold/releases.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/archive.py",
+          "pagefold/plans.py",
+          "pagefold/releases.py"
+        ],
+        "functions": [
+          "archive",
+          "expect_open",
+          "get_release"
+        ]
+      },
+      "extension_seam_id": "archive-entry"
+    },
+    {
+      "id": "pagefold-169",
+      "task_type": "泛Agent需求",
+      "capability_family": "审阅计划项",
+      "subject": "为中文界面整理复杂键值样本",
+      "state": "审阅计划项",
+      "invariant": "读取的版本、待决信息和可操作条件应属于同一次读事务",
+      "observable": "显示参与镜像、待决数及版序",
+      "primary_mechanism": "concurrency",
+      "workflow_ids": [
+        "review"
+      ],
+      "source_anchors": [
+        "pagefold/plans.py",
+        "pagefold/plan_views.py",
+        "pagefold/merge.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/plans.py",
+          "pagefold/plan_views.py",
+          "pagefold/merge.py"
+        ],
+        "functions": [
+          "read_plan",
+          "plan_page",
+          "selected"
+        ]
+      },
+      "extension_seam_id": "review-entry"
+    },
+    {
+      "id": "pagefold-170",
+      "task_type": "泛Agent需求",
+      "capability_family": "下载候选文件",
+      "subject": "整理成果接入演练的查询时间表",
+      "state": "下载候选文件",
+      "invariant": "下载内容取自固定候选，调用方能独立比对凭证",
+      "observable": "下载字节可校验且 SQLite 可独立打开",
+      "primary_mechanism": "error_propagation",
+      "workflow_ids": [
+        "download"
+      ],
+      "source_anchors": [
+        "pagefold/api.py",
+        "pagefold/releases.py",
+        "pagefold/attempts.py",
+        "pagefold/replay.py"
+      ],
+      "existing_touch_points": {
+        "files": [
+          "pagefold/api.py",
+          "pagefold/releases.py",
+          "pagefold/attempts.py",
+          "pagefold/replay.py"
+        ],
+        "functions": [
+          "read",
+          "get_release",
+          "get_attempt",
+          "rebuild"
+        ]
+      },
+      "extension_seam_id": "download-entry"
+    }
+  ]
+}
