@@ -9,7 +9,8 @@ def main():
     parser.add_argument("directory", type=Path)
     directory = parser.parse_args().directory
     directory.mkdir(parents=True, exist_ok=True)
-    for name in ("quartz", "cerulean", "umber", "stress-left", "stress-right"):
+    for name in ("quartz", "cerulean", "umber", "stress-left", "stress-right",
+                 "partial-base", "partial-left", "partial-right"):
         path = directory / (name + ".sqlite")
         with path.open("xb") as file:
             file.write(image(name))

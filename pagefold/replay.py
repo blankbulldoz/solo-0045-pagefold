@@ -20,18 +20,25 @@ def amendments(items, decisions):
     return changed
 
 
-def apply_rows(db, table, operations):
-    name = ident(table["name"])
+def delete_statement(table):
     predicate = " AND ".join(f"{ident(key)} COLLATE BINARY=?" for key in table["key"])
+    return f"DELETE FROM main.{ident(table['name'])} WHERE {predicate}"
+
+
+def insert_statement(table):
     columns = ",".join(map(ident, table["columns"]))
     params = ",".join("?" for _ in table["columns"])
+    return f"INSERT OR ABORT INTO main.{ident(table['name'])} ({columns}) VALUES ({params})"
+
+
+def apply_rows(db, table, operations):
     for item, _ in operations:
         if item["base"] is not None:
-            db.execute(f"DELETE FROM main.{name} WHERE {predicate}", tuple(map(unpack, item["key"])))
+            db.execute(delete_statement(table), tuple(map(unpack, item["key"])))
     for item, row in operations:
         if row is not None:
             try:
-                db.execute(f"INSERT OR ABORT INTO main.{name} ({columns}) VALUES ({params})", tuple(map(unpack, row)))
+                db.execute(insert_statement(table), tuple(map(unpack, row)))
             except sqlite3.IntegrityError as exc:
                 raise Problem("constraint", f"{table['name']} {canonical(item['key'])}：{exc}") from exc
 

@@ -13,8 +13,20 @@ CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,
 CREATE INDEX node_weight ON node(weight);
 """
 
+PARTIAL_SCHEMA = """
+CREATE TABLE permit(
+    code TEXT PRIMARY KEY, holder TEXT NOT NULL, region TEXT,
+    active INTEGER NOT NULL CHECK(active IN (0,1))
+) WITHOUT ROWID;
+CREATE UNIQUE INDEX permit_live ON permit(holder, region) WHERE active;
+"""
+
+PARTIAL_FLAVORS = ("partial-base", "partial-left", "partial-right")
+
 
 def image(flavor):
+    if flavor in PARTIAL_FLAVORS:
+        return partial_image(flavor)
     if flavor not in {"quartz", "cerulean", "umber", "stress-left", "stress-right"}:
         raise ValueError(flavor)
     db = sqlite3.connect(":memory:")
@@ -33,6 +45,31 @@ def image(flavor):
             db.execute("UPDATE bench SET label='右支更名' WHERE code='south'")
         elif flavor.startswith("stress"):
             db.execute("INSERT INTO bench VALUES(?, '共享键值')", (flavor,))
+        db.commit()
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def partial_image(flavor):
+    """部分唯一索引示例：祖本与右支各自合法，裁决保留祖本后与左支新行碰撞。
+
+    p-east 在祖本中是活跃行；左支将其停用并新增同值的活跃行 p-znew，
+    右支将其改名。裁决保留祖本时，p-znew 的写入与未变祖本行 p-east
+    在谓词索引 permit_live 下碰撞。p-old 值相同但不满足谓词，p-null
+    的 region 为 NULL，两者恰好说明为何看起来值相同的行却通过。
+    """
+    db = sqlite3.connect(":memory:")
+    try:
+        db.executescript(PARTIAL_SCHEMA)
+        db.executemany("INSERT INTO permit VALUES(?,?,?,?)", [
+            ("p-east", "shared", "east", 1), ("p-old", "shared", "east", 0)])
+        if flavor == "partial-left":
+            db.execute("UPDATE permit SET active=0 WHERE code='p-east'")
+            db.execute("INSERT INTO permit VALUES('p-null','shared',NULL,1)")
+            db.execute("INSERT INTO permit VALUES('p-znew','shared','east',1)")
+        elif flavor == "partial-right":
+            db.execute("UPDATE permit SET holder='renamed' WHERE code='p-east'")
         db.commit()
         return db.serialize()
     finally:

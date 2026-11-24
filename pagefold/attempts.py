@@ -31,7 +31,8 @@ def rehearse(store, plan_id, revision):
         operations = amendments(items, decisions)
         ancestor = get_image(db, plan["base"], body=True)
         candidate = None
-        result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}
+        result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values())),
+                  "decisions": decisions}
         try:
             candidate = rebuild(ancestor["body"], json.loads(ancestor["catalog"]), operations)
             result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))

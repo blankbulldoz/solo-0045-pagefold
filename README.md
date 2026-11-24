@@ -11,7 +11,7 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
-可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
+可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。另有三件套 `partial-base/left/right.sqlite`：祖本与右支各自合法，裁决保留祖本后，左支新行与未变祖本行在部分唯一索引 `permit_live` 下碰撞。
 
 ## 操作和接口
 
@@ -26,6 +26,16 @@ python3 -m examples.make_images ./demo-images
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
+
+## 碰撞举证
+
+两个各自合法的分支合流后仍可能报唯一约束失败。支持人员可在计划页面之外，针对一次受阻重演还原恰好相互碰撞的主键行：
+
+```sh
+python3 -m examples.collision_probe --state ./pagefold-state.sqlite --plan 计划id --revision 版本
+```
+
+工具以同一祖本与同一裁决快照重放该次失败，标明每行来自未变祖本还是合流后写入；对部分唯一索引给出谓词覆盖判定，对含 NULL 的复合唯一键说明 NULL 互不相同，从而交代为何看起来值相同的一组通过、另一组被拒绝。默认输出书面报告，`--json` 输出可复核的机读行级证据。
 
 ## 验证
 

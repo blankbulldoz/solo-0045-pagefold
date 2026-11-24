@@ -9,12 +9,13 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from pagefold.collisions import probe_attempt
 from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "probe", "archive")
 
 
 def expect(condition, description):
@@ -56,7 +57,7 @@ def mismatched_schema():
         db.close()
 
 
-def run(client, goal):
+def run(client, goal, store):
     def done(workflow, result):
         if goal in (workflow, "all"):
             print(f"{workflow} ✓ {result}")
@@ -151,6 +152,37 @@ def run(client, goal):
         db.close()
     if done("download", "下载摘要校验一致，SQLite 可独立打开和查询"):
         return
+    stress_evidence = probe_attempt(store, failed_plan["id"], 0)
+    expect(stress_evidence["consistent"], "通常唯一约束举证与受阻记录不一致")
+    expect(stress_evidence["incoming"]["key"] == [["t", "stress-right"]], "受阻写入行不符")
+    expect(stress_evidence["incoming"]["origin"]["role"] == "right", "受阻写入来源不符")
+    collision = stress_evidence["collisions"][0]
+    expect(collision["existing"][0]["key"] == [["t", "stress-left"]], "相互碰撞行不符")
+    expect(collision["existing"][0]["origin"]["role"] == "left", "相互碰撞行来源不符")
+    expect(collision["index"]["origin"] == "u" and not collision["index"]["partial"], "应识别通常唯一约束")
+    partial_sources = {role: client.upload(f"partial-{role}")["id"] for role in ("base", "left", "right")}
+    partial_plan = client.call("/api/plans", partial_sources, 201)
+    expect(partial_plan["unresolved"] == 1, "部分索引示例应有一项冲突")
+    partial_route = f"/api/plans/{partial_plan['id']}"
+    conflict = next(item for item in partial_plan["items"] if not item["automatic"])
+    client.call(partial_route + "/decisions", {"item": conflict["id"], "choice": "base", "revision": 0})
+    blocked = client.call(partial_route + "/rehearse", {"revision": 1})
+    expect(blocked["status"] == "blocked" and blocked["problem"]["code"] == "constraint", "部分唯一索引冲突未捕获")
+    evidence = probe_attempt(store, partial_plan["id"], 1)
+    expect(evidence["consistent"], "部分索引举证与受阻记录不一致")
+    expect(evidence["incoming"]["key"] == [["t", "p-znew"]], "部分索引受阻行不符")
+    expect(evidence["incoming"]["origin"]["role"] == "left", "受阻行应来自左支")
+    existing = evidence["collisions"][0]["existing"][0]
+    expect(existing["key"] == [["t", "p-east"]] and existing["origin"]["kind"] == "ancestor",
+           "既有行应来自未变祖本")
+    index = evidence["collisions"][0]["index"]
+    expect(index["partial"] and index["predicate"] == "active", "部分谓词未还原")
+    contrasts = {entry["kind"]: entry for entry in evidence["collisions"][0]["contrasts"]}
+    expect(contrasts["predicate_excluded"]["key"] == [["t", "p-old"]], "谓词对照行缺失")
+    expect(contrasts["null_distinct"]["key"] == [["t", "p-null"]] and
+           contrasts["null_distinct"]["null_columns"] == ["region"], "NULL 对照行缺失")
+    if done("probe", "同一失败重演还原祖本与合流写入的碰撞行，通常唯一约束与部分索引各一例"):
+        return
     client.call(route + "/archive", {"revision": 2})
     expect(client.call(route)["state"] == "archived", "归档状态丢失")
     expect(client.call(route + "/rehearse", {"revision": 2}, 409)["code"] == "closed_plan", "归档计划可重演")
@@ -163,11 +195,12 @@ def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
-        with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
+        store = Store(Path(root) / "state.sqlite")
+        with make_server(store, 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()
             try:
-                run(Client(server.server_port), parser.parse_args().workflow)
+                run(Client(server.server_port), parser.parse_args().workflow, store)
             finally:
                 server.shutdown()
                 thread.join()
