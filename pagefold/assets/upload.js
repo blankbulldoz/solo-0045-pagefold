@@ -25,3 +25,13 @@ if (uploadForm) {
     }
   });
 }
+
+document.querySelectorAll('[data-witness-image],[data-witness-table]').forEach((select) => {
+  select.addEventListener('change', () => {
+    const form = select.closest('form');
+    if (!form) return;
+    const step = form.querySelector('button[name="step"]');
+    if (step && form.requestSubmit) form.requestSubmit(step);
+    else form.submit();
+  });
+});

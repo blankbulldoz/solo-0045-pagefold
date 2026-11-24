@@ -2,11 +2,11 @@ import json
 import logging
 import sqlite3
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, urlencode, urlsplit
 
 from . import api, workspace
 from .errors import Problem
-from .inputs import payload
+from .inputs import fields, payload
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -73,6 +73,24 @@ class Handler(BaseHTTPRequestHandler):
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+        elif (len(parts) >= 2 and parts[0] == "api" and (
+                parts[1] in api.WITNESS_TAIL or
+                (parts[1] == "images" and len(parts) >= 4 and parts[3] in api.WITNESS_TAIL))):
+            if parts[1] == "images":
+                result = api.witness_post(store, self, parts[2],
+                                          parts[4] if len(parts) >= 5 else None)
+            else:
+                result = api.witness_post(store, self,
+                                          parts[2] if len(parts) >= 3 else None,
+                                          parts[3] if len(parts) >= 4 else None)
+            self.json(result)
+        elif parts and parts[0] in workspace.WITNESS_ENTRY_PATHS:
+            data = fields(self, 32_768)
+            if len(parts) >= 2:
+                data.setdefault("image", parts[1])
+            if len(parts) >= 3:
+                data.setdefault("table", parts[2])
+            self.redirect("/witness?" + urlencode({k: v for k, v in data.items() if v is not None}))
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
@@ -91,7 +109,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.route_post(self.server.store, path, parts)
             else:
                 query = {key: values[-1] for key, values in parse_qs(
-                    target.query, keep_blank_values=True, max_num_fields=16).items()}
+                    target.query, keep_blank_values=True, max_num_fields=64).items()}
                 self.route_get(self.server.store, path, parts, query)
         except Problem as exc:
             self.report(exc, path)

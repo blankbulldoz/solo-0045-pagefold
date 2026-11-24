@@ -1,4 +1,5 @@
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
+from .witness import witness_url
 
 
 def plan_links(plans):
@@ -19,9 +20,16 @@ def entries(plan):
             form = fragment("decision", plan=plan["id"], revision=plan["revision"], item=item["id"], options=options)
         choice = ROLE_LABELS.get(item["choice"], "待裁决")
         chosen = ("自动 · " if auto else "") + choice
+        role_cells = {}
+        for role in ROLE_LABELS:
+            cell = values(item[role])
+            if item[role] is not None:
+                url = witness_url(plan["sources"][role], item["table"], item["key"])
+                cell += f'<a class="witness-mini" href="{safe(url)}">上下游见证 ↗</a>'
+            role_cells[role] = cell
         blocks.append(fragment("entry", table=safe(item["table"]), key=values(item["key"]),
                                choice=chosen, badge="auto" if auto else "conflict", form=form,
-                               **{role: values(item[role]) for role in ROLE_LABELS}))
+                               **role_cells))
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
 
