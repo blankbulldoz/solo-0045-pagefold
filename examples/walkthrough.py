@@ -13,8 +13,8 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "packets", "rehearse", "attempts",
+             "seal", "certificate", "download", "archive")
 
 
 def expect(condition, description):
@@ -109,9 +109,94 @@ def run(client, goal):
     expect(client.call(route + "/decisions", dict(decision, revision=1))["revision"] == 1, "重复裁决修改了版本")
     if done("decide", "过期写入拒绝，同选择不推进版本"):
         return
+    packet_check(client, done)
+    if done("packets", "两份重叠分发包各自只含指定行，并回写可追踪的选择"):
+        return
+    continue_checks(client, sources, catalog, route, decision, done)
+
+
+def packet_check(client, done):
+    base, left, right = (client.upload(name) for name in ("packet-base", "packet-left", "packet-right"))
+    plan = client.call("/api/plans", {"base": base["id"], "left": left["id"], "right": right["id"]}, 201)
+    route = f"/api/plans/{plan['id']}"
+    rows = {(item["key"][0][1], int(item["key"][1][1])): item for item in plan["items"]}
+    expect(len(rows) == 5 and plan["unresolved"] == 4, "分发包样本的冲突数不符")
+    expect(client.call(route + "/packets", {"revision": 0, "recipient": "甲", "items": ["0" * 64]}, 409)["code"]
+           == "not_conflict", "非冲突行被带入分发包")
+    client.call(route + "/decisions", {"revision": 0, "item": rows[("north", 2)]["id"], "choice": "left"})
+    first = client.call(route + "/packets", {"revision": 1, "recipient": "甲",
+                                             "items": [rows[("north", 1)]["id"], rows[("north", 2)]["id"]]})
+    second = client.call(route + "/packets", {"revision": 1, "recipient": "乙",
+                                              "items": [rows[("north", 2)]["id"], rows[("south", 1)]["id"]]})
+    packet_ids = {first["id"], second["id"]}
+    expect([item["key"] for item in first["items"]] == [[["t", "north"], ["i", "1"]], [["t", "north"], ["i", "2"]]],
+           "分发包行集合或顺序不符")
+    expect({item["id"] for item in second["items"]} == {rows[("north", 2)]["id"], rows[("south", 1)]["id"]},
+           "第二包行集合不符")
+    exported = client.call(f"/api/packets/{first['id']}/export")
+    leaked = {rows[("south", 1)]["id"], rows[("south", 2)]["id"], rows[("west", 1)]["id"]}
+    expect({item["id"] for item in exported["items"]} == {item["id"] for item in first["items"]},
+           "导出包包含未分发到该包的行")
+    expect(not leaked & {item["id"] for item in exported["items"]}, "未分发的行随包外泄")
+    expect(set(exported["tables"]) == {"node"} and "south" not in json.dumps(exported),
+           "导出包带出了包外表或未分发值")
+    expect(exported["items"][1]["choice"] == "left" and exported["items"][0]["choice"] is None,
+           "包内选择不是发出时的值")
+    expect(client.call(f"/api/packets/{second['id']}/return", {
+        "digest": second["digest"], "selections": {rows[("south", 2)]["id"]: "left"}}, 409)["code"]
+        == "out_of_packet", "包外行选择未被拒绝")
+    due = client.call(route + "/decisions", {"revision": 1, "item": rows[("south", 2)]["id"], "choice": "base"})
+    expect(due["revision"] == 2, "分发期间的其他裁决未推进版本")
+    client.call(f"/api/packets/{first['id']}/return", {"digest": first["digest"], "selections": {
+        rows[("north", 1)]["id"]: "right", rows[("north", 2)]["id"]: ["clear", "left"]}, "note": "甲已复核"})
+    merged = client.call(f"/api/packets/{first['id']}/merge", {"revision": 2})
+    expect([entry["key"] for entry in merged["applied"]] == [[["t", "north"], ["i", "1"]]],
+           "包内新选择未安全并入")
+    expect([entry["key"] for entry in merged["unchanged"]] == [[["t", "north"], ["i", "2"]]]
+           and merged["unchanged"][0]["note"] == "cleared_then_restored", "清空后选回原值未被识别")
+    expect(merged["plan_revision_before"] == 2 and merged["plan_revision_after"] == 3,
+           "合入未基于最新版序推进")
+    client.call(f"/api/packets/{second['id']}/return", {"digest": second["digest"], "selections": {
+        rows[("north", 2)]["id"]: "right", rows[("south", 1)]["id"]: "left"}})
+    current = client.call(route + "/decisions", {"revision": 3, "item": rows[("south", 1)]["id"], "choice": "right"})
+    expect(current["revision"] == 4, "无关行裁决未推进版本")
+    conflict = client.call(f"/api/packets/{second['id']}/merge", {"revision": 4})
+    expect(conflict["state"] == "returned" and [entry["key"] for entry in conflict["pending"]]
+           == [[["t", "south"], ["i", "1"]]], "被他人改过选择的行未被拦下")
+    expect([entry["key"] for entry in conflict["applied"]] == [[["t", "north"], ["i", "2"]]],
+           "与包无关的选择未合入")
+    expect(conflict["plan_revision_before"] == 4 and conflict["plan_revision_after"] == 5,
+           "部分合入未推进版本")
+    expect(conflict["applied"][0]["previous"] == "left" and conflict["applied"][0]["choice"] == "right",
+           "合入没有记录前后选择")
+    expect(client.call(f"/api/packets/{second['id']}/merge", {"revision": 4}, 409)["code"] == "stale_revision",
+           "部分合入后的旧版序未被拒绝")
+    expect(client.call(f"/api/packets/{second['id']}/merge", {"revision": 2}, 409)["code"] == "stale_revision",
+           "过期版序未被拒绝")
+    client.call(f"/api/packets/{second['id']}/return", {"digest": second["digest"], "selections": {
+        rows[("north", 2)]["id"]: "right", rows[("south", 1)]["id"]: "left"}})
+    settled = client.call(f"/api/packets/{second['id']}/merge", {"revision": 5})
+    expect(settled["state"] == "merged" and settled["plan_revision_before"] == 5
+           and settled["plan_revision_after"] == 6 and
+           [entry["key"] for entry in settled["applied"]] == [[["t", "south"], ["i", "1"]]]
+           and settled["applied"][0]["previous"] == "right" and settled["applied"][0]["choice"] == "left",
+           "本人在同一包内确认后未合入")
+    expect(client.call(route)["unresolved"] == 0 and client.call(route)["revision"] == 6, "合入后计划仍有未决")
+    expect(client.call(route + "/rehearse", {"revision": 6})["status"] == "passed", "合入后候选未通过")
+    log = client.call(route + "/decisions")
+    expect([(entry["revision"], entry["origin"]) for entry in log] == [
+        (1, "direct"), (2, "direct"), (3, "packet"), (4, "direct"), (5, "packet"), (6, "packet")],
+        "裁决回写来源不可追踪")
+    expect([entry["actor"] for entry in log if entry["origin"] == "packet"] == ["甲", "乙", "乙"],
+           "分发包来源人不可追踪")
+    page = client.call(f"/plans/{plan['id']}")
+    expect(all(packet_id[:8].encode() in page for packet_id in packet_ids), "计划页未列出分发包")
+
+
+def continue_checks(client, sources, catalog, route, decision, done):
     accepted = client.call(route + "/rehearse", {"revision": 1})
     expect(accepted["status"] == "passed" and accepted["changed"] == 3, "正常候选未通过")
-    stress = {"base": base["id"], "left": client.upload("stress-left")["id"],
+    stress = {"base": sources["base"], "left": client.upload("stress-left")["id"],
               "right": client.upload("stress-right")["id"]}
     failed_plan = client.call("/api/plans", stress, 201)
     stress_route = f"/api/plans/{failed_plan['id']}"

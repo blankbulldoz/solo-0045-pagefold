@@ -1,0 +1,9 @@
+<a class="back" href="/plans/$plan">← 合流计划</a>
+<section class="heading"><div><h1>裁决分发包 <code>$short</code></h1><p>发给 $recipient · 第 $revision 版发出 · $state</p></div><span class="tag">$count 行</span></section>
+<section class="paper"><div class="panel-title"><h2>包内主键行</h2><span class="tag">仅含本包行</span></div>
+<div class="scroll"><table><thead><tr><th>表</th><th>主键</th><th>祖本</th><th>左支</th><th>右支</th><th>发出时选择</th></tr></thead><tbody>$rows</tbody></table></div>
+<nav class="pager" aria-label="分发包文件"><a href="/api/packets/$id/export">下载分发包 JSON ↓</a></nav></section>
+<section class="paper workspace-history"><div class="panel-title"><h2>交回与合入</h2></div>
+<div class="actions">$controls</div>
+<div class="results">$result</div></section>
+<section class="paper workspace-history"><div class="panel-title"><h2>包内轨迹</h2></div><div class="history">$log</div></section>

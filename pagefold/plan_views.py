@@ -1,6 +1,9 @@
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
 
+PACKET_LABELS = {"sent": "已发出", "returned": "已交回", "merged": "已合入", "withdrawn": "已撤回"}
+
+
 def plan_links(plans):
     return "".join(f'<a class="plan-link" href="/plans/{p["id"]}">'
                    f'<span>{safe(p["left_label"])} <b>＋</b> {safe(p["right_label"])}</span>'
@@ -38,7 +41,36 @@ def action_form(plan, action, label, style="", disabled=False):
                     label=label, style=style, disabled=" disabled" if disabled else "")
 
 
-def plan_page(plan, images, attempts, published):
+def packet_links(packets):
+    if not packets:
+        return '<p class="muted">尚未分发裁决包。</p>'
+    return "".join(fragment("packet_link", id=p["id"], recipient=safe(p["recipient"]),
+                            state=PACKET_LABELS[p["state"]], revision=p["plan_revision"],
+                            items=p["items"], applied=p["applied"], pending=p["pending"])
+                   for p in reversed(packets))
+
+
+def packet_form(plan):
+    conflicts = [item for item in plan["items"] if item["automatic"] is None]
+    if plan["state"] != "open" or not conflicts:
+        return '<p class="muted">当前没有可分发的主键行。</p>'
+    checks = "".join(
+        f'<label class="packet-item"><input type="checkbox" name="items" value="{safe(item["id"])}" checked>'
+        f'<span>{safe(item["table"])} {values(item["key"])}</span></label>' for item in conflicts)
+    return fragment("packet_issue", plan=plan["id"], revision=plan["revision"], checks=checks)
+
+
+def decision_log(history):
+    if not history:
+        return '<p class="muted">暂无裁决记录。</p>'
+    return "".join(fragment("decision_log", revision=entry["revision"],
+                            choice=ROLE_LABELS.get(entry["choice"], "清除"),
+                            origin=("直接保存" if entry["origin"] == "direct"
+                                    else "分发包 · " + safe(entry["actor"] or "")),
+                            item=safe(entry["item"][:12])) for entry in history)
+
+
+def plan_page(plan, images, attempts, published, packets=(), decisions=()):
     actions = []
     if plan["state"] == "open":
         passed = any(a["revision"] == plan["revision"] and a["status"] == "passed" for a in attempts)
@@ -53,4 +85,5 @@ def plan_page(plan, images, attempts, published):
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
-                actions="".join(actions))
+                actions="".join(actions), packet_links=packet_links(list(packets)),
+                packet_form=packet_form(plan), decision_log=decision_log(list(decisions)))

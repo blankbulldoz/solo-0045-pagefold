@@ -50,11 +50,15 @@ class Handler(BaseHTTPRequestHandler):
         elif len(parts) > 1 and parts[0] == "api":
             result = api.read(store, parts[1:], query)
             if isinstance(result, bytes):
+                name = parts[2] if len(parts) > 2 else "packet"
                 self.send_bytes(result, "application/vnd.sqlite3", headers=[
-                    ("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.sqlite"')])
+                    ("Content-Disposition", f'attachment; filename="pagefold-{name}.sqlite"')])
             else:
                 headers = []
-                if len(parts) == 4 and parts[3] == "certificate":
+                if len(parts) == 4 and parts[0] == "api" and parts[1] == "packets" and parts[3] == "export":
+                    headers.append(("Content-Disposition",
+                                    f'attachment; filename="pagefold-packet-{parts[2]}.json"'))
+                elif len(parts) == 4 and parts[3] == "certificate":
                     headers.append(("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.json"'))
                 self.json(result, headers=headers)
         else:
@@ -73,9 +77,17 @@ class Handler(BaseHTTPRequestHandler):
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+        elif len(parts) >= 2 and parts[:2] == ["api", "packets"]:
+            self.json(api.write_packet(store, self, parts[2:]))
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
-            self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
+            if len(parts) == 3 and parts[2] == "packets":
+                self.redirect(f"/packets/{result['id']}")
+            else:
+                self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
+        elif parts and parts[0] == "packets":
+            api.write_packet(store, self, parts[1:])
+            self.redirect(f"/packets/{parts[1]}")
         else:
             raise Problem("route", "找不到该入口。", 404)
 

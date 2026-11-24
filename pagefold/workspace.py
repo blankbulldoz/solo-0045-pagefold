@@ -1,10 +1,13 @@
 from .attempts import list_attempts
+from .decisions import history
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import unsigned
 from .merge import ROLES
+from .packet_views import packet_page
+from .packets import get_packet, list_packets
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
 from .render import HERE, page, safe
@@ -22,7 +25,11 @@ def workspace(store, parts, query):
             images = [get_image(db, plan["sources"][role]) for role in ROLES]
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
-            return plan_page(plan, images, attempts, bool(published))
+            return plan_page(plan, images, attempts, bool(published),
+                             packets=list_packets(db, parts[1]), decisions=history(db, parts[1]))
+        if len(parts) == 2 and parts[0] == "packets":
+            packet = get_packet(db, parts[1])
+            return packet_page(packet, read_plan(db, packet["plan"]))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:

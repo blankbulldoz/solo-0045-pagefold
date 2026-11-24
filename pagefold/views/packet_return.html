@@ -1,0 +1,7 @@
+<form class="packet-selection" method="post" action="/packets/$id/return">
+  <input type="hidden" name="digest" value="$digest">
+  <input type="hidden" name="revision" value="$plan_revision">
+  $selects
+  <label><span class="input-title">备注（可选）</span><input type="text" name="note" maxlength="500"></label>
+  <button type="submit">交回选择</button>
+</form>

@@ -2,6 +2,11 @@
   "project_shape": "fullstack",
   "modules": [
     {
+      "id": "packets",
+      "path": "pagefold/packets.py",
+      "responsibility": "实现 issue、accept_return、merge、withdraw"
+    },
+    {
       "id": "images",
       "path": "pagefold/images.py",
       "responsibility": "实现 register、get_image、table_page"
@@ -70,6 +75,11 @@
       "id": "releases",
       "path": "pagefold/releases.py",
       "responsibility": "实现 seal、get_release"
+    },
+    {
+      "id": "packet_views",
+      "path": "pagefold/packet_views.py",
+      "responsibility": "实现 packet_page"
     },
     {
       "id": "api",
@@ -186,6 +196,24 @@
         "decisions",
         "plans",
         "merge"
+      ]
+    },
+    {
+      "id": "packets",
+      "name": "分发并收回离线裁决",
+      "entry": "POST /api/plans/{id}/packets",
+      "success": "分发包只含指定冲突行，收回的选择按最新版序安全并入",
+      "failure": "包外行选择被拒绝，被他人改过的行留给本人再决定",
+      "verification": "python3 -m examples.walkthrough packets",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/packets 与 POST /api/packets/{id}/return、/merge",
+        "分发包只含指定冲突行，收回的选择按最新版序安全并入"
+      ],
+      "module_ids": [
+        "packets",
+        "plans",
+        "decisions",
+        "packet_views"
       ]
     },
     {

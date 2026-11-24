@@ -35,6 +35,10 @@
       "command": "python3 -m examples.walkthrough decide"
     },
     {
+      "workflow_id": "packets",
+      "command": "python3 -m examples.walkthrough packets"
+    },
+    {
       "workflow_id": "rehearse",
       "command": "python3 -m examples.walkthrough rehearse"
     },

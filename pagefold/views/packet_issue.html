@@ -1,0 +1,7 @@
+<form class="packet-issue" method="post" action="/plans/$plan/packets">
+  <input type="hidden" name="revision" value="$revision">
+  <fieldset><legend>随包的行（仅当前待裁决项，不勾选表示整份计划）</legend>$checks</fieldset>
+  <input type="hidden" name="items_mode" value="selected">
+  <label><span class="input-title">收件人</span><input type="text" name="recipient" maxlength="100" required placeholder="例如 同事甲"></label>
+  <button type="submit">生成分发包</button>
+</form>

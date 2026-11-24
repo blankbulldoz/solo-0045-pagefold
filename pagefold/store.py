@@ -20,6 +20,19 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS packets (
+    id TEXT PRIMARY KEY, plan_id TEXT NOT NULL REFERENCES plans(id),
+    recipient TEXT NOT NULL, revision INTEGER NOT NULL,
+    state TEXT NOT NULL CHECK(state IN ('sent', 'returned', 'merged', 'withdrawn')),
+    items TEXT NOT NULL, returned TEXT, result TEXT, applied_revision INTEGER,
+    log TEXT NOT NULL DEFAULT '[]'
+);
+CREATE INDEX IF NOT EXISTS packets_plan ON packets(plan_id);
+CREATE TABLE IF NOT EXISTS decision_log (
+    plan_id TEXT NOT NULL REFERENCES plans(id), revision INTEGER NOT NULL, item TEXT NOT NULL,
+    previous TEXT, choice TEXT, origin TEXT NOT NULL, actor TEXT,
+    created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(plan_id, revision, item)
+);
 """
 
 
