@@ -15,12 +15,13 @@ python3 -m examples.make_images ./demo-images
 
 ## 操作和接口
 
-网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
+网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，通过重演的候选可按版本在网页检查：候选页像镜像页一样列出关系结构和类型化行，并对照同一主键在三份来源中的值。候选只是重演证据，不登记为镜像，也不能作为新计划的来源；历史版候选会明确标注，当前版没有候选时不会退回旧版。确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
 
 - `POST /api/images` 接收 `application/octet-stream`，`X-Image-Name` 是可选的 URL 编码标签。
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
+- `GET /api/plans/{id}/attempts/{revision}` 查看指定版本的重演结果与候选目录，追加 `/rows?table=名称&offset=0` 查阅候选行。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。

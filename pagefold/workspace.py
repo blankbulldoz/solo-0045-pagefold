@@ -1,4 +1,6 @@
 from .attempts import list_attempts
+from .candidate_views import candidate_page, candidate_rows_page
+from .candidates import candidate_overview, candidate_rows
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
@@ -23,6 +25,14 @@ def workspace(store, parts, query):
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
+        if len(parts) in {4, 5} and parts[0] == "plans" and parts[2] == "attempts":
+            revision = unsigned(parts[3], "revision")
+            if len(parts) == 4:
+                return candidate_page(parts[1], candidate_overview(db, parts[1], revision))
+            if parts[4] == "rows":
+                return candidate_rows_page(parts[1], revision, candidate_rows(
+                    db, parts[1], revision, query.get("table"),
+                    unsigned(query.get("offset", "0"), "offset")))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:

@@ -13,8 +13,8 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts",
+             "candidate", "seal", "certificate", "download", "archive")
 
 
 def expect(condition, description):
@@ -127,10 +127,48 @@ def run(client, goal):
     expect(client.call(route + "/seal", {"revision": 2}, 409)["code"] == "rehearsal_required", "旧记录可封存")
     if done("attempts", "旧记录保留但不能封存新版本"):
         return
+    record = client.call(route + "/attempts/1")
+    expect(record["status"] == "passed" and record["current"] is False and
+           record["candidate_digest"] == accepted["candidate_digest"] and
+           any(table["name"] == "node" for table in record["tables"]), "历史候选记录不符")
+    node_rows = client.call(route + "/attempts/1/rows?table=node")
+    expect(node_rows["rows"][0]["key"] == [["t", "north"], ["i", "1"]], "候选复合键丢失")
+    expect(node_rows["rows"][0]["values"][3:] == [["b", "/wA="], ["r", "0x1.2000000000000p+1"]],
+           "候选行类型保留失败")
+    page = client.call(f"/plans/{plan['id']}/attempts/1")
+    expect(all(text.encode() in page for text in ("合成对照", "历史版", "左支覆写", "/wA=", "祖本节点")),
+           "历史候选页未呈现合成值与三方来源")
+    page = client.call(f"/plans/{plan['id']}/attempts/1/rows?" + urlencode({"table": "node"}))
+    expect("/wA=".encode() in page and "候选内容".encode() in page, "候选行页未渲染")
+    expect(client.call(route + "/attempts/2", status=404)["code"] == "unknown_attempt",
+           "当前版无声退回旧候选")
+    missing = client.call(f"/plans/{plan['id']}/attempts/2", status=404)
+    expect("找不到该版的重演记录".encode() in missing, "当前版页面退回旧候选")
+    blocked = client.call(stress_route + "/attempts/0")
+    expect(blocked["status"] == "blocked" and blocked["current"] is True and "tables" not in blocked,
+           "受阻记录不符")
+    expect(client.call(stress_route + "/attempts/0/rows?table=bench", status=409)["code"] ==
+           "candidate_unavailable", "受阻版提供了候选行")
+    blocked_page = client.call(f"/plans/{failed_plan['id']}/attempts/0")
+    expect("受阻诊断".encode() in blocked_page, "受阻页未呈现诊断")
+    images = client.call("/api/images")
+    expect(len(images) == 6 and all(image["id"] != accepted["candidate_digest"] for image in images),
+           "候选混入来源清单")
+    expect(client.call("/api/plans", {"base": accepted["candidate_digest"], "left": left["id"],
+                                      "right": right["id"]}, 404)["code"] == "unknown_image",
+           "候选被当成登记镜像")
+    expect(client.call(route + "/seal", {"revision": 2}, 409)["code"] == "rehearsal_required",
+           "封存入口行为改变")
+    state = client.call(route)
+    expect(state["revision"] == 2 and state["state"] == "open", "检查操作改变了计划状态")
+    if done("candidate", "历史候选可审阅，当前版不回退，受阻版有诊断，候选不作来源"):
+        return
     current = client.call(route + "/rehearse", {"revision": 2})
     certificate = client.call(route + "/seal", {"revision": 2})
     expect(client.call(route + "/seal", {"revision": 2}) == certificate, "重复封存结果改变")
     expect(client.call(route + "/decisions", dict(decision, revision=2), 409)["code"] == "closed_plan", "封存可编辑")
+    sealed = client.call(f"/plans/{plan['id']}/attempts/2")
+    expect("合成对照".encode() in sealed and "当前版".encode() in sealed, "封存后候选不可审阅")
     if done("seal", "原子封存当前候选，重复封存稳定"):
         return
     proof = client.call(route + "/certificate")
@@ -156,6 +194,7 @@ def run(client, goal):
     expect(client.call(route + "/rehearse", {"revision": 2}, 409)["code"] == "closed_plan", "归档计划可重演")
     expect(client.call(route + "/download") == candidate and client.call(route + "/certificate") == proof,
            "归档后成果变化")
+    expect(client.call(route + "/attempts/2")["status"] == "passed", "归档后候选记录丢失")
     done("archive", "停止写入，既有成果和凭证继续可提取")
 
 
