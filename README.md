@@ -22,6 +22,7 @@ python3 -m examples.make_images ./demo-images
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
+- `POST /api/plans/{id}/probe` 接收 `revision`、`budget` 和可选 `domain`、`assignments`，只读试算冲突组合，不写入裁决。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
@@ -32,6 +33,26 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.probe_demo all
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+## 试算探索（只读）
+
+正式裁决前，可用试算在可配置预算内检查冲突组合是否成立，而不会写入计划的裁决、
+版本或重演历史。`POST /api/plans/{id}/probe` 接收 `revision`、`budget`（1–128）、
+可选 `domain`（限制每项的候选角色，如 `["left","right"]`）和可选 `assignments`
+（指定完整组合；配合 `budget=1` 只检查这一个组合）。
+
+试算在内存中的祖本副本上复用重演与约束校验，返回：每个组合的通过/受阻证据与诊断、
+哪些冲突项的选择会改变可交付性（带单翻转组合对证据）、需要多项配合的条件性外键依赖、
+以及覆盖报告（已试/总数、每项选项覆盖、成对覆盖、未覆盖组合的精确清单或确定性抽样）。
+组合空间不大于预算时完全穷举并给出全部未覆盖序号；空间过大时明确声明未穷举，只给抽样。
+试算同样校验版本，封存后的计划仍可只读试算，但正式写入依旧被拒绝。
+
+```sh
+python3 -m examples.probe_demo small      # 6 冲突 64 组合，预算内穷举
+python3 -m examples.probe_demo large      # 16 冲突 65,536 组合，预算无法穷举
+python3 -m examples.probe_demo isolation  # 核对试算不产生任何裁决写入
+```

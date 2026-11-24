@@ -9,6 +9,7 @@ from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
+from .probing import MAX_BUDGET, probe
 from .releases import get_release, seal
 from .sqlite_image import MAX_BYTES
 
@@ -57,6 +58,9 @@ def write_plan(store, handler, tail):
         if choice not in (*ROLES, "clear"):
             raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
         return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+    if action == "probe":
+        budget = unsigned(data.get("budget", MAX_BUDGET), "budget")
+        return probe(store, plan_id, revision, budget, data.get("domain"), data.get("assignments"))
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)
