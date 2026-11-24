@@ -48,15 +48,19 @@ class Handler(BaseHTTPRequestHandler):
             body, kind = workspace.asset(path)
             self.send_bytes(body, kind + "; charset=utf-8")
         elif len(parts) > 1 and parts[0] == "api":
-            result = api.read(store, parts[1:], query)
-            if isinstance(result, bytes):
+            result = api.read(store, parts[1:], query, getattr(self.server, "keyring", None))
+            action = parts[3] if len(parts) >= 4 else None
+            if isinstance(result, bytes) and action == "download":
                 self.send_bytes(result, "application/vnd.sqlite3", headers=[
                     ("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.sqlite"')])
+            elif isinstance(result, bytes):
+                # 凭证类端点：原样返回规范字节，摘要可离线复现。
+                suffix = "json" if action == "certificate" else f"{action}.json"
+                self.send_bytes(result, "application/json; charset=utf-8", headers=[
+                    ("Content-Disposition",
+                     f'attachment; filename="pagefold-{parts[2]}.{suffix}"')])
             else:
-                headers = []
-                if len(parts) == 4 and parts[3] == "certificate":
-                    headers.append(("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.json"'))
-                self.json(result, headers=headers)
+                self.json(result)
         else:
             self.send_bytes(workspace.workspace(store, parts, query), "text/html; charset=utf-8")
 
@@ -72,9 +76,11 @@ class Handler(BaseHTTPRequestHandler):
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
-            self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+            self.json(api.write_plan(store, self, parts[2:],
+                                     getattr(self.server, "keyring", None)),
+                      201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":
-            result = api.write_plan(store, self, parts[1:])
+            result = api.write_plan(store, self, parts[1:], getattr(self.server, "keyring", None))
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
         else:
             raise Problem("route", "找不到该入口。", 404)
@@ -116,9 +122,10 @@ class Handler(BaseHTTPRequestHandler):
         self.handle_route(True)
 
 
-def make_server(store, port):
+def make_server(store, port, keyring=None):
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     server.store = store
+    server.keyring = keyring
     address = server.server_port
     server.hosts = {f"127.0.0.1:{address}", f"localhost:{address}"}
     server.origins = {f"http://{host}" for host in server.hosts}

@@ -38,7 +38,7 @@ def action_form(plan, action, label, style="", disabled=False):
                     label=label, style=style, disabled=" disabled" if disabled else "")
 
 
-def plan_page(plan, images, attempts, published):
+def plan_page(plan, images, attempts, published, handed=False):
     actions = []
     if plan["state"] == "open":
         passed = any(a["revision"] == plan["revision"] and a["status"] == "passed" for a in attempts)
@@ -47,7 +47,12 @@ def plan_page(plan, images, attempts, published):
     if plan["state"] != "archived":
         actions.append(action_form(plan, "archive", "归档计划", "quiet"))
     if published:
-        actions.append(fragment("release", plan=plan["id"]))
+        release = fragment("release", plan=plan["id"])
+        if handed:
+            release += fragment("handover", plan=plan["id"])
+        else:
+            release += fragment("handover-action", plan=plan["id"])
+        actions.append(release)
     roles = "".join(f'<a href="/images/{i["id"]}"><small>{label}</small><b>{safe(i["label"])}</b>'
                     f'<code>{i["id"][:14]}</code></a>' for label, i in zip(ROLE_LABELS.values(), images))
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,

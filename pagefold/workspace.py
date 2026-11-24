@@ -22,7 +22,8 @@ def workspace(store, parts, query):
             images = [get_image(db, plan["sources"][role]) for role in ROLES]
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
-            return plan_page(plan, images, attempts, bool(published))
+            handover = db.execute("SELECT 1 FROM handovers WHERE plan_id=?", (parts[1],)).fetchone()
+            return plan_page(plan, images, attempts, bool(published), bool(handover))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:
