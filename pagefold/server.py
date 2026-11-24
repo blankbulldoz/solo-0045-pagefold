@@ -68,9 +68,20 @@ class Handler(BaseHTTPRequestHandler):
             raise Problem("origin", "该请求必须来自当前工作区。", 403)
         if path == "/api/images":
             self.json(api.upload(store, self), 201)
+        elif path == "/api/rules":
+            self.json(api.create_rule_request(store, self), 201)
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
+        elif path == "/rule-demo":
+            payload(self, 0)
+            self.redirect(f"/plans/{workspace.rule_sample(store)['id']}")
+        elif path == "/rules/trial":
+            trial = api.trial_rule_request(store, self)
+            self.send_bytes(workspace.rule_trial_page(trial), "text/html; charset=utf-8")
+        elif path == "/rules":
+            api.create_rule_request(store, self)
+            self.redirect("/rules")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":

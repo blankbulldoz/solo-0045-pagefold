@@ -20,6 +20,10 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS rules (
+    id TEXT PRIMARY KEY, name TEXT NOT NULL, spec TEXT NOT NULL,
+    builtin INTEGER NOT NULL DEFAULT 0
+);
 """
 
 
