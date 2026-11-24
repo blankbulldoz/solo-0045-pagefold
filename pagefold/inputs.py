@@ -50,3 +50,11 @@ def token(value, name):
     if isinstance(value, str) and TOKEN.fullmatch(value):
         return value
     raise Problem("token", f"字段 {name} 须为 64 位十六进制摘要。", 400)
+
+
+def token_list(value, name, limit=32):
+    if isinstance(value, str):
+        value = [part.strip() for part in value.split(",") if part.strip()]
+    if not isinstance(value, list) or not 1 <= len(value) <= limit:
+        raise Problem("token", f"字段 {name} 须为 1 至 {limit} 个 64 位摘要。", 400)
+    return [token(part, name) for part in value]

@@ -1,6 +1,7 @@
 import json
 import sqlite3
 
+from . import lineage
 from .catalog import describe
 from .codec import canonical, digest
 from .constraints import check_database
@@ -9,7 +10,7 @@ from .rows import read_image, read_table
 from .sqlite_image import mounted
 
 
-def register(store, data, label):
+def register(store, data, label, claims=None, missing_note=None):
     checksum = digest(data)
     try:
         with mounted(data) as image:
@@ -23,7 +24,20 @@ def register(store, data, label):
     with store.connect(write=True) as db:
         db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
                    (checksum, label, canonical(catalog), data))
-        return image_record(get_image(db, checksum))
+        record = image_record(get_image(db, checksum))
+        import_id = lineage.record_import(db, checksum, label)
+        if claims:
+            lineage.record_declared(db, checksum, import_id, claims)
+        if missing_note:
+            lineage.record_missing(db, checksum, import_id, missing_note)
+        filename_hints = lineage.record_filename_hints(db, checksum, label, import_id)
+        sealed = lineage.discover_sealed_outputs(db, checksum)
+    record["import_id"] = import_id
+    record["lineage"] = {"sealed_matches": sealed,
+                         "filename_hints": filename_hints,
+                         "declared_sources": list(claims or []),
+                         "missing_note": missing_note}
+    return record
 
 
 def get_image(db, image_id, body=False):

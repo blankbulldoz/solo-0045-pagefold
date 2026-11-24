@@ -1,6 +1,7 @@
 import json
 import uuid
 
+from . import lineage
 from .codec import canonical, fingerprint
 from .errors import Problem
 from .images import get_image
@@ -24,6 +25,8 @@ def create_plan(store, sources):
     with store.connect(write=True) as db:
         db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
                    (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+        # 正式计划选定后，三个来源各自获得一条可核验的计划角色边。
+        lineage.record_plan_roles(db, plan_id, sources)
         return read_plan(db, plan_id)
 
 

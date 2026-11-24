@@ -1,12 +1,13 @@
 import json
 from urllib.parse import unquote
 
+from . import lineage
 from .archive import archive
 from .attempts import list_attempts, rehearse
 from .decisions import resolve
 from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
-from .inputs import fields, payload, token, unsigned
+from .inputs import fields, payload, token, token_list, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
 from .releases import get_release, seal
@@ -23,6 +24,13 @@ def read(store, parts, query):
                 return image_record(get_image(db, tail[0]))
             if len(tail) == 2 and tail[1] == "rows":
                 return table_page(db, tail[0], query.get("table"), unsigned(query.get("offset", "0"), "offset"))
+            if len(tail) == 2 and tail[1] == "lineage":
+                return lineage.image_lineage(db, tail[0])
+            if len(tail) == 3 and tail[1] == "lineage" and tail[2] == "routes":
+                return lineage.derivation_routes(db, tail[0])
+        if resource == "lineage" and len(tail) == 1 and tail[0] == "preflight":
+            sources = {role: token(query.get(role), role) for role in ROLES if role in query}
+            return lineage.shared_inputs(db, sources)
         if resource == "plans":
             if not tail:
                 return list_plans(db)
@@ -40,13 +48,25 @@ def upload(store, handler):
     if handler.headers.get_content_type() != "application/octet-stream":
         raise Problem("media_type", "请提交 application/octet-stream 格式的镜像。", 415)
     label = unquote(handler.headers.get("X-Image-Name", "")).strip() or "SQLite 镜像"
-    return register(store, payload(handler, MAX_BYTES), label[:100])
+    claims = _header_tokens(handler.headers.get_all("X-Lineage-Claims"))
+    missing = unquote(handler.headers.get("X-Lineage-Missing", "")).strip() or None
+    return register(store, payload(handler, MAX_BYTES), label[:100], claims, missing)
+
+
+def _header_tokens(values):
+    if not values:
+        return None
+    merged = ",".join(values)
+    return token_list(merged, "X-Lineage-Claims") if merged.strip() else None
 
 
 def write_plan(store, handler, tail):
     if not tail:
         data = fields(handler, 32_768)
-        return create_plan(store, {role: token(data.get(role), role) for role in ROLES})
+        sources = {role: token(data.get(role), role) for role in ROLES}
+        if data.get("preflight"):
+            return lineage.preflight(store, sources)
+        return create_plan(store, sources)
     if len(tail) != 2:
         raise Problem("route", "找不到该入口。", 404)
     plan_id, action = tail

@@ -4,6 +4,8 @@ from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import unsigned
+from .lineage import build_lineage_view
+from .lineage_views import lineage_page
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
@@ -30,6 +32,8 @@ def workspace(store, parts, query):
             if parts[2] == "rows":
                 return rows_page(entry, table_page(db, parts[1], query.get("table"),
                                                    unsigned(query.get("offset", "0"), "offset")))
+            if parts[2] == "lineage":
+                return lineage_page(build_lineage_view(db, parts[1]))
     raise Problem("route", "找不到该入口。", 404)
 
 
