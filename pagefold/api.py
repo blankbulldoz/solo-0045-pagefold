@@ -3,6 +3,7 @@ from urllib.parse import unquote
 
 from .archive import archive
 from .attempts import list_attempts, rehearse
+from .coadopt import plan_analysis
 from .decisions import resolve
 from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
@@ -30,6 +31,8 @@ def read(store, parts, query):
                 return read_plan(db, tail[0])
             if len(tail) == 2 and tail[1] == "attempts":
                 return list_attempts(db, tail[0])
+            if len(tail) == 2 and tail[1] == "coadoption":
+                return plan_analysis(db, tail[0])
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
                 release = get_release(db, tail[0], body=tail[1] == "download")
                 return release["candidate"] if tail[1] == "download" else json.loads(release["certificate"])

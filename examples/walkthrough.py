@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "analyze", "archive")
 
 
 def expect(condition, description):
@@ -100,7 +100,10 @@ def run(client, goal):
     expect("主键行差异".encode() in page and "1 项待裁决".encode() in page, "计划页未展示冲突")
     expect(client.call(route)["unresolved"] == 1, "未决数不符")
     expect(client.call(route + "/rehearse", {"revision": 0}, 409)["code"] == "unresolved", "未决重演未拦住")
-    if done("review", "待决数与可重演条件一致"):
+    linkage = client.call(route + "/coadoption")
+    expect(linkage["summary"] == {"items": 3, "independent": 1, "linked": 2, "rechoose": 0, "pending": 1},
+           "联动分析结论分布不符")
+    if done("review", "待决数与可重演条件一致，联动分组就绪"):
         return
     conflict = next(item for item in plan["items"] if not item["automatic"])
     decision = {"item": conflict["id"], "choice": "right", "revision": 0}
@@ -150,6 +153,46 @@ def run(client, goal):
     finally:
         db.close()
     if done("download", "下载摘要校验一致，SQLite 可独立打开和查询"):
+        return
+    scenarios = {scenario: {role: client.upload(f"{scenario}-{role}")["id"]
+                            for role in ("base", "left", "right")}
+                 for scenario in ("hinge", "cycle", "tangle")}
+    hinge_plan = client.call("/api/plans", scenarios["hinge"], 201)
+    expect(hinge_plan["unresolved"] == 0 and len(hinge_plan["items"]) == 3, "铰链场景应全部自动采纳")
+    hinge_route = f"/api/plans/{hinge_plan['id']}"
+    report = client.call(hinge_route + "/coadoption")
+    expect(report["summary"] == {"items": 3, "independent": 1, "linked": 0, "rechoose": 2, "pending": 0},
+           "铰链场景结论分布不符")
+    group, = report["groups"]
+    expect(group["verdict"] == "clash" and group["repairable"] is False and group["exhaustive"],
+           "删节点加绑定应构成不可修复的改选组")
+    edge, = group["edges"]
+    expect(edge["columns"] == ["bench", "slot"] and edge["values"] == [["t", "north"], ["i", "1"]]
+           and edge["roles"] == ["right"] and edge["active"] and edge["violated"], "联动边未回到来源列和值")
+    expect(len(report["independent"]) == 1 and report["independent"][0]["table"] == "binding",
+           "留有一个 NULL 的复合外键不应产生联动")
+    issue = client.call(hinge_route + "/rehearse", {"revision": 0})
+    expect(issue["status"] == "blocked" and issue["problem"]["code"] == "foreign_key", "重演应确认分析预言的违例")
+    page = client.call(f"/plans/{hinge_plan['id']}/coadoption")
+    expect("联动采纳分析".encode() in page and "必须改选".encode() in page, "分析页未渲染")
+    cycle_plan = client.call("/api/plans", scenarios["cycle"], 201)
+    cycle_report = client.call(f"/api/plans/{cycle_plan['id']}/coadoption")
+    cgroup, = cycle_report["groups"]
+    expect(cgroup["verdict"] == "compatible" and len(cgroup["edges"]) == 2, "双方更新后成立的循环应可同采纳")
+    expect(client.call(f"/api/plans/{cycle_plan['id']}/rehearse", {"revision": 0})["status"] == "passed",
+           "成环候选应通过重演")
+    tangle_plan = client.call("/api/plans", scenarios["tangle"], 201)
+    treport = client.call(f"/api/plans/{tangle_plan['id']}/coadoption")
+    expect(treport["summary"] == {"items": 9, "independent": 3, "linked": 4, "rechoose": 2, "pending": 1},
+           "复杂图结论分布不符")
+    expect(sorted(g["verdict"] for g in treport["groups"]) == ["clash", "compatible", "pending"],
+           "复杂图应同时出现三种组态")
+    expect(sum(len(g["edges"]) for g in treport["groups"]) == 3, "无关关系不应进入解释范围")
+    note2 = next(item for item in tangle_plan["items"]
+                 if item["table"] == "note" and item["key"] == [["i", "2"]])
+    pending_group = next(g for g in treport["groups"] if g["verdict"] == "pending")
+    expect(pending_group["options"].get(note2["id"]) == ["base", "left", "right"], "待裁决组未给出可选项")
+    if done("analyze", "小图锁定删改联动，循环图同采纳，大图排除无关关系"):
         return
     client.call(route + "/archive", {"revision": 2})
     expect(client.call(route)["state"] == "archived", "归档状态丢失")

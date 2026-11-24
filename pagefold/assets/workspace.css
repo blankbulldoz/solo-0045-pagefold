@@ -24,3 +24,8 @@ select,button,input::file-selector-button{font:inherit;border:1px solid #b8bfb2;
 :focus-visible{outline:3px solid #317858;outline-offset:3px}
 @media(max-width:760px){.frame{width:calc(100% - 28px)}main{padding-top:22px}.work-grid{grid-template-columns:1fr}.heading{align-items:start}.heading>form{flex-shrink:0}.panel-title,.new-plan,.upload,.actions,.history,.plan-links{padding-left:14px;padding-right:14px}}
 @media(max-width:420px){.brand-sub{display:none}.triptych{grid-template-columns:1fr}.sources a{padding:7px}.sources code{display:none}}
+.coadopt-groups{display:grid;gap:18px;margin:18px 0}
+.coadopt-body{padding:14px 20px;display:grid;gap:10px}
+.coadopt-edges,.coadopt-fixes{margin:0;padding-left:20px;font-size:13px;display:grid;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:14px 20px}
+.chip{border:1px solid var(--line);border-radius:5px;padding:3px 8px;font-size:12px;background:#f3f2e9}

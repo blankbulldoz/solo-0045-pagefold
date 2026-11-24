@@ -1,4 +1,6 @@
 from .attempts import list_attempts
+from .coadopt import plan_analysis
+from .coadopt_views import coadopt_page
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
@@ -23,6 +25,8 @@ def workspace(store, parts, query):
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
+        if len(parts) == 3 and parts[0] == "plans" and parts[2] == "coadoption":
+            return coadopt_page(plan_analysis(db, parts[1]))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:

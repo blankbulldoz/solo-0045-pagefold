@@ -11,7 +11,7 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
-可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
+可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。另有三组联动示例：`hinge`（祖本有节点、左支删除节点、右支新增绑定，另含一条留有一个 NULL 的可空复合外键）、`cycle`（双方更新后才成立的循环依赖）、`tangle`（大量无关关系中定位联动组），各含 `base`、`left`、`right` 镜像。
 
 ## 操作和接口
 
@@ -21,6 +21,7 @@ python3 -m examples.make_images ./demo-images
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
+- `GET /api/plans/{id}/coadoption` 解释当前候选集合能否一起采纳：可独立操作、需一起考虑与必须改选的分组，每条联动可回到来源列和值。计划页的"联动采纳分析"展示同一结果。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
