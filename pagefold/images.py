@@ -9,7 +9,7 @@ from .rows import read_image, read_table
 from .sqlite_image import mounted
 
 
-def register(store, data, label):
+def register(store, data, label, collection=None):
     checksum = digest(data)
     try:
         with mounted(data) as image:
@@ -18,12 +18,32 @@ def register(store, data, label):
             rows = read_image(image, catalog)
     except (sqlite3.Error, UnicodeError) as exc:
         raise Problem("image_invalid", f"SQLite 无法读取镜像：{exc}") from exc
+    row_count = 0
     for table in catalog["tables"]:
-        table["rows"] = len(rows[table["name"]])
+        table_rows = len(rows[table["name"]])
+        table["rows"] = table_rows
+        row_count += table_rows
     with store.connect(write=True) as db:
-        db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
-                   (checksum, label, canonical(catalog), data))
-        return image_record(get_image(db, checksum))
+        cursor = db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
+                            (checksum, label, canonical(catalog), data))
+        duplicate = cursor.rowcount == 0
+        if collection is not None:
+            collection["registration"] = {
+                "id": checksum,
+                "label": label,
+                "size": len(data),
+                "row_count": row_count,
+                "duplicate": duplicate,
+            }
+            db.execute("INSERT OR REPLACE INTO source_collections VALUES(?,?,?,?,?)",
+                       (collection["id"], checksum, collection["source"],
+                        collection["captured_at"], canonical(collection)))
+        record = image_record(get_image(db, checksum))
+    record["duplicate"] = duplicate
+    record["row_count"] = row_count
+    if collection is not None:
+        record["collection"] = collection
+    return record
 
 
 def get_image(db, image_id, body=False):

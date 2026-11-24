@@ -57,6 +57,10 @@
     {
       "workflow_id": "archive",
       "command": "python3 -m examples.walkthrough archive"
+    },
+    {
+      "workflow_id": "collect_wal",
+      "command": "python3 -m examples.collect_wal_demo"
     }
   ]
 }

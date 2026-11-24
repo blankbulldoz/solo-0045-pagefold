@@ -48,7 +48,7 @@ class Handler(BaseHTTPRequestHandler):
             body, kind = workspace.asset(path)
             self.send_bytes(body, kind + "; charset=utf-8")
         elif len(parts) > 1 and parts[0] == "api":
-            result = api.read(store, parts[1:], query)
+            result = api.read(store, parts[1:], query, self.server.sources)
             if isinstance(result, bytes):
                 self.send_bytes(result, "application/vnd.sqlite3", headers=[
                     ("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.sqlite"')])
@@ -58,7 +58,7 @@ class Handler(BaseHTTPRequestHandler):
                     headers.append(("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.json"'))
                 self.json(result, headers=headers)
         else:
-            self.send_bytes(workspace.workspace(store, parts, query), "text/html; charset=utf-8")
+            self.send_bytes(workspace.workspace(store, parts, query, self.server.sources), "text/html; charset=utf-8")
 
     def route_post(self, store, path, parts):
         origin = self.headers.get("Origin")
@@ -68,6 +68,15 @@ class Handler(BaseHTTPRequestHandler):
             raise Problem("origin", "该请求必须来自当前工作区。", 403)
         if path == "/api/images":
             self.json(api.upload(store, self), 201)
+        elif path in {"/api/collect", "/api/sources/collect", "/api/images/collect"}:
+            self.json(api.collect(store, self.server.sources, self), 201)
+        elif (len(parts) == 4 and parts[:2] == ["api", "sources"] and parts[3] == "collect"):
+            self.json(api.collect(store, self.server.sources, self, parts[2]), 201)
+        elif len(parts) == 3 and parts[:2] == ["api", "sources"]:
+            self.json(api.collect(store, self.server.sources, self, parts[2]), 201)
+        elif path == "/sources/collect":
+            result = api.collect(store, self.server.sources, self)
+            self.redirect(f"/images/{result['id']}")
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
@@ -116,9 +125,11 @@ class Handler(BaseHTTPRequestHandler):
         self.handle_route(True)
 
 
-def make_server(store, port):
+def make_server(store, port, sources=None):
+    from .sources import SourcePolicy
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     server.store = store
+    server.sources = sources if sources is not None else SourcePolicy()
     address = server.server_port
     server.hosts = {f"127.0.0.1:{address}", f"localhost:{address}"}
     server.origins = {f"http://{host}" for host in server.hosts}

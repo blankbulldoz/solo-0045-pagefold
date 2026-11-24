@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "operations": {
+      "path": "/var/lib/operations/operations.sqlite",
+      "label": "运维在线库",
+      "commit_sql": "SELECT seq, commit_id, note FROM pagefold_commit ORDER BY seq",
+      "commit_limit": 1000,
+      "pages": 16,
+      "timeout": 10
+    }
+  },
+  "roots": [
+    "/var/lib/pagefold/allowed-sources"
+  ]
+}

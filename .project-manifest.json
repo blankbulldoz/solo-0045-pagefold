@@ -80,6 +80,11 @@
       "id": "archive",
       "path": "pagefold/archive.py",
       "responsibility": "实现 archive"
+    },
+    {
+      "id": "sources",
+      "path": "pagefold/sources.py",
+      "responsibility": "实现 SourcePolicy、collect_source、采集凭证查询"
     }
   ],
   "workflows": [
@@ -291,6 +296,24 @@
         "archive",
         "plans",
         "releases"
+      ]
+    },
+    {
+      "id": "collect_wal",
+      "name": "在线 SQLite 一致采集",
+      "entry": "POST /api/sources/{name}/collect",
+      "success": "受服务端白名单约束，返回包含提交凭证的登记镜像",
+      "failure": "非允许源或中断读取不产生登记",
+      "verification": "python3 -m examples.collect_wal_demo",
+      "steps": [
+        "通过 SQLite Backup API 从 WAL 源取得单一一致点",
+        "从镜像内提交台账辨认已包含提交并原子登记采集凭证"
+      ],
+      "module_ids": [
+        "sources",
+        "images",
+        "sqlite_image",
+        "store"
       ]
     }
   ],

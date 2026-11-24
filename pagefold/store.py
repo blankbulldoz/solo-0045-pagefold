@@ -20,6 +20,13 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS source_collections (
+    id TEXT PRIMARY KEY,
+    image_id TEXT NOT NULL REFERENCES images(id),
+    source TEXT NOT NULL,
+    captured_at TEXT NOT NULL,
+    record TEXT NOT NULL
+);
 """
 
 
