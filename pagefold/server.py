@@ -71,6 +71,8 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
+        elif path == "/api/trials":
+            self.json(api.write_trial(store, self), 200)
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":

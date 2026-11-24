@@ -8,6 +8,8 @@ from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
 from .render import HERE, page, safe
+from .trial_views import trial_page
+from .trials import build_trial
 
 
 def workspace(store, parts, query):
@@ -17,6 +19,15 @@ def workspace(store, parts, query):
             return page("home", "三方合流工作区", choices=image_options(images),
                         images=image_links(images) or '<li class="muted">尚未登记镜像。</li>',
                         plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
+        if parts == ["trials"]:
+            images = list_images(db)
+            selected = {name: query.get(name, "") for name in ("left", "right", "base_a", "base_b")}
+            trial = None
+            if all(selected.values()):
+                trial = build_trial(
+                    store, selected["left"], selected["right"],
+                    [("候选祖本 A", selected["base_a"]), ("候选祖本 B", selected["base_b"])])
+            return trial_page(images, selected, trial)
         if len(parts) == 2 and parts[0] == "plans":
             plan = read_plan(db, parts[1])
             images = [get_image(db, plan["sources"][role]) for role in ROLES]

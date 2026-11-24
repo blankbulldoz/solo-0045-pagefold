@@ -24,6 +24,7 @@ python3 -m examples.make_images ./demo-images
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
+- `POST /api/trials` 接收 `left`、`right` 和两个 `bases`（每项含 `label`、`id`），对同一对分支、两个候选祖本做**不保存**的并列试算。返回上下两份预览（`previews`）、按主键对齐的逐行对照（`aligned`，逐键标注 `absent`/`automatic`/`conflict`）以及有方向的差分（自动采纳翻转、消失/出现、待决化解、同总数异实质）。试算不写入计划、裁决或重演记录；网页入口为 `/trials`，可用试算返回的来源参数直接复刻某一侧的正式计划。
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
 
@@ -32,6 +33,7 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.lineage_walkthrough
 ```
 
-工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+工作流检查使用临时状态库和本机 HTTP 服务。`lineage_walkthrough` 用两套复合主键范围重叠的镜像（`pagefold/lineage_inputs.py` 的 alpha 与左右镜像的 beta）验证并列试算：自动采纳翻转、待决化解、缺席/无差异/未决三态、镜像角色与模式可追溯，以及用试算来源复刻一侧正式计划并封存。正式自动化测试套件延期。

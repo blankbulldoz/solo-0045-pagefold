@@ -11,6 +11,7 @@ from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
 from .releases import get_release, seal
 from .sqlite_image import MAX_BYTES
+from .trials import build_trial
 
 
 def read(store, parts, query):
@@ -61,3 +62,20 @@ def write_plan(store, handler, tail):
     if action in writes:
         return writes[action](store, plan_id, revision)
     raise Problem("route", "找不到该入口。", 404)
+
+
+def write_trial(store, handler):
+    """不保存的并列试算：同一对分支、两个候选祖本，返回上下两份预览与对齐差分。"""
+    data = fields(handler, 32_768)
+    left_id = token(data.get("left"), "left")
+    right_id = token(data.get("right"), "right")
+    raw_bases = data.get("bases")
+    if not isinstance(raw_bases, list) or len(raw_bases) != 2:
+        raise Problem("trial_bases", "请在 bases 中提供两个候选祖本。", 400)
+    bases = []
+    for index, entry in enumerate(raw_bases):
+        if not isinstance(entry, dict) or not isinstance(entry.get("label"), str) \
+                or not entry["label"].strip():
+            raise Problem("trial_bases", "每个候选祖本须带非空标签。", 400)
+        bases.append((entry["label"].strip()[:100], token(entry.get("id"), f"bases[{index}].id")))
+    return build_trial(store, left_id, right_id, bases)
