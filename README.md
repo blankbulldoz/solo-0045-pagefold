@@ -13,6 +13,18 @@ python3 -m examples.make_images ./demo-images
 
 可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
+## 分支变更移植
+
+把"上轮祖本 → 改动分支"的修改带到新祖本。三个角色分别是**上轮祖本**（`port-base`）、**改动分支**（`port-branch`）和**新祖本**（`port-target`），首页的"分支变更移植"区块或 `/demo-port` 可一键载入。逐行交代处置与来源：
+
+- 自动移植：单边改动需要真正写入，来源为改动分支或新祖本；
+- 已提前到位：新祖本已被本轮业务改成与分支相同的值，重演时跳过；
+- 保留新祖本：冲突行人工选择保留目标库现值；
+- 重新选择：冲突行人工改采纳改动分支或上轮祖本；
+- 待裁决：双边不同且尚未选择，未决前禁止重演。
+
+复合主键重命名在分支库表现为"删旧键 + 插新键"两个条目，系统按非键负载识别为同一**改名组**，并报告完整移植（删旧与插新齐备）、保留未改名、部分移植、待裁决或受阻。`port-blocked-target.sqlite` 额外保留一条指向旧键的引用，完整改名删旧键时会被外键拦截，改名组降级为"受阻未完成"，不会把半套动作报成完整移植，也不产生可下载候选。
+
 ## 操作和接口
 
 网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
@@ -24,6 +36,9 @@ python3 -m examples.make_images ./demo-images
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
+- `POST /api/ports` 以相同的三角色字段建立移植计划（`base` 上轮祖本、`left` 改动分支、`right` 新祖本）。
+- `GET /api/ports/{id}` 查看逐行处置、来源与改名组，追加 `/attempts` 读取移植重演历史，`/download` 下载通过重演的独立候选。
+- `POST /api/ports/{id}/decisions` 接收 `revision`、`item`、`choice`（`base`、`left`、`right`、`clear`），`POST /api/ports/{id}/rehearse` 重演移植。
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
 
@@ -32,6 +47,7 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.port_walkthrough all
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。

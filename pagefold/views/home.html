@@ -13,3 +13,14 @@
   </aside>
 </div>
 <section class="workspace-history paper"><div class="panel-title"><h2>合流计划</h2></div><div class="plan-links">$plans</div></section>
+<section class="heading port-heading"><div><h1>分支变更移植</h1><p>把上轮祖本到改动分支的修改带到新祖本，逐行交代保留/重新选择的处置与来源。</p></div><form method="post" action="/demo-port"><button>载入移植示例</button></form></section>
+<div class="work-grid">
+  <section class="paper"><div class="panel-title"><h2>建立移植计划</h2><span class="tag">PORT</span></div>
+  <form class="new-plan" method="post" action="/ports">
+    <label><span class="input-title">上轮祖本</span><span class="input-desc">改动分支所基于的旧祖本</span><select name="base" required>$choices</select></label>
+    <label><span class="input-title">改动分支</span><span class="input-desc">携带要移植修改的分支</span><select name="left" required>$choices</select></label>
+    <label><span class="input-title">新祖本</span><span class="input-desc">本轮要接收移植的目标镜像</span><select name="right" required>$choices</select></label>
+    <button class="primary" type="submit">计算移植差异</button>
+  </form></section>
+  <aside class="paper"><div class="panel-title"><h2>移植计划</h2></div><div class="plan-links">$ports</div></aside>
+</div>

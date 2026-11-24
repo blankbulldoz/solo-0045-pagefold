@@ -51,7 +51,8 @@ class Handler(BaseHTTPRequestHandler):
             result = api.read(store, parts[1:], query)
             if isinstance(result, bytes):
                 self.send_bytes(result, "application/vnd.sqlite3", headers=[
-                    ("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.sqlite"')])
+                    ("Content-Disposition",
+                     f'attachment; filename="pagefold-{parts[1]}-{parts[2]}.sqlite"')])
             else:
                 headers = []
                 if len(parts) == 4 and parts[3] == "certificate":
@@ -71,11 +72,19 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
+        elif path == "/demo-port":
+            payload(self, 0)
+            self.redirect(f"/ports/{workspace.port_sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+        elif len(parts) >= 2 and parts[:2] == ["api", "ports"]:
+            self.json(api.write_port(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
+        elif parts and parts[0] == "ports":
+            result = api.write_port(store, self, parts[1:])
+            self.redirect(f"/ports/{parts[1] if len(parts) > 1 else result['id']}")
         else:
             raise Problem("route", "找不到该入口。", 404)
 

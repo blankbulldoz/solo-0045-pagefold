@@ -20,6 +20,15 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS ports (
+    id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
+    branch TEXT NOT NULL REFERENCES images(id), target TEXT NOT NULL REFERENCES images(id),
+    items TEXT NOT NULL, decisions TEXT NOT NULL DEFAULT '{}', revision INTEGER NOT NULL DEFAULT 0
+);
+CREATE TABLE IF NOT EXISTS port_attempts (
+    port_id TEXT NOT NULL REFERENCES ports(id), revision INTEGER NOT NULL,
+    result TEXT NOT NULL, candidate BLOB, PRIMARY KEY(port_id, revision)
+);
 """
 
 

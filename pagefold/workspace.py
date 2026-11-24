@@ -7,6 +7,9 @@ from .inputs import unsigned
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
+from .port_attempts import list_port_attempts
+from .port_views import port_page
+from .port_plans import PORT_ROLES, create_port, list_ports, read_port
 from .render import HERE, page, safe
 
 
@@ -16,13 +19,19 @@ def workspace(store, parts, query):
             images = list_images(db)
             return page("home", "三方合流工作区", choices=image_options(images),
                         images=image_links(images) or '<li class="muted">尚未登记镜像。</li>',
-                        plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
+                        plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>',
+                        ports=port_links(list_ports(db)) or '<p class="muted">尚未创建移植计划。</p>')
         if len(parts) == 2 and parts[0] == "plans":
             plan = read_plan(db, parts[1])
             images = [get_image(db, plan["sources"][role]) for role in ROLES]
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
+        if len(parts) == 2 and parts[0] == "ports":
+            port = read_port(db, parts[1])
+            images = [get_image(db, port["sources"][role]) for role in PORT_ROLES]
+            attempts = list_port_attempts(db, parts[1])
+            return port_page(port, images, attempts)
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:
@@ -33,10 +42,23 @@ def workspace(store, parts, query):
     raise Problem("route", "找不到该入口。", 404)
 
 
+def port_links(ports):
+    return "".join(f'<a class="plan-link" href="/ports/{p["id"]}">'
+                   f'<span>{safe(p["branch_label"])} <b>⇢</b> {safe(p["target_label"])}</span>'
+                   f'<small>第 {p["revision"]} 版</small></a>' for p in ports)
+
+
 def sample(store):
     entries = {role: register(store, image(flavor), label)["id"] for role, flavor, label in zip(
         ROLES, ("quartz", "cerulean", "umber"), ("石英祖本", "青蓝分支", "赤褐分支"))}
     return create_plan(store, entries)
+
+
+def port_sample(store):
+    entries = {role: register(store, image(flavor), label)["id"] for role, flavor, label in zip(
+        PORT_ROLES, ("port-base", "port-branch", "port-target"),
+        ("上轮祖本", "改动分支", "新祖本"))}
+    return create_port(store, entries)
 
 
 def error(problem, path):

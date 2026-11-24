@@ -57,6 +57,38 @@
     {
       "workflow_id": "archive",
       "command": "python3 -m examples.walkthrough archive"
+    },
+    {
+      "workflow_id": "port-import",
+      "command": "python3 -m examples.port_walkthrough import"
+    },
+    {
+      "workflow_id": "port-plan",
+      "command": "python3 -m examples.port_walkthrough plan"
+    },
+    {
+      "workflow_id": "port-review",
+      "command": "python3 -m examples.port_walkthrough review"
+    },
+    {
+      "workflow_id": "port-decide",
+      "command": "python3 -m examples.port_walkthrough decide"
+    },
+    {
+      "workflow_id": "port-keep",
+      "command": "python3 -m examples.port_walkthrough keep"
+    },
+    {
+      "workflow_id": "port-reselect",
+      "command": "python3 -m examples.port_walkthrough reselect"
+    },
+    {
+      "workflow_id": "port-blocked",
+      "command": "python3 -m examples.port_walkthrough blocked"
+    },
+    {
+      "workflow_id": "port-download",
+      "command": "python3 -m examples.port_walkthrough download"
     }
   ]
 }
