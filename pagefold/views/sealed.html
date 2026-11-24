@@ -1,0 +1,17 @@
+<section class="paper seal-panel is-sealed" id="sealed-record" aria-label="封存记录">
+  <div class="panel-title"><h2>封存记录与凭证</h2><span class="tag auto">$badge</span></div>
+  <div class="confirm-body">
+    <p class="confirm-lead">候选与凭证已在同一事务内冻结。原样重试封存只会重认同一份记录，不会产生第二份封存。</p>
+    <dl class="evidence">
+      <div class="evidence-digest"><dt>冻结候选 SHA-256 摘要</dt><dd><code>$digest</code></dd></div>
+      <div class="evidence-grid">
+        <div><dt>候选大小</dt><dd>$size 字节</dd></div>
+        <div><dt>裁决版本</dt><dd>第 $revision 版</dd></div>
+      </div>
+      <div><dt>凭证格式</dt><dd><code>$format</code></dd></div>
+    </dl>
+    <h3 class="confirm-sources-title">封存绑定的三方来源角色</h3>
+    <ul class="confirm-sources">$sources</ul>
+    $links
+  </div>
+</section>

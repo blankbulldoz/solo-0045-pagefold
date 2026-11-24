@@ -1,0 +1,29 @@
+<section class="paper seal-panel" id="seal-confirm" aria-label="封存证据确认">
+  <div class="panel-title"><h2>封存前证据确认</h2><span class="tag conflict">待明确确认</span></div>
+  <div class="confirm-body">
+    <p class="confirm-lead">当前版重演已通过。以下就是将要冻结并写入凭证的证据，请核对候选摘要与三方来源；勾选确认后才会完成封存。</p>
+    <dl class="evidence">
+      <div class="evidence-digest"><dt>候选 SHA-256 摘要</dt><dd><code>$digest</code></dd></div>
+      <div class="evidence-grid">
+        <div><dt>候选大小</dt><dd>$size 字节</dd></div>
+        <div><dt>裁决版本</dt><dd>第 $revision 版</dd></div>
+      </div>
+      <div><dt>计划摘要</dt><dd><code>$plan_digest</code></dd></div>
+      <div><dt>裁决选择摘要</dt><dd><code>$decision_digest</code></dd></div>
+    </dl>
+    <h3 class="confirm-sources-title">所见来源角色（按角色绑定进凭证）</h3>
+    <ul class="confirm-sources">$sources</ul>
+    <form method="post" action="/plans/$plan/seal" class="confirm-form" data-seal-form>
+      <input type="hidden" name="revision" value="$revision">
+      <input type="hidden" name="confirm_plan" value="$plan">
+      <input type="hidden" name="confirm_revision" value="$revision">
+      <input type="hidden" name="confirm_digest" value="$digest">
+      <input type="hidden" name="confirm_base" value="$base">
+      <input type="hidden" name="confirm_left" value="$left">
+      <input type="hidden" name="confirm_right" value="$right">
+      <label class="confirm-check"><input type="checkbox" name="confirmed" value="yes" data-confirm-check required><span>我确认本页所见候选摘要 <code>$digest_short</code> 以及祖本 / 左支 / 右支来源无误，封存的就是这一候选。</span></label>
+      <button class="primary seal-button" type="submit" data-seal-button>确认摘要与来源，完成封存</button>
+      <p class="muted">提交会绑定本证据的计划、版序、摘要与来源。过期确认会返回新旧比较对象；指向其他计划的确认会被单独拒绝；响应丢失时原样再次提交即可，只会重认同一份封存记录。</p>
+    </form>
+  </div>
+</section>

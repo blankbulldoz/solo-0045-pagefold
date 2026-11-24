@@ -128,10 +128,30 @@ def run(client, goal):
     if done("attempts", "旧记录保留但不能封存新版本"):
         return
     current = client.call(route + "/rehearse", {"revision": 2})
-    certificate = client.call(route + "/seal", {"revision": 2})
-    expect(client.call(route + "/seal", {"revision": 2}) == certificate, "重复封存结果改变")
+    preview = client.call(route + "/seal")
+    expect(preview["sealable"] and preview["candidate_digest"] == current["candidate_digest"]
+           and preview["confirmation"]["sources"] == sources, "封存证据与当前候选或来源不符")
+    confirmation = preview["confirmation"]
+    expect(client.call(route + "/seal", {"revision": 2}, 409)["code"] == "confirmation_required",
+           "缺少明确确认仍可封存")
+    stale = client.call(route + "/seal", {"revision": 2, "confirmed": True, "confirmation": {
+        "plan": plan["id"], "revision": 1, "candidate_digest": accepted["candidate_digest"],
+        "sources": sources}}, 409)
+    expect(stale["code"] == "stale_confirmation"
+           and stale["current"]["candidate_digest"] == current["candidate_digest"]
+           and stale["confirmed"]["revision"] == 1, "过期确认未返回新的比较对象")
+    cross = client.call(route + "/seal", {"revision": 2, "confirmed": True, "confirmation": dict(
+        confirmation, plan=failed_plan["id"])}, 409)
+    expect(cross["code"] == "confirmation_plan_mismatch"
+           and cross["confirmation_plan"] == failed_plan["id"], "指向另一计划的确认未被区分")
+    certificate = client.call(route + "/seal",
+                              {"revision": 2, "confirmed": True, "confirmation": confirmation})
+    expect(client.call(route + "/seal", {"revision": 2, "confirmed": True,
+                                         "confirmation": confirmation}) == certificate,
+           "响应丢失后的同确认重试产生了不同封存")
+    expect(client.call(route + "/seal", {"revision": 2}) == certificate, "幂等重试未重认同一份封存")
     expect(client.call(route + "/decisions", dict(decision, revision=2), 409)["code"] == "closed_plan", "封存可编辑")
-    if done("seal", "原子封存当前候选，重复封存稳定"):
+    if done("seal", "原子封存当前候选，重复封存稳定；确认绑定证据，过期/跨计划可区分"):
         return
     proof = client.call(route + "/certificate")
     expect(proof["sources"] == sources and proof["candidate_digest"] == current["candidate_digest"] and
