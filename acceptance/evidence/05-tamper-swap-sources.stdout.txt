@@ -1,0 +1,9 @@
+层 1 字节匹配:✓ 4/4
+层 2 来源吻合:✓ 9/9
+层 3 实际行重演:✗ 5/8
+    ✗ plan.digest:expected=a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32,recomputed=14de1c9781db10f723bbcc01eaac92ea83df45815a3edf534756b76e65984925
+    ✗ replay.digest:expected=c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24,recomputed=8d09772f0076e47abba9eee777569d717b3758e8ca92881f8758b66d40300da0
+    ✗ deliverable.logical:发现 1 处行差异
+结论:不予验收
+  第 3 层检查 plan.digest 未通过:expected=a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32,recomputed=14de1c9781db10f723bbcc01eaac92ea83df45815a3edf534756b76e65984925
+  逻辑比对:成果与重演候选字节不同;逐表一致 2/3

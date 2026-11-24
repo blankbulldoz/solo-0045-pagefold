@@ -5,3 +5,4 @@ __pycache__/
 *.sqlite-wal
 demo-images/
 .DS_Store
+/acceptance/pack/

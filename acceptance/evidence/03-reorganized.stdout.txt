@@ -1,0 +1,7 @@
+层 1 字节匹配:✗ 3/4
+    ✗ deliverable.digest:expected=c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24,actual=05e945d1daa9efd9b75a3f4f2b367e03a2e732cf0fc2c40448fcd9bc0a71e885
+层 2 来源吻合:✓ 9/9
+层 3 实际行重演:✓ 8/8
+结论:验收通过 — 内容等价
+  成果字节与凭证 candidate_digest 不同;来源吻合;由输入与裁决重演的候选与凭证一致,且成果与重演候选模式签名相同、逐表行内容相同(同一逻辑成果,如经 SQLite 整理)。
+  逻辑比对:成果与重演候选字节不同;逐表一致 3/3

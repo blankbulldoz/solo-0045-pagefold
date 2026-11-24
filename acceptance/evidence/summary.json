@@ -1,0 +1,122 @@
+{
+  "format": "pagefold-acceptance-evidence-v1",
+  "generated_at": "2026-11-24T08:22:21+00:00",
+  "scenarios": [
+    {
+      "name": "01-minimal",
+      "note": "仅凭证与成果:字节匹配",
+      "args": [
+        "--certificate",
+        "acceptance/pack/certificate.json",
+        "--deliverable",
+        "acceptance/pack/deliverable.sqlite"
+      ],
+      "exit_code": 0,
+      "accepted": true,
+      "level": "byte-match",
+      "label": "字节匹配",
+      "failed_checks": [],
+      "report": "acceptance/evidence/01-minimal.report.json",
+      "expectation_met": true,
+      "problems": []
+    },
+    {
+      "name": "02-full-replay",
+      "note": "凭证+成果+三份输入+裁决:实际行重演",
+      "args": [
+        "--pack",
+        "acceptance/pack"
+      ],
+      "exit_code": 0,
+      "accepted": true,
+      "level": "row-replay",
+      "label": "实际行重演",
+      "failed_checks": [],
+      "report": "acceptance/evidence/02-full-replay.report.json",
+      "expectation_met": true,
+      "problems": []
+    },
+    {
+      "name": "03-reorganized",
+      "note": "内容等价但字节不同的成果:逻辑比对",
+      "args": [
+        "--pack",
+        "acceptance/pack",
+        "--deliverable",
+        "acceptance/pack/deliverable-reorganized.sqlite"
+      ],
+      "exit_code": 0,
+      "accepted": true,
+      "level": "logical-equal",
+      "label": "内容等价",
+      "failed_checks": [
+        "deliverable.digest"
+      ],
+      "report": "acceptance/evidence/03-reorganized.report.json",
+      "expectation_met": true,
+      "problems": []
+    },
+    {
+      "name": "04-tamper-swap-inputs",
+      "note": "左右支调包:来源摘要不吻合",
+      "args": [
+        "--pack",
+        "acceptance/pack/tampered/swap-inputs"
+      ],
+      "exit_code": 1,
+      "accepted": false,
+      "level": "rejected",
+      "label": "不予验收",
+      "failed_checks": [
+        "inputs.left.digest",
+        "inputs.right.digest",
+        "plan.digest",
+        "replay.digest",
+        "deliverable.logical"
+      ],
+      "report": "acceptance/evidence/04-tamper-swap-inputs.report.json",
+      "expectation_met": true,
+      "problems": []
+    },
+    {
+      "name": "05-tamper-swap-sources",
+      "note": "调包并改凭证来源:重演计划摘要不符",
+      "args": [
+        "--pack",
+        "acceptance/pack/tampered/swap-sources"
+      ],
+      "exit_code": 1,
+      "accepted": false,
+      "level": "rejected",
+      "label": "不予验收",
+      "failed_checks": [
+        "plan.digest",
+        "replay.digest",
+        "deliverable.logical"
+      ],
+      "report": "acceptance/evidence/05-tamper-swap-sources.report.json",
+      "expectation_met": true,
+      "problems": []
+    },
+    {
+      "name": "06-tamper-edited-candidate",
+      "note": "改库后仅更新候选摘要:重演候选与凭证不符",
+      "args": [
+        "--pack",
+        "acceptance/pack/tampered/edited-candidate"
+      ],
+      "exit_code": 1,
+      "accepted": false,
+      "level": "rejected",
+      "label": "不予验收",
+      "failed_checks": [
+        "replay.digest",
+        "deliverable.logical"
+      ],
+      "report": "acceptance/evidence/06-tamper-edited-candidate.report.json",
+      "expectation_met": true,
+      "problems": []
+    }
+  ],
+  "all_expectations_met": true
+}

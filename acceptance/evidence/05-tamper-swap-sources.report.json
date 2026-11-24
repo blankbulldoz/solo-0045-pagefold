@@ -1,0 +1,272 @@
+{
+  "format": "pagefold-acceptance-report-v1",
+  "generated_at": "2026-11-24T08:22:21+00:00",
+  "tool": {
+    "entry": "acceptance/verify.py",
+    "python": "3.11.2",
+    "sqlite": "3.40.1"
+  },
+  "materials": {
+    "certificate": "acceptance/pack/tampered/swap-sources/certificate.json",
+    "deliverable": "acceptance/pack/tampered/swap-sources/deliverable.sqlite",
+    "inputs": {
+      "base": "acceptance/pack/tampered/swap-sources/inputs/base.sqlite",
+      "left": "acceptance/pack/tampered/swap-sources/inputs/left.sqlite",
+      "right": "acceptance/pack/tampered/swap-sources/inputs/right.sqlite"
+    },
+    "adjudication": "acceptance/pack/tampered/swap-sources/adjudication.json"
+  },
+  "layers": [
+    {
+      "layer": 1,
+      "name": "字节匹配",
+      "available": true,
+      "checks": [
+        {
+          "id": "certificate.structure",
+          "ok": true,
+          "detail": "格式、字段与摘要形状全部合法"
+        },
+        {
+          "id": "deliverable.size",
+          "ok": true,
+          "actual": 24576,
+          "expected": 24576
+        },
+        {
+          "id": "deliverable.digest",
+          "ok": true,
+          "actual": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+          "expected": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24"
+        },
+        {
+          "id": "deliverable.image",
+          "ok": true,
+          "detail": "镜像头合法,完整性与外键检查通过"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "layer": 2,
+      "name": "来源吻合",
+      "available": true,
+      "checks": [
+        {
+          "id": "inputs.base.digest",
+          "ok": true,
+          "actual": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+          "expected": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"
+        },
+        {
+          "id": "inputs.base.image",
+          "ok": true,
+          "detail": "镜像头合法,完整性与外键检查通过"
+        },
+        {
+          "id": "inputs.base.schema",
+          "ok": true,
+          "actual": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "expected": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac"
+        },
+        {
+          "id": "inputs.left.digest",
+          "ok": true,
+          "actual": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+          "expected": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+        },
+        {
+          "id": "inputs.left.image",
+          "ok": true,
+          "detail": "镜像头合法,完整性与外键检查通过"
+        },
+        {
+          "id": "inputs.left.schema",
+          "ok": true,
+          "actual": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "expected": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac"
+        },
+        {
+          "id": "inputs.right.digest",
+          "ok": true,
+          "actual": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+          "expected": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75"
+        },
+        {
+          "id": "inputs.right.image",
+          "ok": true,
+          "detail": "镜像头合法,完整性与外键检查通过"
+        },
+        {
+          "id": "inputs.right.schema",
+          "ok": true,
+          "actual": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "expected": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "layer": 3,
+      "name": "实际行重演",
+      "available": true,
+      "checks": [
+        {
+          "id": "adjudication.structure",
+          "ok": true,
+          "detail": "格式与裁决映射合法"
+        },
+        {
+          "id": "adjudication.binding",
+          "ok": true,
+          "detail": "裁决绑定计划 e7c11a8d93c94b3a8980c711cefbe86b 版本 1"
+        },
+        {
+          "id": "plan.digest",
+          "ok": false,
+          "recomputed": "14de1c9781db10f723bbcc01eaac92ea83df45815a3edf534756b76e65984925",
+          "expected": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+          "items": 3
+        },
+        {
+          "id": "adjudication.coverage",
+          "ok": true,
+          "detail": "冲突 1 项,裁决 1 条,一一对应"
+        },
+        {
+          "id": "decisions.digest",
+          "ok": true,
+          "recomputed": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+          "expected": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e"
+        },
+        {
+          "id": "replay.rebuild",
+          "ok": true,
+          "detail": "重演通过约束、完整性与重读校验,变更 3 行"
+        },
+        {
+          "id": "replay.digest",
+          "ok": false,
+          "recomputed": "8d09772f0076e47abba9eee777569d717b3758e8ca92881f8758b66d40300da0",
+          "expected": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+          "size": 24576
+        },
+        {
+          "id": "deliverable.logical",
+          "ok": false,
+          "detail": "发现 1 处行差异"
+        }
+      ],
+      "ok": false
+    }
+  ],
+  "comparison": {
+    "deliverable_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+    "replayed_digest": "8d09772f0076e47abba9eee777569d717b3758e8ca92881f8758b66d40300da0",
+    "certificate_candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+    "byte_identical": false,
+    "schema": {
+      "certificate": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "deliverable": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "replayed": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "equal": true
+    },
+    "tables": [
+      {
+        "table": "bench",
+        "delivered_rows": 2,
+        "replayed_rows": 2,
+        "delivered_digest": "ab2c23c09d0f06d7ef90024978c2f0249bb6f89d29bf1a073d07e8e5d7b06604",
+        "replayed_digest": "ab2c23c09d0f06d7ef90024978c2f0249bb6f89d29bf1a073d07e8e5d7b06604",
+        "equal": true
+      },
+      {
+        "table": "binding",
+        "delivered_rows": 1,
+        "replayed_rows": 1,
+        "delivered_digest": "7b113e84152ba8f4c9059e8c4d55395394af34d0b7a9e53e0acc3bb176367cb5",
+        "replayed_digest": "7b113e84152ba8f4c9059e8c4d55395394af34d0b7a9e53e0acc3bb176367cb5",
+        "equal": true
+      },
+      {
+        "table": "node",
+        "delivered_rows": 3,
+        "replayed_rows": 3,
+        "delivered_digest": "335fab8c92acfb86fbf4a74c7ff3f13fe4a98ed184b1dec46d5285f4ffd04e72",
+        "replayed_digest": "8370f183bb564085b5b91d7b1b8e43604f09b90081156fc18529949c3bca333f",
+        "equal": false
+      }
+    ],
+    "row_content_equal": false,
+    "difference_count": 1,
+    "differences": [
+      {
+        "table": "node",
+        "key": [
+          [
+            "t",
+            "north"
+          ],
+          [
+            "i",
+            "1"
+          ]
+        ],
+        "delivered": [
+          [
+            "t",
+            "north"
+          ],
+          [
+            "i",
+            "1"
+          ],
+          [
+            "t",
+            "祖本节点"
+          ],
+          [
+            "b",
+            "/wA="
+          ],
+          [
+            "r",
+            "0x1.2000000000000p+1"
+          ]
+        ],
+        "replayed": [
+          [
+            "t",
+            "north"
+          ],
+          [
+            "i",
+            "1"
+          ],
+          [
+            "t",
+            "左支覆写"
+          ],
+          [
+            "b",
+            "ABQ="
+          ],
+          [
+            "r",
+            "0x1.8000000000000p+0"
+          ]
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "accepted": false,
+    "level": "rejected",
+    "label": "不予验收",
+    "layers_verified": [
+      "字节匹配",
+      "来源吻合"
+    ],
+    "summary": "第 3 层检查 plan.digest 未通过:expected=a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32,recomputed=14de1c9781db10f723bbcc01eaac92ea83df45815a3edf534756b76e65984925"
+  }
+}

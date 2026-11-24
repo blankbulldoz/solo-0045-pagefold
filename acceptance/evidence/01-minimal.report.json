@@ -1,0 +1,75 @@
+{
+  "format": "pagefold-acceptance-report-v1",
+  "generated_at": "2026-11-24T08:22:21+00:00",
+  "tool": {
+    "entry": "acceptance/verify.py",
+    "python": "3.11.2",
+    "sqlite": "3.40.1"
+  },
+  "materials": {
+    "certificate": "acceptance/pack/certificate.json",
+    "deliverable": "acceptance/pack/deliverable.sqlite",
+    "inputs": {
+      "base": null,
+      "left": null,
+      "right": null
+    },
+    "adjudication": null
+  },
+  "layers": [
+    {
+      "layer": 1,
+      "name": "字节匹配",
+      "available": true,
+      "checks": [
+        {
+          "id": "certificate.structure",
+          "ok": true,
+          "detail": "格式、字段与摘要形状全部合法"
+        },
+        {
+          "id": "deliverable.size",
+          "ok": true,
+          "actual": 24576,
+          "expected": 24576
+        },
+        {
+          "id": "deliverable.digest",
+          "ok": true,
+          "actual": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+          "expected": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24"
+        },
+        {
+          "id": "deliverable.image",
+          "ok": true,
+          "detail": "镜像头合法,完整性与外键检查通过"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "layer": 2,
+      "name": "来源吻合",
+      "available": false,
+      "checks": [],
+      "reason": "未提供三份输入(缺 base,left,right)"
+    },
+    {
+      "layer": 3,
+      "name": "实际行重演",
+      "available": false,
+      "checks": [],
+      "reason": "重演需要三份输入与裁决记录"
+    }
+  ],
+  "comparison": null,
+  "verdict": {
+    "accepted": true,
+    "level": "byte-match",
+    "label": "字节匹配",
+    "layers_verified": [
+      "字节匹配"
+    ],
+    "summary": "成果字节与凭证 candidate_digest/candidate_size 一致;手边只有凭证与成果,来源与裁决未核对。"
+  }
+}

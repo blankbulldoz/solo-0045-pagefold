@@ -27,11 +27,25 @@ python3 -m examples.make_images ./demo-images
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
 
+## 离线验收
+
+接收方访问不到本服务时,可凭封存材料离线核对成果。`acceptance/verify.py` 是独立实现,
+按材料完整程度分层给出结论:仅凭证与成果时为字节匹配,补充三份输入后来源吻合,
+再补充裁决记录可实际行重演;成果经 SQLite 整理(字节不同)时给出逐表逻辑比对。
+左右支调包、改库后仅改凭证候选摘要等篡改都能被来源与裁决重新核对出来。详见
+`acceptance/README.md`。
+
+```sh
+python3 -m acceptance.build_pack      # 生成验收包 acceptance/pack/
+python3 -m acceptance.run_acceptance  # 三次验收与篡改对照,证据在 acceptance/evidence/
+```
+
 ## 验证
 
 ```sh
-python3 -m compileall -q pagefold examples
+python3 -m compileall -q pagefold examples acceptance
 python3 -m examples.walkthrough all
+python3 -m acceptance.run_acceptance
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
