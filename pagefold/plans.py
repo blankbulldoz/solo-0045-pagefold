@@ -6,6 +6,7 @@ from .errors import Problem
 from .images import get_image
 from .merge import ROLES, calculate, selected
 from .rows import read_image
+from .schema_diff import diff_catalogs
 from .sqlite_image import mounted
 
 
@@ -14,7 +15,11 @@ def create_plan(store, sources):
         images = [get_image(db, sources[role], body=True) for role in ROLES]
     catalogs = [json.loads(image["catalog"]) for image in images]
     if len({catalog["signature"] for catalog in catalogs}) != 1:
-        raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
+        report = diff_catalogs(catalogs, {role: images[pos]["label"]
+                                          for pos, role in enumerate(ROLES)})
+        raise Problem("schema_mismatch",
+                      f"三份镜像的模式记录不一致，精确匹配规则下拒绝建计划：{report['count']} 项结构差异。",
+                      409, {"mismatch": report, "image_links": dict(sources)})
     snapshots = []
     for image, catalog in zip(images, catalogs):
         with mounted(image["body"]) as snapshot:

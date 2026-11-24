@@ -13,8 +13,9 @@ def key_atom(value):
 
 def read_table(db, table, allowance=MAX_ROWS):
     name = table["name"]
-    positions = [table["columns"].index(key) for key in table["key"]]
-    cols = ",".join(map(ident, table["columns"]))
+    column_names = [column["name"] for column in table["columns"]]
+    positions = [column_names.index(key) for key in table["key"]]
+    cols = ",".join(ident(name) for name in column_names)
     result = {}
     cursor = db.execute(f"SELECT {cols} FROM main.{ident(name)} LIMIT ?", (allowance + 1,))
     for raw in cursor:

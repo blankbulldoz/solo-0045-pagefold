@@ -12,9 +12,10 @@ from urllib.request import Request, urlopen
 from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
+from examples.schema_cases import GROUPS, case_image
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+WORKFLOWS = ("import", "catalog", "rows", "plan", "schema", "review", "decide", "rehearse", "attempts",
+             "seal", "certificate", "download", "archive")
 
 
 def expect(condition, description):
@@ -43,6 +44,10 @@ class Client:
 
     def upload(self, name, data=None, status=201):
         return self.call("/api/images", image(name) if data is None else data, status, {
+            "X-Image-Name": name, "Content-Type": "application/octet-stream"})
+
+    def upload_case(self, name):
+        return self.call("/api/images", case_image(name), 201, {
             "X-Image-Name": name, "Content-Type": "application/octet-stream"})
 
 
@@ -74,9 +79,13 @@ def run(client, goal):
     catalog = client.call(image_route)["catalog"]
     node = next(table for table in catalog["tables"] if table["name"] == "node")
     expect(node["key"] == ["bench", "slot"] and node["foreign_keys"], "复合主键或外键目录不正确")
+    expect(node["columns"][0]["name"] == "bench" and node["columns"][0]["notnull"], "列定义目录不完整")
+    expect(any(index["name"] == "node_weight" and index["columns"] == ["weight"]
+               for index in next(t for t in catalog["tables"] if t["name"] == "node")["indexes"]),
+            "显式索引定义未进入目录")
     expect(client.call("/api/images/missing", status=404)["code"] == "unknown_image", "未知镜像未拒绝")
     page = client.call(f"/images/{base['id']}")
-    expect("关系结构".encode() in page, "镜像目录未渲染")
+    expect("关系结构".encode() in page and "node_weight".encode() in page, "镜像目录未渲染索引定义")
     if done("catalog", "目录保留复合主键顺序及依赖"):
         return
     rows = client.call(image_route + "/rows?table=node")
@@ -91,10 +100,54 @@ def run(client, goal):
     sources = {"base": base["id"], "left": left["id"], "right": right["id"]}
     error = client.call("/api/plans", dict(sources, right=alternate["id"]), 409)
     expect(error["code"] == "schema_mismatch", "结构不一致未拒绝")
+    expect(error["mismatch"]["count"] >= 1 and error["mismatch"]["findings"][0]["type"]
+           == "index_missing", "结构差异未按索引类别精确分类")
     plan = client.call("/api/plans", sources, 201)
     expect(plan["revision"] == 0 and len(plan["items"]) == 3, "三方计划内容不符")
     if done("plan", "两项单边改动、一项冲突，模式不一致拒绝"):
         return
+
+    def trio(group):
+        ids = {}
+        for role, case_name in zip(("base", "left", "right"), GROUPS[group]):
+            ids[role] = client.upload_case(case_name)["id"]
+        return ids
+
+    common = trio("common")
+    report = client.call("/api/plans", common, 409)["mismatch"]
+    types = {(finding["table"], finding["type"], finding.get("subject")) for finding in report["findings"]}
+    expect(types == {("ledger", "index_missing", "ledger_note"),
+                     ("entry", "index_missing", "entry_tag")}, "共同差异组未识别出两个各自的单独索引")
+    common_left = next(f for f in report["findings"] if f["subject"] == "ledger_note")
+    expect(common_left["roles"] == ["left"] and "left" in common_left["evidence"], "未指明挡路的镜像")
+    expect(common_left["evidence"]["base"]["present"] and not common_left["evidence"]["base"]["indexes"],
+           "各库索引证据不完整")
+    html_report = client.call(
+        "/plans", data=urlencode(common).encode(), status=409,
+        headers={"Content-Type": "application/x-www-form-urlencoded"})
+    expect("模式精确匹配未通过".encode() in html_report and "ledger_note".encode() in html_report,
+           "结构冲突页未渲染差异明细")
+
+    branch = trio("branch")
+    branch_report = client.call("/api/plans", branch, 409)["mismatch"]
+    by_type = {}
+    for finding in branch_report["findings"]:
+        by_type.setdefault(finding["type"], finding)
+    expect(set(by_type) == {"key_order", "index_missing"}, "分支差异未区分主键顺序与索引")
+    key_finding = by_type["key_order"]
+    expect(key_finding["table"] == "ledger" and key_finding["roles"] == ["left"],
+           "复合主键顺序变化未精确归到左支")
+    expect(key_finding["evidence"]["left"]["key"] == ["seq", "book"]
+           and key_finding["evidence"]["base"]["key"] == ["book", "seq"], "主键顺序证据不正确")
+    index_finding = by_type["index_missing"]
+    expect(index_finding["roles"] == ["right"] and index_finding["subject"] == "ledger_book_note",
+           "新增单独索引未精确归到右支")
+    expect(not any(f["type"].startswith("table") for f in branch_report["findings"]),
+           "主键顺序和索引差异被误报成缺表")
+    expect(client.call("/api/plans", sources, 201)["revision"] == 0, "精确匹配规则下一致镜像仍应正常建计划")
+    if done("schema", "两组三方镜像区分共同差异与分支差异，精确匹配规则不变"):
+        return
+
     route = f"/api/plans/{plan['id']}"
     page = client.call(f"/plans/{plan['id']}")
     expect("主键行差异".encode() in page and "1 项待裁决".encode() in page, "计划页未展示冲突")

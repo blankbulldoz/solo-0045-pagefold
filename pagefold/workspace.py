@@ -8,6 +8,7 @@ from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
 from .render import HERE, page, safe
+from .schema_views import mismatch_page
 
 
 def workspace(store, parts, query):
@@ -40,6 +41,8 @@ def sample(store):
 
 
 def error(problem, path):
+    if problem.code == "schema_mismatch" and problem.context and problem.context.get("mismatch"):
+        return mismatch_page(problem.context["mismatch"], problem.context.get("image_links", {}))
     return page("error", "操作未完成", detail=safe(problem.detail),
                 link=safe(path if path.startswith("/plans/") and not path.startswith("//") else "/"))
 

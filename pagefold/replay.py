@@ -23,8 +23,9 @@ def amendments(items, decisions):
 def apply_rows(db, table, operations):
     name = ident(table["name"])
     predicate = " AND ".join(f"{ident(key)} COLLATE BINARY=?" for key in table["key"])
-    columns = ",".join(map(ident, table["columns"]))
-    params = ",".join("?" for _ in table["columns"])
+    column_names = [column["name"] for column in table["columns"]]
+    columns = ",".join(map(ident, column_names))
+    params = ",".join("?" for _ in column_names)
     for item, _ in operations:
         if item["base"] is not None:
             db.execute(f"DELETE FROM main.{name} WHERE {predicate}", tuple(map(unpack, item["key"])))
