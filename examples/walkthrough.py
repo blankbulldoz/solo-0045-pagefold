@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "query", "archive")
 
 
 def expect(condition, description):
@@ -150,6 +150,49 @@ def run(client, goal):
     finally:
         db.close()
     if done("download", "下载摘要校验一致，SQLite 可独立打开和查询"):
+        return
+    join_sql = ("SELECT bench.label, node.slot, node.note, node.payload "
+                "FROM bench JOIN node ON node.bench = bench.code")
+    evidence = client.call(route + "/review", {"sql": join_sql})
+    expect(evidence["state"] == "sealed" and len(evidence["roles"]) == 4, "复核角色不全")
+    by_role = {entry["role"]: entry for entry in evidence["roles"]}
+    expect(all(entry["status"] == "ok" for entry in evidence["roles"]), "跨表连接未全部执行成功")
+    expect([by_role[role]["row_count"] for role in ("base", "left", "right", "result")] == [2, 3, 2, 3],
+           "连接结果行数不符")
+    result_cells = [cell for row in by_role["result"]["rows"] for cell in row]
+    expect(["n"] in result_cells and any(cell[0] == "b" for cell in result_cells),
+           "连接结果丢失 NULL 或 BLOB 类型")
+    verdicts = {tuple(item["pair"]): item["verdict"] for item in evidence["comparisons"]}
+    expect(set(verdicts.values()) == {"different"}, "连接查询四方应全部不同")
+    copies = client.call(route + "/review", {"sql": "SELECT slot FROM node"})
+    by_role = {entry["role"]: entry for entry in copies["roles"]}
+    expect(by_role["base"]["rows"] == [[["i", "1"]], [["i", "1"]]], "重复行未保留")
+    expect(by_role["base"]["digest"] == by_role["right"]["digest"] !=
+           by_role["result"]["digest"], "重复行查询摘要关系不符")
+    verdicts = {tuple(item["pair"]): item["verdict"] for item in copies["comparisons"]}
+    expect(verdicts[("base", "right")] == "equal" and verdicts[("left", "result")] == "equal",
+           "等价配对结论不符")
+    expect(verdicts[("base", "result")] == "different", "成果与祖本应判为不同")
+    fragile = "SELECT json_extract(note, '$') FROM node WHERE slot = 2"
+    partial = client.call(route + "/review", {"sql": fragile})
+    by_role = {entry["role"]: entry for entry in partial["roles"]}
+    expect(by_role["base"]["status"] == by_role["right"]["status"] == "ok", "空结果应可执行")
+    expect(by_role["left"]["status"] == by_role["result"]["status"] == "error", "数据相关错误未按角色捕获")
+    verdicts = {tuple(item["pair"]): item["verdict"] for item in partial["comparisons"]}
+    expect(verdicts[("base", "right")] == "equal", "可比较配对结论不符")
+    expect(all(verdict == "incomparable" for pair, verdict in verdicts.items()
+               if "left" in pair or "result" in pair), "失败角色应不可比较")
+    expect(client.call(route + "/review", {"sql": "DELETE FROM node"}, 422)["code"] == "query_kind",
+           "写查询未拒绝")
+    expect(client.call(stress_route + "/review", {"sql": "SELECT 1"}, 409)["code"] == "not_sealed",
+           "未封存计划可复核")
+    missing = client.call(route + "/review", {"sql": "SELECT * FROM missing"})
+    expect(all(entry["status"] == "error" for entry in missing["roles"]) and
+           all(item["verdict"] == "incomparable" for item in missing["comparisons"]),
+           "未知表应全部不可比较")
+    page = client.call(f"/plans/{plan['id']}/review?" + urlencode({"sql": "SELECT slot FROM node"}))
+    expect("互相核对".encode() in page and "结果一致".encode() in page, "复核页未渲染核对结论")
+    if done("query", "连接与重复行查询给出四方证据，失败角色不可比较，写查询与未封存计划拒绝"):
         return
     client.call(route + "/archive", {"revision": 2})
     expect(client.call(route)["state"] == "archived", "归档状态丢失")

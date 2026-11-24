@@ -10,6 +10,7 @@ from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
 from .releases import get_release, seal
+from .review import run_review
 from .sqlite_image import MAX_BYTES
 
 
@@ -51,6 +52,9 @@ def write_plan(store, handler, tail):
         raise Problem("route", "找不到该入口。", 404)
     plan_id, action = tail
     data = fields(handler, 32_768)
+    if action == "review":
+        with store.connect() as db:
+            return run_review(db, plan_id, data.get("sql"))
     revision = unsigned(data.get("revision"), "revision")
     if action == "decisions":
         choice = data.get("choice")

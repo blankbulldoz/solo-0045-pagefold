@@ -23,9 +23,16 @@ python3 -m examples.make_images ./demo-images
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
+- `POST /api/plans/{id}/review` 接收含 `sql` 的 JSON，在祖本、左支、右支与封存成果上运行同一查询，返回各角色的规范化结果与两两核对结论。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
+
+## 查询复核
+
+已封存（含已归档）计划可通过网页的「查询复核」或 `POST /api/plans/{id}/review` 运行只读查询复核，供各方核对既有查询换读封存成果后的结果差异。复核仅接受单条 SELECT、WITH 或 VALUES，在祖本、左支、右支与封存成果上分别执行，镜像以只读方式挂载，结果行数和计算量设有上限。
+
+各角色结果按规范顺序排列，与查询是否带 `ORDER BY` 无关；重复行原样保留，NULL、整数、实数、文本、BLOB 类型分别表示，结果摘要绑定列名与全部行。两两配对给出一致、不同或不可比较的结论：任一角色执行失败（如数据相关的表达式错误）时，涉及该角色的配对标记为不可比较，不据此得出等价结论。
 
 ## 验证
 

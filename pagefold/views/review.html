@@ -1,0 +1,5 @@
+<a class="back" href="/plans/$plan">← 合流计划</a>
+<section class="heading"><div><h1>封存查询复核</h1><p>计划 <code>$short</code> · $state · 同一查询在祖本、左支、右支与封存成果上分别执行，结果可互相核对</p></div></section>
+<section class="paper"><div class="panel-title"><h2>复核查询</h2><span class="tag">只读</span></div>
+<form class="review-form" method="get" action="/plans/$plan/review"><label><span class="input-title">SQL 查询</span><span class="input-desc">单条 SELECT、WITH 或 VALUES；结果按规范顺序排列，重复行与值类型原样保留</span><textarea name="sql" rows="5" maxlength="8000" required>$sql</textarea></label><button class="primary" type="submit">运行复核</button></form></section>
+$report
