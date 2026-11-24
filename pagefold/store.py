@@ -16,6 +16,10 @@ CREATE TABLE IF NOT EXISTS attempts (
     plan_id TEXT NOT NULL REFERENCES plans(id), revision INTEGER NOT NULL,
     result TEXT NOT NULL, candidate BLOB, PRIMARY KEY(plan_id, revision)
 );
+CREATE TABLE IF NOT EXISTS decision_receipts (
+    plan_id TEXT NOT NULL REFERENCES plans(id), confirmation TEXT NOT NULL,
+    revision INTEGER NOT NULL, result TEXT NOT NULL, PRIMARY KEY(plan_id, confirmation)
+);
 CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL

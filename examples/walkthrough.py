@@ -13,7 +13,7 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
+WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "batch", "rehearse", "attempts", "seal",
              "certificate", "download", "archive")
 
 
@@ -108,6 +108,81 @@ def run(client, goal):
     expect(client.call(route + "/decisions", decision, 409)["code"] == "stale_revision", "过期裁决未拒绝")
     expect(client.call(route + "/decisions", dict(decision, revision=1))["revision"] == 1, "重复裁决修改了版本")
     if done("decide", "过期写入拒绝，同选择不推进版本"):
+        return
+    base_source = client.upload("quartz")
+    group_plan = client.call("/api/plans", {"base": base_source["id"],
+                                            "left": client.upload("group-left")["id"],
+                                            "right": client.upload("group-right")["id"]}, 201)
+    group_route = f"/api/plans/{group_plan['id']}"
+    conflicts = [item for item in group_plan["items"] if item["automatic"] is None]
+    expect(len(conflicts) == 4 and group_plan["unresolved"] == 4, "成组场景的冲突数不符")
+    north = next(item for item in conflicts if item["table"] == "bench" and item["key"] == [["t", "north"]])
+    south = next(item for item in conflicts if item["table"] == "bench" and item["key"] == [["t", "south"]])
+    node_north = next(item for item in conflicts
+                      if item["table"] == "node" and item["key"][0][1] == "north")
+    node_south = next(item for item in conflicts
+                      if item["table"] == "node" and item["key"][0][1] == "south")
+    # Repeating one member at its current value (still undecided here) is allowed.
+    batch = [{"item": north["id"], "choice": "left"}, {"item": south["id"], "choice": "right"},
+             {"item": node_north["id"], "choice": "left"}, {"item": north["id"], "choice": "left"}]
+    prepared = client.call(group_route + "/decisions/preview", {"revision": 0, "entries": batch})
+    expect(prepared["changed"] == 3 and prepared["next_revision"] == 1 and
+           prepared["unresolved_before"] == 4 and prepared["unresolved_after"] == 1, "预览未标出真实变化")
+    expect({change["item"] for change in prepared["changes"]} == {north["id"], south["id"], node_north["id"]}
+           and all(change["from"] is None for change in prepared["changes"]), "预览变化集合不符")
+    applied = client.call(group_route + "/decisions", {"revision": 0, "entries": batch,
+                                                       "confirmation": prepared["confirmation"]})
+    expect(applied["revision"] == 1 and applied["changed"] == 3 and not applied["replayed"], "成组裁决未一次生效")
+    # The browser drops the response and resends the identical confirmation.
+    replayed = client.call(group_route + "/decisions", {"revision": 0, "entries": batch,
+                                                        "confirmation": prepared["confirmation"]})
+    expect(replayed["replayed"] and replayed["revision"] == 1 and replayed["changed"] == 3 and
+           client.call(group_route)["revision"] == 1, "断线重发没有重演同一确认")
+    # A legal no-change batch is accepted without advancing the revision.
+    quiet = client.call(group_route + "/decisions/preview", {"revision": 1, "entries": batch})
+    expect(quiet["changed"] == 0 and quiet["next_revision"] == 1 and quiet["unresolved_after"] == 1,
+           "合法空变化未按无变化预览")
+    stay = client.call(group_route + "/decisions", {"revision": 1, "entries": batch,
+                                                     "confirmation": quiet["confirmation"]})
+    expect(stay["revision"] == 1 and stay["changed"] == 0, "空变化推进了版本")
+    # A second window still holding revision 0 sends a different, valid batch.
+    # It must be refused whole: no member of it may leak in.
+    second_window = [{"item": node_south["id"], "choice": "base"}]
+    expect(client.call(group_route + "/decisions/preview",
+                       {"revision": 0, "entries": second_window}, 409)["code"] == "stale_revision",
+           "旧版序预览未被拒绝")
+    expect(client.call(group_route + "/decisions",
+                       {"revision": 0, "entries": second_window}, 409)["code"] == "stale_revision",
+           "旧版序的合法批次未被拒绝")
+    expect(client.call(group_route)["revision"] == 1 and client.call(group_route)["unresolved"] == 1,
+           "旧版序批次留下了部分结果")
+    # An invalid member voids the whole batch, including its valid neighbours.
+    automatic = next(item for item in group_plan["items"] if item["automatic"] is not None)
+    rolling = [{"item": node_south["id"], "choice": "right"},
+               {"item": automatic["id"], "choice": "left"}]
+    expect(client.call(group_route + "/decisions", {"revision": 1, "entries": rolling}, 409)["code"] ==
+           "not_conflict", "非冲突成员未被拒绝")
+    expect(client.call(group_route)["revision"] == 1 and client.call(group_route)["unresolved"] == 1,
+           "含无效成员的批次没有完整退回")
+    expect(client.call(group_route + "/decisions", {
+        "revision": 1, "entries": [{"item": node_south["id"], "choice": "base"},
+                                    {"item": node_south["id"], "choice": "right"}]}, 409)["code"] ==
+           "duplicate_item", "同请求内两次不同选择未被拒绝")
+    expect(client.call(group_route + "/decisions", {
+        "revision": 1, "entries": [{"item": "0" * 64, "choice": "left"}]}, 409)["code"] ==
+           "unknown_item", "过期条目未被拒绝")
+    expect(client.call(group_route + "/decisions", {"revision": 0, "entries": rolling},
+                       409)["code"] == "stale_revision", "旧版序的批次未被拒绝")
+    expect(client.call(group_route)["revision"] == 1, "被拒绝的批次推进了版本")
+    expect(client.call(group_route + "/rehearse", {"revision": 1}, 409)["code"] == "unresolved",
+           "剩余未决仍可重演")
+    finished = client.call(group_route + "/decisions", {
+        "revision": 1, "entries": [{"item": node_south["id"], "choice": "left"}]})
+    expect(finished["revision"] == 2 and finished["unresolved_after"] == 0, "收尾裁决未完成")
+    expect(client.call(group_route + "/rehearse", {"revision": 2})["status"] == "passed", "成组结果重演未通过")
+    page = client.call(f"/plans/{group_plan['id']}")
+    expect(b'id="batch-decisions"' in page and b'data-batch-row' in page, "计划页未渲染成组裁决面板")
+    if done("batch", "成组裁决一次生效，空变化稳定，断线重发重演同一确认，无效成员整批退回"):
         return
     accepted = client.call(route + "/rehearse", {"revision": 1})
     expect(accepted["status"] == "passed" and accepted["changed"] == 3, "正常候选未通过")

@@ -15,7 +15,7 @@ def fields(handler, limit):
             result = json.loads(data)
         elif nature == "application/x-www-form-urlencoded":
             result = {key: values[-1] for key, values in parse_qs(
-                data.decode("utf-8"), keep_blank_values=True, max_num_fields=20).items()}
+                data.decode("utf-8"), keep_blank_values=True, max_num_fields=4096).items()}
         else:
             raise Problem("media_type", "请提交 JSON 或网页表单。", 415)
     except (ValueError, UnicodeError) as exc:

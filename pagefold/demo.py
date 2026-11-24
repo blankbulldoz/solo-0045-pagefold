@@ -15,7 +15,8 @@ CREATE INDEX node_weight ON node(weight);
 
 
 def image(flavor):
-    if flavor not in {"quartz", "cerulean", "umber", "stress-left", "stress-right"}:
+    if flavor not in {"quartz", "cerulean", "umber", "stress-left", "stress-right",
+                      "group-left", "group-right"}:
         raise ValueError(flavor)
     db = sqlite3.connect(":memory:")
     try:
@@ -33,6 +34,17 @@ def image(flavor):
             db.execute("UPDATE bench SET label='右支更名' WHERE code='south'")
         elif flavor.startswith("stress"):
             db.execute("INSERT INTO bench VALUES(?, '共享键值')", (flavor,))
+        elif flavor == "group-left":
+            db.execute("UPDATE bench SET label='玄石（左）' WHERE code='north'")
+            db.execute("UPDATE node SET note='左支分组' WHERE bench='north' AND slot=1")
+            db.execute("UPDATE bench SET label='砂层（左）' WHERE code='south'")
+            db.execute("UPDATE node SET weight=3.5 WHERE bench='south' AND slot=1")
+            db.execute("UPDATE binding SET bench='south' WHERE id=1")
+        elif flavor == "group-right":
+            db.execute("UPDATE bench SET label='玄石（右）' WHERE code='north'")
+            db.execute("UPDATE node SET payload=x'ee11' WHERE bench='north' AND slot=1")
+            db.execute("UPDATE bench SET label='砂层（右）' WHERE code='south'")
+            db.execute("UPDATE node SET weight=4.5 WHERE bench='south' AND slot=1")
         db.commit()
         return db.serialize()
     finally:

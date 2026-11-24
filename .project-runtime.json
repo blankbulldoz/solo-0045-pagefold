@@ -35,6 +35,10 @@
       "command": "python3 -m examples.walkthrough decide"
     },
     {
+      "workflow_id": "batch",
+      "command": "python3 -m examples.walkthrough batch"
+    },
+    {
       "workflow_id": "rehearse",
       "command": "python3 -m examples.walkthrough rehearse"
     },

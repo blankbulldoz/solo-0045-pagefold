@@ -3,7 +3,7 @@ from urllib.parse import unquote
 
 from .archive import archive
 from .attempts import list_attempts, rehearse
-from .decisions import resolve
+from .decisions import preview, resolve, resolve_batch
 from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
@@ -47,12 +47,22 @@ def write_plan(store, handler, tail):
     if not tail:
         data = fields(handler, 32_768)
         return create_plan(store, {role: token(data.get(role), role) for role in ROLES})
-    if len(tail) != 2:
+    if len(tail) < 2 or len(tail) > 3 or (len(tail) == 3 and tail[1:] != ["decisions", "preview"]):
         raise Problem("route", "找不到该入口。", 404)
-    plan_id, action = tail
-    data = fields(handler, 32_768)
+    plan_id, action = tail[0], tail[1]
+    data = fields(handler, 1_048_576)
     revision = unsigned(data.get("revision"), "revision")
+    if len(tail) == 3:
+        entries = data.get("entries")
+        if not isinstance(entries, list):
+            raise Problem("entries", "字段 entries 须为裁决数组。", 400)
+        return preview(store, plan_id, revision, entries)
     if action == "decisions":
+        if "entries" in data:
+            entries = data["entries"]
+            if not isinstance(entries, list):
+                raise Problem("entries", "字段 entries 须为裁决数组。", 400)
+            return resolve_batch(store, plan_id, revision, entries, data.get("confirmation"))
         choice = data.get("choice")
         if choice not in (*ROLES, "clear"):
             raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)

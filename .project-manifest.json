@@ -189,6 +189,25 @@
       ]
     },
     {
+      "id": "batch",
+      "name": "成组裁决",
+      "entry": "POST /api/plans/{id}/decisions/preview",
+      "success": "同组多项一次原子生效，预览标出真实变化，断线后按确认摘要重演",
+      "failure": "任一条目过期、非冲突或同请求内选择矛盾则整批退回",
+      "verification": "python3 -m examples.walkthrough batch",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/decisions/preview",
+        "同一依赖组的行一起提交，确认摘要绑定版本与条目",
+        "整批原子生效；同值成员合法，空变化不推进版本",
+        "重复发送同一确认只重演已记录结果，不重复写入"
+      ],
+      "module_ids": [
+        "decisions",
+        "plans",
+        "merge"
+      ]
+    },
+    {
       "id": "rehearse",
       "name": "重演数据库",
       "entry": "POST /api/plans/{id}/rehearse",

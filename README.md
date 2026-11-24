@@ -11,17 +11,19 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
-可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
+可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。`group-left.sqlite` 和 `group-right.sqlite` 以 `quartz.sqlite` 为祖本时产生两组按外键相连的冲突，可演练成组裁决。
 
 ## 操作和接口
 
-网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
+网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。同一表或外键引用相连的冲突会归入一个依赖组，可整组选择、先看实际会改变的行再确认。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。确认结果保存在浏览器本地，断线后可用同一份确认摘要重发或核对。
 
 - `POST /api/images` 接收 `application/octet-stream`，`X-Image-Name` 是可选的 URL 编码标签。
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
+- `POST /api/plans/{id}/decisions/preview` 接收 `revision` 和 `entries`（`item`、`choice` 数组），返回确认摘要、实际改变的行及未决数变化。
+- `POST /api/plans/{id}/decisions` 也接受 `entries` 与可选的 `confirmation` 做一次成组提交。整批原子生效；任一条目过期、非冲突或同请求内自相矛盾则整批退回。再次发送同一确认只重演已记录的确认结果，不重复写入。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 

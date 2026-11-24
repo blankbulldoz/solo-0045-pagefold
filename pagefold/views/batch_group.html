@@ -1,0 +1,13 @@
+<form class="batch-group" data-batch-form data-plan="$plan" data-revision="$revision" data-group="$key">
+  <fieldset>
+    <legend>依赖组 $number <span class="tag">$name</span></legend>
+    <table class="batch"><thead><tr><th scope="col">行</th><th scope="col">当前</th><th scope="col">成组选择</th></tr></thead>
+    <tbody>$rows</tbody></table>
+    <div class="batch-controls">
+      <label class="batch-all">整组设为 <select data-batch-all>$options</select></label>
+      <button type="submit" name="intent" value="preview">预览本组变化</button>
+      <button type="submit" class="primary" name="intent" value="apply" disabled data-batch-apply>确认提交本组</button>
+    </div>
+    <div class="batch-preview" data-batch-preview aria-live="polite"></div>
+  </fieldset>
+</form>

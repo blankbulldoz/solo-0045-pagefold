@@ -24,3 +24,10 @@ select,button,input::file-selector-button{font:inherit;border:1px solid #b8bfb2;
 :focus-visible{outline:3px solid #317858;outline-offset:3px}
 @media(max-width:760px){.frame{width:calc(100% - 28px)}main{padding-top:22px}.work-grid{grid-template-columns:1fr}.heading{align-items:start}.heading>form{flex-shrink:0}.panel-title,.new-plan,.upload,.actions,.history,.plan-links{padding-left:14px;padding-right:14px}}
 @media(max-width:420px){.brand-sub{display:none}.triptych{grid-template-columns:1fr}.sources a{padding:7px}.sources code{display:none}}
+.batch-panel .batch-body{padding:16px 20px}.batch-body>.muted{font-size:13px;color:var(--quiet);margin-bottom:12px}
+.batch-group{margin:0 0 12px}.batch-group fieldset{border:1px solid var(--line);border-radius:7px;padding:8px 12px 12px;margin:0}.batch-group legend{padding:0 6px;font-size:13px;font-weight:700}
+table.batch{border-collapse:collapse;width:100%;font-size:13px}table.batch :is(th,td){padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}table.batch th span{font:11px/1.4 var(--mono);color:var(--quiet);font-weight:500}
+.batch-choice select{width:auto;min-height:0;padding:5px 9px}.batch-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin-top:10px}.batch-all{display:flex;align-items:center;gap:7px;font-size:13px;margin-right:auto}.batch-all select{width:auto;min-height:0;padding:5px 9px}
+.batch-preview:empty{display:none}.batch-preview{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;font-size:13px}
+.batch-preview h3{font-size:13px;margin-bottom:5px}.batch-preview ul{margin:0 0 11px;padding-left:18px}.batch-preview li{margin:3px 0}.error-text{color:var(--rust);font-weight:650}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media(max-width:760px){.batch-panel .batch-body{padding-left:14px;padding-right:14px}}
