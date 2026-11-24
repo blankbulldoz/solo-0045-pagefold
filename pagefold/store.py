@@ -4,7 +4,8 @@ from contextlib import contextmanager
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS images (
-    id TEXT PRIMARY KEY, label TEXT NOT NULL, catalog TEXT NOT NULL, body BLOB NOT NULL
+    id TEXT PRIMARY KEY, label TEXT NOT NULL, catalog TEXT NOT NULL, body BLOB NOT NULL,
+    size INTEGER NOT NULL, reclaimed INTEGER NOT NULL DEFAULT 0
 );
 CREATE TABLE IF NOT EXISTS plans (
     id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
@@ -20,7 +21,20 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS reclaims (
+    digest TEXT PRIMARY KEY, report TEXT NOT NULL, result TEXT NOT NULL,
+    freed INTEGER NOT NULL, executed_at TEXT NOT NULL
+);
 """
+
+
+def migrate(db):
+    columns = {row[1] for row in db.execute("PRAGMA table_info(images)")}
+    if "size" not in columns:
+        db.execute("ALTER TABLE images ADD COLUMN size INTEGER NOT NULL DEFAULT 0")
+        db.execute("UPDATE images SET size=length(body) WHERE size=0")
+    if "reclaimed" not in columns:
+        db.execute("ALTER TABLE images ADD COLUMN reclaimed INTEGER NOT NULL DEFAULT 0")
 
 
 class Store:
@@ -29,6 +43,7 @@ class Store:
         with self.connect(snapshot=False) as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
+            migrate(db)
 
     @contextmanager
     def connect(self, write=False, snapshot=True):

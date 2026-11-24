@@ -21,26 +21,31 @@ def register(store, data, label):
     for table in catalog["tables"]:
         table["rows"] = len(rows[table["name"]])
     with store.connect(write=True) as db:
-        db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
-                   (checksum, label, canonical(catalog), data))
+        db.execute("""
+            INSERT INTO images(id, label, catalog, body, size, reclaimed) VALUES(?,?,?,?,?,0)
+            ON CONFLICT(id) DO UPDATE SET body=excluded.body, size=excluded.size, reclaimed=0
+        """, (checksum, label, canonical(catalog), data, len(data)))
         return image_record(get_image(db, checksum))
 
 
 def get_image(db, image_id, body=False):
-    columns = "id,label,catalog,body" if body else "id,label,catalog,length(body) AS size"
+    columns = "id,label,catalog,body,size,reclaimed" if body else "id,label,catalog,size,reclaimed"
     row = db.execute(f"SELECT {columns} FROM images WHERE id=?", (image_id,)).fetchone()
     if row is None:
         raise Problem("unknown_image", "找不到指定的镜像。", 404)
+    if body and row["reclaimed"]:
+        raise Problem("image_reclaimed", "该镜像的原始内容已回收，数据页不可读取。", 410)
     return row
 
 
 def image_record(row):
     return {"id": row["id"], "label": row["label"], "size": row["size"],
-            "catalog": json.loads(row["catalog"])}
+            "reclaimed": bool(row["reclaimed"]), "catalog": json.loads(row["catalog"])}
 
 
 def list_images(db):
-    return [dict(row) for row in db.execute("SELECT id,label,length(body) AS size FROM images ORDER BY rowid DESC")]
+    return [dict(row, reclaimed=bool(row["reclaimed"])) for row in db.execute(
+        "SELECT id,label,size,reclaimed FROM images ORDER BY rowid DESC")]
 
 
 def table_page(db, image_id, name, offset):

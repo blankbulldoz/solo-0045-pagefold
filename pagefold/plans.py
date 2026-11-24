@@ -22,6 +22,12 @@ def create_plan(store, sources):
     items = calculate(*snapshots)
     plan_id = uuid.uuid4().hex
     with store.connect(write=True) as db:
+        # Re-check under the write lock: a reclaim could have cleared a body
+        # between the snapshot read above and this insert.
+        for role in ROLES:
+            row = db.execute("SELECT reclaimed FROM images WHERE id=?", (sources[role],)).fetchone()
+            if row is None or row["reclaimed"]:
+                raise Problem("image_reclaimed", f"来源（{role}）的原始内容已不可读取。", 409)
         db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
                    (plan_id, *[sources[role] for role in ROLES], canonical(items)))
         return read_plan(db, plan_id)

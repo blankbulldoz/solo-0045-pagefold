@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "archive", "reclaim-preview", "reclaim-confirm")
 
 
 def expect(condition, description):
@@ -156,7 +156,112 @@ def run(client, goal):
     expect(client.call(route + "/rehearse", {"revision": 2}, 409)["code"] == "closed_plan", "归档计划可重演")
     expect(client.call(route + "/download") == candidate and client.call(route + "/certificate") == proof,
            "归档后成果变化")
-    done("archive", "停止写入，既有成果和凭证继续可提取")
+    if done("archive", "停止写入，既有成果和凭证继续可提取"):
+        return
+    reclaim(client, goal, done, base)
+
+
+def variant(code):
+    """A quartz clone that only differs by one extra bench row (same schema)."""
+    db = sqlite3.connect(":memory:")
+    try:
+        db.deserialize(image("quartz"))
+        db.execute("INSERT INTO bench VALUES(?,?)", (code, "变体 " + code))
+        db.commit()
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def reclaim(client, goal, done, base):
+    """Preview and confirm reclaim across shared, sealed, archived and orphan sources."""
+    ancestor = base["id"]  # quartz, also referenced by the earlier plans
+    left1, right1 = client.upload("left1", variant("l1"))["id"], client.upload("right1", variant("r1"))["id"]
+    left2, right2 = client.upload("left2", variant("l2"))["id"], client.upload("right2", variant("r2"))["id"]
+    trunk, branch = client.upload("trunk", variant("t1"))["id"], client.upload("branch", variant("b1"))["id"]
+    orphan = client.upload("orphan", variant("o1"))["id"]
+    spare = client.upload("spare", variant("s1"))["id"]
+    expect(client.upload("spare", variant("s1"))["id"] == spare, "同内容镜像未复用为同一摘要")
+
+    # 1) Open plan: its sources must survive because it can still be rehearsed.
+    open_plan = client.call("/api/plans", {"base": ancestor, "left": left1, "right": right1}, 201)
+    # 2) Sealed plan: 封存结果 keeps its sources.
+    sealed_plan = client.call("/api/plans", {"base": ancestor, "left": left2, "right": right2}, 201)
+    client.call(f"/api/plans/{sealed_plan['id']}/rehearse", {"revision": 0})
+    client.call(f"/api/plans/{sealed_plan['id']}/seal", {"revision": 0})
+    # 3) Sealed then archived: still downloadable, sources kept for certificate review.
+    reviewed = client.call("/api/plans", {"base": trunk, "left": branch, "right": ancestor}, 201)
+    client.call(f"/api/plans/{reviewed['id']}/rehearse", {"revision": 0})
+    client.call(f"/api/plans/{reviewed['id']}/seal", {"revision": 0})
+    client.call(f"/api/plans/{reviewed['id']}/archive", {"revision": 0})
+    reviewed_release = client.call(f"/api/plans/{reviewed['id']}/download")
+    # 4) Archived without sealing: history stays, but its sources may be freed.
+    archived = client.call("/api/plans", {"base": orphan, "left": client.upload("ab", variant("a1"))["id"],
+                                          "right": client.upload("ar", variant("a2"))["id"]}, 201)
+    client.call(f"/api/plans/{archived['id']}/archive", {"revision": 0})
+
+    preview = client.call("/api/reclaims")
+    expect(preview["format"] == "pagefold-reclaim-v1", "回收预审格式不符")
+    reclaimable = {entry["id"]: entry for entry in preview["reclaimable"]}
+    retained = {entry["id"]: entry for entry in preview["retained"]}
+    expect(ancestor in retained, "共享祖本未被保留")
+    expect(set(retained[ancestor]["reasons"]) ==
+           {"open_plan", "sealed_result", "certificate_review"}, "共享祖本未记录三种保留理由")
+    roles = {ref["role"] for ref in retained[ancestor]["references"]}
+    expect({"base", "right"} <= roles, "同一文件在不同计划中的角色未分别记录")
+    expect(left1 in retained and left2 in retained and trunk in retained, "开放/封存/复核来源未保留")
+    expect(orphan in reclaimable, "归档未封存计划的来源未列为可回收")
+    expect(preview["freed_bytes"] == sum(entry["size"] for entry in preview["reclaimable"]),
+           "释放体积不等于去重后可回收镜像之和")
+    expect(len(preview["reclaimable"]) == len(reclaimable), "回收清单存在重复镜像")
+    expect(sum(entry["id"] == spare for entry in preview["reclaimable"]) == 1, "同内容镜像被重复计入")
+    page = client.call("/reclaims")
+    expect("原始镜像回收".encode() in page and "确认回收".encode() in page, "回收预审页未渲染")
+    if done("reclaim-preview", f"保留 {len(retained)} 份（开放/封存/复核），可回收 {len(reclaimable)} 份，"
+                              f"同内容仅计一次，预计释放 {preview['freed_bytes']:,} B"):
+        return
+
+    # A reference added after previewing must invalidate the report and survive.
+    client.call("/api/plans", {"base": spare, "left": client.upload("l4", variant("l4"))["id"],
+                                      "right": client.upload("r4", variant("r4"))["id"]}, 201)
+    stale = client.call("/api/reclaims", {"digest": preview["digest"]}, 409)
+    expect(stale["code"] == "stale_report", "新增引用后仍执行旧预审")
+    expect(client.call(f"/api/images/{spare}/rows?table=bench")["total"] > 0, "过期预审删除了新引用的来源")
+    refreshed = client.call("/api/reclaims")
+    expect(refreshed["digest"] != preview["digest"], "预审摘要未反映新增引用")
+    expect(spare not in {entry["id"] for entry in refreshed["reclaimable"]}, "新引用来源仍可回收")
+
+    execution = client.call("/api/reclaims", {"digest": refreshed["digest"]})
+    expect(execution["format"] == "pagefold-reclaim-execution-v1", "回收执行格式不符")
+    expect(execution["freed_bytes"] == refreshed["freed_bytes"], "实际释放与预审不一致")
+    expect({entry["id"] for entry in execution["reclaimed"]} ==
+           {entry["id"] for entry in refreshed["reclaimable"]}, "执行清单与预审不一致")
+    again = client.call("/api/reclaims", {"digest": refreshed["digest"]})
+    expect(again["repeated"] and again["freed_bytes"] == execution["freed_bytes"], "重复执行结果改变")
+    expect(client.call("/api/reclaims/" + refreshed["digest"])["freed_bytes"] == execution["freed_bytes"],
+           "回收记录无法按摘要查询")
+    expect(client.call("/api/reclaims/history")[0]["digest"] == refreshed["digest"], "回收历史缺失")
+
+    # Freed sources lose only their rows; catalog, ids and sizes survive.
+    expect(client.call(f"/api/images/{orphan}")["reclaimed"], "回收后镜像未标记")
+    expect(client.call(f"/api/images/{orphan}/rows?table=bench", status=410)["code"] == "image_reclaimed",
+           "回收后的行仍可读取")
+    expect(client.call(f"/api/images/{orphan}")["catalog"]["signature"], "回收后目录丢失")
+
+    # Retained reference, frozen release, and archived history stay readable.
+    expect(client.call(f"/api/images/{ancestor}/rows?table=node")["rows"][0]["values"][3] == ["b", "ABQ="],
+           "保留来源的行数据不可读")
+    expect(client.call(f"/api/plans/{open_plan['id']}")["state"] == "open", "开放计划状态改变")
+    expect(client.call(f"/api/plans/{sealed_plan['id']}/certificate")["sources"]["base"] == ancestor,
+           "封存凭证丢失来源")
+    expect(client.call(f"/api/plans/{reviewed['id']}/download") == reviewed_release, "归档成果下载改变")
+    expect(client.call(f"/api/images/{ancestor}/rows?table=bench")["total"] > 0, "复核来源不可读")
+    expect(client.call(f"/api/plans/{archived['id']}")["items"], "归档未封存计划的历史丢失")
+    expect("合流计划".encode() in client.call(f"/plans/{archived['id']}"), "归档计划页无法渲染")
+    blocked = client.call("/api/plans", {"base": orphan, "left": left1, "right": right1}, 410)
+    expect(blocked["code"] == "image_reclaimed", "已回收来源仍可建立新计划")
+    done("reclaim-confirm", f"过期预审被拒并保留新引用；执行释放 {execution['freed_bytes']:,} B，"
+                            f"{len(execution['reclaimed'])} 份去重镜像；保留来源、封存成果与归档历史仍可读")
 
 
 def main():

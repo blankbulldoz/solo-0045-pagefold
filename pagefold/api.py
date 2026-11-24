@@ -1,6 +1,7 @@
 import json
 from urllib.parse import unquote
 
+from . import reclaim
 from .archive import archive
 from .attempts import list_attempts, rehearse
 from .decisions import resolve
@@ -33,6 +34,13 @@ def read(store, parts, query):
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
                 release = get_release(db, tail[0], body=tail[1] == "download")
                 return release["candidate"] if tail[1] == "download" else json.loads(release["certificate"])
+        if resource == "reclaims":
+            if not tail:
+                return reclaim.report(db)
+            if len(tail) == 1 and tail[0] == "history":
+                return reclaim.history(db)
+            if len(tail) == 1:
+                return reclaim.record(db, tail[0])
     raise Problem("route", "找不到该入口。", 404)
 
 
@@ -61,3 +69,8 @@ def write_plan(store, handler, tail):
     if action in writes:
         return writes[action](store, plan_id, revision)
     raise Problem("route", "找不到该入口。", 404)
+
+
+def execute_reclaim(store, handler):
+    data = fields(handler, 32_768)
+    return reclaim.execute(store, token(data.get("digest"), "digest"))

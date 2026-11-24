@@ -80,6 +80,16 @@
       "id": "archive",
       "path": "pagefold/archive.py",
       "responsibility": "实现 archive"
+    },
+    {
+      "id": "reclaim",
+      "path": "pagefold/reclaim.py",
+      "responsibility": "实现 report、execute、history、record"
+    },
+    {
+      "id": "reclaim_views",
+      "path": "pagefold/reclaim_views.py",
+      "responsibility": "实现 reclaim_page"
     }
   ],
   "workflows": [
@@ -291,6 +301,43 @@
         "archive",
         "plans",
         "releases"
+      ]
+    },
+    {
+      "id": "reclaim-preview",
+      "name": "回收预审",
+      "entry": "GET /api/reclaims",
+      "success": "保留开放计划、封存结果与凭证复核所用的来源，按去重镜像计算释放体积",
+      "failure": "过期预审不能执行",
+      "verification": "python3 -m examples.walkthrough reclaim-preview",
+      "steps": [
+        "从公开入口取得请求 GET /api/reclaims",
+        "保留开放计划、封存结果与凭证复核所用的来源，按去重镜像计算释放体积"
+      ],
+      "module_ids": [
+        "reclaim",
+        "reclaim_views",
+        "images",
+        "plans",
+        "releases"
+      ]
+    },
+    {
+      "id": "reclaim-confirm",
+      "name": "回收确认",
+      "entry": "POST /api/reclaims",
+      "success": "清空预审的去重镜像字节，过期预审被拒，保留历史与封存成果仍可读",
+      "failure": "预审后新增引用导致 stale_report",
+      "verification": "python3 -m examples.walkthrough reclaim-confirm",
+      "steps": [
+        "从公开入口取得请求 POST /api/reclaims",
+        "清空预审的去重镜像字节，过期预审被拒，保留历史与封存成果仍可读"
+      ],
+      "module_ids": [
+        "reclaim",
+        "images",
+        "plans",
+        "server"
       ]
     }
   ],

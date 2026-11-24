@@ -10,19 +10,27 @@ def image_options(images):
 
 def image_links(images):
     return "".join(f'<li><a href="/images/{i["id"]}">{safe(i["label"])}</a>'
-                   f'<code>{i["id"][:12]}</code><small>{i["size"]:,} B</small></li>' for i in images)
+                   f'<code>{i["id"][:12]}</code><small>{i["size"]:,} B'
+                   f'{" · 原始内容已回收" if i["reclaimed"] else ""}</small></li>' for i in images)
 
 
 def image_page(image):
     tables = []
     for table in image["catalog"]["tables"]:
+        if image["reclaimed"]:
+            tables.append(f'<tr><th>{safe(table["name"])}</th>'
+                          f'<td>{safe(" · ".join(table["key"]))}</td><td>—</td><td>{table["rows"]}</td></tr>')
+            continue
         url = f'/images/{image["id"]}/rows?' + urlencode({"table": table["name"]})
         references = "、".join(f"{row[3]} → {row[2]}.{row[4] or '主键'}" for row in table["foreign_keys"]) or "—"
         tables.append(f'<tr><th><a href="{safe(url)}">{safe(table["name"])}</a></th>'
                       f'<td>{safe(" · ".join(table["key"]))}</td><td>{safe(references)}</td>'
                       f'<td>{table["rows"]}</td></tr>')
+    notice = ('<p class="muted reclaim-notice">原始内容已回收，行数据不可读取；目录与来源标识仍然保留。</p>'
+              if image["reclaimed"] else "")
     return page("image", image["label"], label=safe(image["label"]), image_id=image["id"],
-                signature=image["catalog"]["signature"], tables="".join(tables), size=f'{image["size"]:,}')
+                signature=image["catalog"]["signature"], tables="".join(tables), size=f'{image["size"]:,}',
+                notice=notice)
 
 
 def rows_page(image, result):

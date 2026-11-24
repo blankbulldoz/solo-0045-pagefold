@@ -7,6 +7,8 @@ from .inputs import unsigned
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
+from . import reclaim
+from .reclaim_views import reclaim_page
 from .render import HERE, page, safe
 
 
@@ -23,6 +25,8 @@ def workspace(store, parts, query):
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
+        if parts == ["reclaims"]:
+            return reclaim_page(reclaim.report(db), reclaim.history(db))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:
@@ -40,8 +44,8 @@ def sample(store):
 
 
 def error(problem, path):
-    return page("error", "操作未完成", detail=safe(problem.detail),
-                link=safe(path if path.startswith("/plans/") and not path.startswith("//") else "/"))
+    target = path if path.startswith(("/plans/", "/reclaims")) and not path.startswith("//") else "/"
+    return page("error", "操作未完成", detail=safe(problem.detail), link=safe(target))
 
 
 def asset(path):

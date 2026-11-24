@@ -71,11 +71,16 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
+        elif parts == ["api", "reclaims"]:
+            self.json(api.execute_reclaim(store, self), 200)
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
+        elif parts == ["reclaims"]:
+            api.execute_reclaim(store, self)
+            self.redirect("/reclaims")
         else:
             raise Problem("route", "找不到该入口。", 404)
 

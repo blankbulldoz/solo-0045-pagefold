@@ -1,0 +1,7 @@
+<a class="back" href="/">← 工作区</a>
+<section class="heading"><div><h1>原始镜像回收</h1><p>预审保留与可回收的来源，确认后清空无人使用的原始字节。</p></div></section>
+<dl class="meta reclaim-summary"><dt>预审摘要</dt><dd><code>$digest</code></dd><dt>镜像总数</dt><dd>$reclaimed_count 已回收 · $reclaimable_count 可回收 · $retained_count 保留</dd><dt>预计释放</dt><dd>$freed B</dd><dt>保留体积</dt><dd>$retained_bytes B</dd></dl>
+<section class="paper"><div class="panel-title"><h2>保留中的来源</h2><span class="tag auto">$retained_count</span></div><div class="scroll"><table><thead><tr><th>镜像</th><th>摘要</th><th>体积</th><th>保留理由</th><th>引用</th></tr></thead><tbody>$retained</tbody></table></div></section>
+<section class="paper workspace-history"><div class="panel-title"><h2>可回收的原始镜像</h2><span class="tag conflict">$reclaimable_count</span></div><div class="scroll"><table><thead><tr><th>镜像</th><th>摘要</th><th>体积</th><th>引用</th></tr></thead><tbody>$reclaimable</tbody></table></div><div class="confirm-block">$form</div></section>
+<section class="paper workspace-history"><div class="panel-title"><h2>已回收</h2><span class="tag">$reclaimed_count</span></div><div class="scroll"><table><thead><tr><th>镜像</th><th>摘要</th><th>体积</th><th>引用</th></tr></thead><tbody>$reclaimed</tbody></table></div></section>
+<section class="paper workspace-history"><div class="panel-title"><h2>回收记录</h2></div><div class="scroll"><table><thead><tr><th>预审摘要</th><th>执行时间</th><th>份数</th><th>释放</th></tr></thead><tbody>$history</tbody></table></div></section>
