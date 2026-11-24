@@ -1,4 +1,6 @@
 from .attempts import list_attempts
+from .bundle_views import bundle_links, bundle_page, plan_options
+from .bundles import bundle_view, list_bundles
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
@@ -14,9 +16,14 @@ def workspace(store, parts, query):
     with store.connect() as db:
         if not parts:
             images = list_images(db)
+            plans = list_plans(db)
             return page("home", "三方合流工作区", choices=image_options(images),
                         images=image_links(images) or '<li class="muted">尚未登记镜像。</li>',
-                        plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
+                        plans=plan_links(plans) or '<p class="muted">尚未创建合流计划。</p>',
+                        bundle_choices=plan_options(plans),
+                        bundles=bundle_links(list_bundles(db)) or '<p class="muted">尚未创建联合交付。</p>')
+        if len(parts) == 2 and parts[0] == "bundles":
+            return bundle_page(bundle_view(db, parts[1]))
         if len(parts) == 2 and parts[0] == "plans":
             plan = read_plan(db, parts[1])
             images = [get_image(db, plan["sources"][role]) for role in ROLES]

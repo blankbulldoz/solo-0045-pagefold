@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS bundles (
+    id TEXT PRIMARY KEY, manifest TEXT NOT NULL
+);
 """
 
 

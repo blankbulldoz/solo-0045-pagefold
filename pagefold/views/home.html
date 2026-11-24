@@ -13,3 +13,11 @@
   </aside>
 </div>
 <section class="workspace-history paper"><div class="panel-title"><h2>合流计划</h2></div><div class="plan-links">$plans</div></section>
+<section class="workspace-history paper"><div class="panel-title"><h2>联合交付</h2><span class="tag">整套领取</span></div>
+  <form class="new-plan" method="post" action="/bundles">
+    <label><span class="input-title">成员一</span><span class="input-desc">明确选择计划与版本号</span><select name="plan1" required>$bundle_choices</select><input name="revision1" type="number" min="0" step="1" required></label>
+    <label><span class="input-title">成员二</span><span class="input-desc">任一成员版本漂移则整组拒绝</span><select name="plan2" required>$bundle_choices</select><input name="revision2" type="number" min="0" step="1" required></label>
+    <button class="primary" type="submit">组成一套交付</button>
+  </form>
+  <div class="plan-links">$bundles</div>
+</section>

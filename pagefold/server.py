@@ -50,12 +50,16 @@ class Handler(BaseHTTPRequestHandler):
         elif len(parts) > 1 and parts[0] == "api":
             result = api.read(store, parts[1:], query)
             if isinstance(result, bytes):
+                name = parts[2] if parts[1] == "plans" else f"bundle-{parts[2][:12]}-{parts[4][:12]}"
                 self.send_bytes(result, "application/vnd.sqlite3", headers=[
-                    ("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.sqlite"')])
+                    ("Content-Disposition", f'attachment; filename="pagefold-{name}.sqlite"')])
             else:
                 headers = []
                 if len(parts) == 4 and parts[3] == "certificate":
                     headers.append(("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.json"'))
+                if len(parts) == 3 and parts[1] == "bundles":
+                    headers.append(("Content-Disposition",
+                                    f'attachment; filename="pagefold-bundle-{parts[2][:12]}.json"'))
                 self.json(result, headers=headers)
         else:
             self.send_bytes(workspace.workspace(store, parts, query), "text/html; charset=utf-8")
@@ -68,6 +72,11 @@ class Handler(BaseHTTPRequestHandler):
             raise Problem("origin", "该请求必须来自当前工作区。", 403)
         if path == "/api/images":
             self.json(api.upload(store, self), 201)
+        elif path == "/api/bundles":
+            manifest, created = api.deliver(store, self)
+            self.json(manifest, 201 if created else 200)
+        elif path == "/bundles":
+            self.redirect(f"/bundles/{api.deliver(store, self)[0]['id']}")
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")

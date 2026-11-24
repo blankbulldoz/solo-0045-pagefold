@@ -50,3 +50,9 @@ def token(value, name):
     if isinstance(value, str) and TOKEN.fullmatch(value):
         return value
     raise Problem("token", f"字段 {name} 须为 64 位十六进制摘要。", 400)
+
+
+def plan_token(value):
+    if isinstance(value, str) and re.fullmatch(r"[a-f0-9]{32}", value):
+        return value
+    raise Problem("token", "交付成员的计划须为 32 位十六进制标识。", 400)

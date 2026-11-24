@@ -3,6 +3,7 @@ from urllib.parse import unquote
 
 from .archive import archive
 from .attempts import list_attempts, rehearse
+from .bundles import create_bundle, get_bundle, list_bundles, member_body
 from .decisions import resolve
 from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
@@ -23,6 +24,13 @@ def read(store, parts, query):
                 return image_record(get_image(db, tail[0]))
             if len(tail) == 2 and tail[1] == "rows":
                 return table_page(db, tail[0], query.get("table"), unsigned(query.get("offset", "0"), "offset"))
+        if resource == "bundles":
+            if not tail:
+                return list_bundles(db)
+            if len(tail) == 1:
+                return get_bundle(db, tail[0])
+            if len(tail) == 3 and tail[1] == "members":
+                return member_body(db, tail[0], tail[2])
         if resource == "plans":
             if not tail:
                 return list_plans(db)
@@ -41,6 +49,15 @@ def upload(store, handler):
         raise Problem("media_type", "请提交 application/octet-stream 格式的镜像。", 415)
     label = unquote(handler.headers.get("X-Image-Name", "")).strip() or "SQLite 镜像"
     return register(store, payload(handler, MAX_BYTES), label[:100])
+
+
+def deliver(store, handler):
+    data = fields(handler, 32_768)
+    selection = data.get("members")
+    if selection is None:
+        selection = [{"plan": data.get(f"plan{n}"), "revision": data.get(f"revision{n}")}
+                     for n in (1, 2)]
+    return create_bundle(store, selection)
 
 
 def write_plan(store, handler, tail):
