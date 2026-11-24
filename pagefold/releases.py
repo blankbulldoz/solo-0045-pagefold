@@ -23,9 +23,13 @@ def seal(store, plan_id, revision):
             return json.loads(get_release(db, plan_id)["certificate"])
         expect_open(plan)
         attempt = get_attempt(db, plan_id, revision)
-        if attempt is None or attempt["candidate"] is None:
+        if attempt is None:
             raise Problem("rehearsal_required", "当前版本须先通过重演。", 409)
         result = json.loads(attempt["result"])
+        if result.get("status") == "running":
+            raise Problem("rehearsal_running", "当前版本的重演仍在进行，请稍后再封存。", 409)
+        if result.get("status") != "passed" or attempt["candidate"] is None:
+            raise Problem("rehearsal_required", "当前版本的重演未通过，无法封存。", 409)
         if digest(attempt["candidate"]) != result.get("candidate_digest"):
             raise Problem("candidate_digest", "候选摘要不一致，无法封存。", 409)
         items, decisions = plan_content(plan)

@@ -30,6 +30,8 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(data)
 
     def json(self, result, status=200, headers=()):
+        if hasattr(result, "as_dict"):
+            status, result = result.status, result.as_dict()
         self.send_bytes(json.dumps(result, ensure_ascii=True).encode("ascii"),
                         "application/json; charset=utf-8", status, headers)
 

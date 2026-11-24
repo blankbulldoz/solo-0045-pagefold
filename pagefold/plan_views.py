@@ -25,12 +25,36 @@ def entries(plan):
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
 
+STATUS_LABELS = {"passed": "通过", "blocked": "受阻", "running": "处理中", "stale": "已失效"}
+
+
+def attempt_evidence(attempt):
+    status = attempt.get("status")
+    if status == "passed":
+        return attempt.get("candidate_digest", "")
+    if status == "blocked":
+        return attempt.get("problem", {}).get("detail", "")
+    if status == "stale":
+        return attempt.get("reason", {}).get("detail", "")
+    return "输入已读取，正在重演。"
+
+
 def attempts_list(attempts, revision):
-    return "".join(fragment("attempt", revision=a["revision"],
-                            status="通过" if a["status"] == "passed" else "受阻",
-                            marker=" · 当前版" if revision == a["revision"] else " · 历史版",
-                            evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
-                            changes=a["changed"]) for a in attempts) or '<p class="muted">暂无重演记录。</p>'
+    blocks = []
+    for attempt in attempts:
+        status = attempt.get("status", "blocked")
+        current = revision == attempt["revision"]
+        if status == "stale":
+            marker = " · 已失效"
+        elif status == "running":
+            marker = " · 处理中"
+        else:
+            marker = " · 当前版" if current else " · 历史版"
+        blocks.append(fragment("attempt", revision=attempt["revision"],
+                               status=STATUS_LABELS.get(status, status), marker=marker,
+                               evidence=safe(attempt_evidence(attempt)),
+                               changes=attempt.get("changed", 0)))
+    return "".join(blocks) or '<p class="muted">暂无重演记录。</p>'
 
 
 def action_form(plan, action, label, style="", disabled=False):
@@ -42,7 +66,9 @@ def plan_page(plan, images, attempts, published):
     actions = []
     if plan["state"] == "open":
         passed = any(a["revision"] == plan["revision"] and a["status"] == "passed" for a in attempts)
-        actions.append(action_form(plan, "rehearse", "重演当前版", "primary", bool(plan["unresolved"])))
+        running = any(a["revision"] == plan["revision"] and a["status"] == "running" for a in attempts)
+        actions.append(action_form(plan, "rehearse", "重演当前版", "primary",
+                                   bool(plan["unresolved"]) or running))
         actions.append(action_form(plan, "seal", "封存成果", disabled=not passed))
     if plan["state"] != "archived":
         actions.append(action_form(plan, "archive", "归档计划", "quiet"))

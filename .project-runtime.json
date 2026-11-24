@@ -57,6 +57,10 @@
     {
       "workflow_id": "archive",
       "command": "python3 -m examples.walkthrough archive"
+    },
+    {
+      "workflow_id": "rehearsal_timing",
+      "command": "python3 -m examples.rehearsal_timing"
     }
   ]
 }
