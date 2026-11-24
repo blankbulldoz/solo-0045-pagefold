@@ -4,7 +4,7 @@ import sqlite3
 from .codec import canonical, digest
 from .errors import Problem
 from .images import get_image
-from .plans import expect_open, expect_revision, get_plan, plan_content
+from .plans import expect_open, expect_revision, get_plan, plan_bridge, plan_content
 from .replay import amendments, rebuild
 
 
@@ -29,11 +29,13 @@ def rehearse(store, plan_id, revision):
             return json.loads(previous["result"])
         items, decisions = plan_content(plan)
         operations = amendments(items, decisions)
-        ancestor = get_image(db, plan["base"], body=True)
+        bridge = plan_bridge(plan)
+        ancestor = get_image(db, bridge["ancestor"] if bridge else plan["base"], body=True)
+        catalog = bridge["catalog"] if bridge else json.loads(ancestor["catalog"])
         candidate = None
         result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}
         try:
-            candidate = rebuild(ancestor["body"], json.loads(ancestor["catalog"]), operations)
+            candidate = rebuild(ancestor["body"], catalog, operations)
             result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))
         except Problem as exc:
             result.update(status="blocked", problem=exc.as_dict())

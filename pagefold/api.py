@@ -46,7 +46,14 @@ def upload(store, handler):
 def write_plan(store, handler, tail):
     if not tail:
         data = fields(handler, 32_768)
-        return create_plan(store, {role: token(data.get(role), role) for role in ROLES})
+        declaration = data.get("bridge")
+        if declaration is not None and not isinstance(declaration, dict):
+            raise Problem("bridge_declaration", "bridge 字段须为桥接声明对象。", 400)
+        trial = data.get("trial", False)
+        if type(trial) is not bool:
+            raise Problem("bridge_declaration", "trial 字段须为布尔值。", 400)
+        sources = {role: token(data.get(role), role) for role in ROLES}
+        return create_plan(store, sources, declaration, trial)
     if len(tail) != 2:
         raise Problem("route", "找不到该入口。", 404)
     plan_id, action = tail

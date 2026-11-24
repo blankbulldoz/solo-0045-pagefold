@@ -1,30 +1,71 @@
 import json
 import uuid
 
+from .bridge import compute, migrate_ancestor, translate
 from .codec import canonical, fingerprint
 from .errors import Problem
-from .images import get_image
+from .images import get_image, register
 from .merge import ROLES, calculate, selected
 from .rows import read_image
 from .sqlite_image import mounted
 
 
-def create_plan(store, sources):
-    with store.connect() as db:
-        images = [get_image(db, sources[role], body=True) for role in ROLES]
-    catalogs = [json.loads(image["catalog"]) for image in images]
-    if len({catalog["signature"] for catalog in catalogs}) != 1:
-        raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
-    snapshots = []
-    for image, catalog in zip(images, catalogs):
-        with mounted(image["body"]) as snapshot:
-            snapshots.append(read_image(snapshot, catalog))
-    items = calculate(*snapshots)
+def _snapshots(images, catalogs):
+    result = []
+    for role in ROLES:
+        with mounted(images[role]["body"]) as snapshot:
+            result.append(read_image(snapshot, catalogs[role]))
+    return result
+
+
+def _store_plan(store, sources, items, bridge=None):
     plan_id = uuid.uuid4().hex
     with store.connect(write=True) as db:
-        db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
-                   (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+        db.execute("INSERT INTO plans(id,base,left_id,right_id,items,bridge) VALUES(?,?,?,?,?,?)",
+                   (plan_id, *[sources[role] for role in ROLES], canonical(items),
+                    canonical(bridge) if bridge else None))
         return read_plan(db, plan_id)
+
+
+def create_plan(store, sources, declaration=None, trial=False):
+    with store.connect() as db:
+        images = {role: get_image(db, sources[role], body=True) for role in ROLES}
+    catalogs = {role: json.loads(images[role]["catalog"]) for role in ROLES}
+    if declaration is None:
+        if len({catalog["signature"] for catalog in catalogs.values()}) != 1:
+            raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
+        return _store_plan(store, sources, calculate(*_snapshots(images, catalogs)))
+    result = compute(catalogs, declaration)
+    snapshots = {}
+    for role in ROLES:
+        with mounted(images[role]["body"]) as snapshot:
+            rows = read_image(snapshot, catalogs[role])
+        snapshots[role] = translate(result, role, rows)
+    report = result["report"]
+    unreachable = report["unreachable"]
+    if unreachable:
+        if trial:
+            return {"trial": True, "reachable": False, "bridge": report}
+        reasons = "；".join(f"{item['table']} 的 {item['column'] or '表'}（{item['role']}）：{item['reason']}"
+                           for item in unreachable[:3])
+        raise Problem("bridge_unreachable",
+                      f"桥接存在无法合流的结构：{reasons}。共 {len(unreachable)} 处，详见试算结果。", 409)
+    items = calculate(snapshots["base"], snapshots["left"], snapshots["right"])
+    migrated, alterations = migrate_ancestor(images["base"]["body"], result)
+    with mounted(migrated) as check:
+        preserved = read_image(check, result["catalog"])
+    report["alterations"] = alterations
+    report["identity"]["ancestor_rows_preserved"] = preserved == snapshots["base"]
+    if not report["identity"]["ancestor_rows_preserved"]:
+        raise Problem("bridge_identity", "迁移后的祖本行与桥接结果不一致。", 500)
+    if trial:
+        return {"trial": True, "reachable": True, "bridge": report, "items": items,
+                "unresolved": sum(item["automatic"] is None for item in items)}
+    ancestor = register(store, migrated, f"桥接祖本（{images['base']['label']}）")
+    bridge = {"target": result["target"], "declaration": declaration, "catalog": result["catalog"],
+              "ancestor": ancestor["id"], "schema": report["schema"], "report": report,
+              "digest": fingerprint(declaration)}
+    return _store_plan(store, sources, items, bridge)
 
 
 def get_plan(db, plan_id):
@@ -38,13 +79,22 @@ def plan_content(row):
     return json.loads(row["items"]), json.loads(row["decisions"])
 
 
+def plan_bridge(row):
+    return json.loads(row["bridge"]) if row["bridge"] else None
+
+
 def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
+    bridge = plan_bridge(row)
+    summary = None
+    if bridge:
+        summary = {key: bridge[key] for key in ("target", "declaration", "ancestor", "schema",
+                                                "digest", "report")}
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
             "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
-            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
+            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items], "bridge": summary}
 
 
 def list_plans(db):

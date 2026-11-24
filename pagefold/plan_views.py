@@ -1,6 +1,41 @@
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
 
+def bridge_section(bridge):
+    if not bridge:
+        return ""
+    report = bridge["report"]
+    grouped = {}
+    for entry in report["tables"]:
+        grouped.setdefault(entry["table"], []).append(entry)
+    rows = []
+    for table, entries in grouped.items():
+        for number, entry in enumerate(entries):
+            parts = [f"{entry['rows']} 行"]
+            if entry["source"] != table:
+                parts.append(f"表 {entry['source']} → {table}")
+            if entry["renamed"]:
+                parts.append("改名 " + "、".join(f"{src}→{dst}" for src, dst in entry["renamed"].items()))
+            if entry["filled"]:
+                parts.append("填充 " + "、".join(entry["filled"]))
+            if entry["reordered"]:
+                parts.append("列次序已对齐")
+            if entry["keys_remapped"]:
+                parts.append(f"{entry['keys_remapped']} 键重排")
+            head = f'<th rowspan="{len(entries)}">{safe(table)}</th>' if not number else ""
+            rows.append(f'<tr>{head}<th>{ROLE_LABELS[entry["role"]]}</th><td>{safe("；".join(parts))}</td></tr>')
+    alterations = "".join(f'<li><code>{safe(sql)}</code></li>' for sql in report["alterations"])
+    preserved = report["identity"].get("ancestor_rows_preserved")
+    identity = "；".join(f"{ROLE_LABELS[role]} " + "、".join(
+        f"{table} {counts['rows_in']}→{counts['rows_out']} 行"
+        for table, counts in tables.items()) for role, tables in report["identity"].items() if role in ROLE_LABELS)
+    return fragment("bridge", target=ROLE_LABELS[report["target"]], schema=safe(report["schema"][:16]),
+                    ancestor=safe(bridge["ancestor"]), tables="".join(rows),
+                    alterations=f"<ul>{alterations}</ul>" if alterations else "<p>祖本无需物理迁移。</p>",
+                    identity=safe(identity),
+                    preserved="一致" if preserved else ("未验证" if preserved is None else "不一致"))
+
+
 def plan_links(plans):
     return "".join(f'<a class="plan-link" href="/plans/{p["id"]}">'
                    f'<span>{safe(p["left_label"])} <b>＋</b> {safe(p["right_label"])}</span>'
@@ -53,4 +88,4 @@ def plan_page(plan, images, attempts, published):
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
-                actions="".join(actions))
+                bridge=bridge_section(plan["bridge"]), actions="".join(actions))

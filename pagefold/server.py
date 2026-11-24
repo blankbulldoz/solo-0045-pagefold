@@ -72,7 +72,9 @@ class Handler(BaseHTTPRequestHandler):
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
-            self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+            result = api.write_plan(store, self, parts[2:])
+            created = len(parts) == 2 and not (isinstance(result, dict) and result.get("trial"))
+            self.json(result, 201 if created else 200)
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
