@@ -27,11 +27,23 @@ python3 -m examples.make_images ./demo-images
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
 
+## 前进增量
+
+下游只读服务已持有上一版封存成果时，`pagefold.increments` 可为同一模式的两版封存成果生成数据级增量，避免整文件替换。增量按主键行描述删除与插入，应用时先删后插，因此两条记录交换唯一键值也能安全落地。增量记录两端凭证的候选摘要（绑定封存成果）和两端逻辑摘要（类型化行集合的指纹），并以规范 JSON 保存，自身可再摘要核对。
+
+`apply_increment` 在镜像边界内更新接收方文件：先校验文件头、模式签名与起点逻辑摘要，任一不符即拒绝且文件保持不变；应用在单事务内完成，提交前复核完整性、外键与目标逻辑摘要。前置条件只比对逻辑内容，不比对文件字节，因此页布局不同但逻辑数据相等的本地副本可以应用；内容偏离起点的文件被拒绝。增量只进不退，重复应用会因起点摘要不符而被拒绝。
+
+```sh
+python3 -m examples.rollout          # 演示两条合流线的增量构建、等价副本迁移与偏离拒绝
+python3 -m examples.rollout --out ./rollout-out   # 保留增量文档与接收方文件
+```
+
 ## 验证
 
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.rollout
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
