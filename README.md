@@ -32,6 +32,20 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.blockers_demo
 ```
+
+`blockers_demo` 用真实 `rebuild` 与真实 HTTP 入口演示阻断集合：两个相互独立的约束组（CHECK 与 UNIQUE/外键）会在同一次结果中收全，颠倒输入次序得到同一份稳定集合；还演示同一字段 CHECK 先报错、掩盖其外键错误的情况，以及修复后（先露出外键、再完全通过）的结果对比。
+
+### 阻断集合
+
+受阻的重演结果除保留原有 `problem: {code, detail}`（首要原因，契约不变）外，还带顶层 `blockers`：
+
+- `verified[]`：本次重建由 SQLite 实际验证的原因（INSERT 约束、`integrity_check`、`foreign_key_check`），含表、编码主键、约束引用、原始信息和处置提示；
+- `unchecked[]`：目标行未能写入、无法继续用库内检查复核的条目，回链拦截它的 `verified` 编号，并列出关联外键在计划目标态中的状态；
+- `gaps[]`：尚不能下结论但仍影响恢复的缺口，典型是被首个错误掩盖的外键（`code: masked_foreign_key`），会给出缺失父键与回链；另有检查截断、检查未能完成等缺口；
+- `items[]` 是上述三类按 `state` 标记的扁平合集，`counts` 给出三类计数。
+
+收集是有界的：不增加额外试算轮次，只把同一批写入继续做完，并运行既有的完整性/外键 PRAGMA；行身份定位仅针对 `foreign_key_check` 已报出的违规。受阻时仍不提交、不产生候选字节；同版重演继续返回同一份缓存证据。
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。

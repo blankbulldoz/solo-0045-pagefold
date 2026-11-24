@@ -1,3 +1,4 @@
+from .blockers import KIND_LABELS
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
 
@@ -25,12 +26,83 @@ def entries(plan):
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
 
+def _row_identity(record):
+    table = safe(record.get("table") or "?")
+    key = values(record["key"]) if record.get("key") is not None else '<span class="null">未定位到行</span>'
+    return f'<span class="bloc"><b>{table}</b> · {key}</span>'
+
+
+def _chip(record):
+    return f'<code class="bid">{safe(record["id"])}</code>'
+
+
+def _verified_item(rec):
+    kind = safe(KIND_LABELS.get(rec.get("kind"), rec.get("kind") or "约束"))
+    constraint = f'<code>{safe(rec["constraint"])}</code>' if rec.get("constraint") else ""
+    action = f'<small class="ba">处置：{safe(rec["action"])}</small>' if rec.get("action") else ""
+    message = rec.get("message") or rec.get("detail") or ""
+    return (f'<li>{_chip(rec)}<span class="bkind">{kind}</span>{_row_identity(rec)}{constraint}'
+            f'<small>{safe(message)}</small>{action}</li>')
+
+
+def _unchecked_item(rec):
+    link = f'<small class="blink">被 {safe(rec["blocked_by"])} 拦截</small>' if rec.get("blocked_by") else ""
+    fks = ""
+    if rec.get("foreign_keys"):
+        bits = []
+        for fk in rec["foreign_keys"]:
+            ref = f'{safe(fk["references"]["table"])}({safe(",".join(fk["references"]["columns"]))})'
+            state = {"present": "目标父行在计划中存在", "absent": "目标父行缺失",
+                     "parent_blocked": "父行同样未写入",
+                     "nullable_skipped": "含 NULL，默认不强制"}.get(fk.get("target_state"), fk.get("target_state"))
+            cols = safe(",".join(fk["columns"]))
+            bits.append(f'<small class="bfk">外键 {cols} → {ref}：{safe(state)}</small>')
+        fks = "".join(bits)
+    return (f'<li>{_chip(rec)}{_row_identity(rec)}{link}'
+            f'<small>{safe(rec.get("detail") or "")}</small>{fks}</li>')
+
+
+def _gap_item(rec):
+    link = f'<small class="blink">关联 {safe(rec["linked_to"])}</small>' if rec.get("linked_to") else ""
+    action = f'<small class="ba">处置：{safe(rec["action"])}</small>' if rec.get("action") else ""
+    return (f'<li>{_chip(rec)}{link}<small>{safe(rec.get("detail") or "")}</small>'
+            f'<small class="ba">{safe(rec.get("affects") or "")}</small>{action}</li>')
+
+
+def blocker_findings(blockers):
+    if not blockers:
+        return ""
+    groups = (
+        ("verified", "经过验证的原因", "bv", _verified_item),
+        ("unchecked", "尚无法继续检查的条目", "bu", _unchecked_item),
+        ("gaps", "仍会影响结论的缺口", "bg", _gap_item),
+    )
+    sections = []
+    total = 0
+    for name, title, cls, render_item in groups:
+        records = blockers.get(name) or []
+        total += len(records)
+        if records:
+            items = "".join(render_item(record) for record in records)
+        else:
+            items = '<li class="muted">无</li>'
+        sections.append(
+            f'<section class="bgroup {cls}"><h4>{title}<span class="tag">{len(records)}</span></h4>'
+            f'<ul>{items}</ul></section>')
+    return (f'<div class="blockers"><p class="blockers-title">阻断集合 · {total} 条标记</p>'
+            f'{"".join(sections)}</div>')
+
+
 def attempts_list(attempts, revision):
-    return "".join(fragment("attempt", revision=a["revision"],
-                            status="通过" if a["status"] == "passed" else "受阻",
-                            marker=" · 当前版" if revision == a["revision"] else " · 历史版",
-                            evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
-                            changes=a["changed"]) for a in attempts) or '<p class="muted">暂无重演记录。</p>'
+    rendered = []
+    for a in attempts:
+        findings = blocker_findings(a.get("blockers"))
+        rendered.append(fragment("attempt", revision=a["revision"],
+                                status="通过" if a["status"] == "passed" else "受阻",
+                                marker=" · 当前版" if revision == a["revision"] else " · 历史版",
+                                evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
+                                changes=a["changed"], findings=findings))
+    return "".join(rendered) or '<p class="muted">暂无重演记录。</p>'
 
 
 def action_form(plan, action, label, style="", disabled=False):

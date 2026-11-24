@@ -37,6 +37,8 @@ def rehearse(store, plan_id, revision):
             result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))
         except Problem as exc:
             result.update(status="blocked", problem=exc.as_dict())
+            if exc.blockers is not None:
+                result["blockers"] = exc.blockers
         except sqlite3.Error as exc:
             result.update(status="blocked", problem={"code": "sqlite_replay", "detail": str(exc)})
         db.execute("INSERT INTO attempts VALUES(?,?,?,?)", (plan_id, revision, canonical(result), candidate))

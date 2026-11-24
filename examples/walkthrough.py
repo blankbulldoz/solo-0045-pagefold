@@ -117,6 +117,9 @@ def run(client, goal):
     stress_route = f"/api/plans/{failed_plan['id']}"
     issue = client.call(stress_route + "/rehearse", {"revision": 0})
     expect(issue["status"] == "blocked" and issue["problem"]["code"] == "constraint", "合成唯一性问题未捕获")
+    verified = issue.get("blockers", {}).get("verified", [])
+    expect(any(item["kind"] == "unique" for item in verified), "阻断集合未标明已验证的唯一键原因")
+    expect(issue["blockers"]["counts"]["unchecked"] >= 1, "阻断集合未标明无法继续检查的条目")
     expect(client.call(stress_route + "/download", status=404)["code"] == "unpublished", "失败候选可下载")
     if done("rehearse", "有效候选通过，两个合法输入的唯一键冲突产生诊断"):
         return

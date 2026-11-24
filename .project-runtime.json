@@ -11,6 +11,10 @@
   "build_command": "python3 -m compileall -q pagefold examples",
   "workflow_checks": [
     {
+      "workflow_id": "blockers-demo",
+      "command": "python3 -m examples.blockers_demo"
+    },
+    {
       "workflow_id": "import",
       "command": "python3 -m examples.walkthrough import"
     },
