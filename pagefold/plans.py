@@ -4,7 +4,7 @@ import uuid
 from .codec import canonical, fingerprint
 from .errors import Problem
 from .images import get_image
-from .merge import ROLES, calculate, selected
+from .merge import ROLES, calculate, merge_report, selected
 from .rows import read_image
 from .sqlite_image import mounted
 
@@ -38,13 +38,29 @@ def plan_content(row):
     return json.loads(row["items"]), json.loads(row["decisions"])
 
 
+def annotate_items(items, decisions, catalog):
+    """为每个条目附加逐列分析，供页面和 API 区分“可以组合”和“已经采纳”。"""
+    tables = {table["name"]: table for table in catalog["tables"]}
+    enriched = []
+    for item in items:
+        table = tables[item["table"]]
+        decision = decisions.get(item["id"])
+        annotated = dict(item)
+        annotated["merge"] = merge_report(item, table["columns"], table["key"])
+        annotated["synthesis"] = decision if isinstance(decision, dict) else None
+        enriched.append(annotated)
+    return enriched
+
+
 def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
+    catalog = json.loads(get_image(db, row["base"])["catalog"])
+    enriched = annotate_items(items, decisions, catalog)
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
             "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
-            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
+            "items": [dict(i, choice=selected(i, decisions)[0]) for i in enriched]}
 
 
 def list_plans(db):

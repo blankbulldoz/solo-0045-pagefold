@@ -1,6 +1,7 @@
 <form class="decision" action="/plans/$plan/decisions" method="post">
  <input type="hidden" name="revision" value="$revision">
  <input type="hidden" name="item" value="$item">
- <label>行裁决 <select name="choice">$options</select></label>
+ <label>裁决方式 <select name="choice" class="decision-mode">$options</select></label>
+ <div class="column-picker" hidden>$column_picker</div>
  <button>保存</button>
 </form>

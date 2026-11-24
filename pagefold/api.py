@@ -54,9 +54,16 @@ def write_plan(store, handler, tail):
     revision = unsigned(data.get("revision"), "revision")
     if action == "decisions":
         choice = data.get("choice")
-        if choice not in (*ROLES, "clear"):
-            raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
-        return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+        if choice not in (*ROLES, "combine", "clear"):
+            raise Problem("choice", "请选择祖本、左支、右支、列合成或清除裁决。", 400)
+        if "columns" in data:
+            columns = data["columns"]
+        else:
+            prefix = "col."
+            # 网页表单里未选择的列提交空字符串，丢弃后由合成逻辑沿用祖本值。
+            columns = {key[len(prefix):]: value for key, value in data.items()
+                       if key.startswith(prefix) and value != ""} or None
+        return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice, columns)
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)

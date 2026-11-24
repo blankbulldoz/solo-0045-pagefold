@@ -11,7 +11,7 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
-可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
+可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`：左支只改备注，右支只改二进制和权重。页面在整行裁决之外提供列合成——逐列采纳双方互不冲突的独立改动，并区分“可以组合”（系统建议尚未采纳）与“已经采纳 · 列合成”（合成行已固定为重演目标）。选择右支也可按整行裁决成功重演，也可选择祖本或左支。同列出现两个不同新值时须逐列选定来源；删除碰上修改只能整行裁决；独立列拼成的行若违反行级约束，重演会受阻并保留整行裁决退路。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
 ## 操作和接口
 
@@ -21,7 +21,7 @@ python3 -m examples.make_images ./demo-images
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
-- `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
+- `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`；`choice=combine` 时用 `columns`（JSON 对象，列名到 `base`/`left`/`right` 的映射）逐列合成，网页表单改用 `col.列名` 字段。同列冲突未显式选边返回 `column_conflict`，删除碰上修改返回 `row_missing`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
@@ -32,6 +32,7 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.column_merge all
 ```
 
-工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+工作流检查使用临时状态库和本机 HTTP 服务。`column_merge` 分别用整行裁决和列合成演示同一复合主键冲突，并覆盖同列不同值、删除碰上修改、合成违反行级约束三条处理路径，逐场核对页面信息与下载数据库中的重演字段。正式自动化测试套件延期。

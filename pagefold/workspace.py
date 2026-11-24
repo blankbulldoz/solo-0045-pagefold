@@ -45,7 +45,8 @@ def error(problem, path):
 
 
 def asset(path):
-    files = {"/assets/workspace.css": "text/css", "/assets/upload.js": "text/javascript"}
+    files = {"/assets/workspace.css": "text/css", "/assets/upload.js": "text/javascript",
+             "/assets/merge.js": "text/javascript"}
     if path not in files:
         raise Problem("route", "找不到该资源。", 404)
     return (HERE / path.lstrip("/")).read_bytes(), files[path]
