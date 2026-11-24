@@ -40,7 +40,7 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith("/api/"):
             self.json(problem.as_dict(), problem.status)
         else:
-            back = "/".join(path.split("/")[:3])
+            back = problem.return_to or "/".join(path.split("/")[:3])
             self.send_bytes(workspace.error(problem, back), "text/html; charset=utf-8", problem.status)
 
     def route_get(self, store, path, parts, query):
@@ -68,14 +68,15 @@ class Handler(BaseHTTPRequestHandler):
             raise Problem("origin", "该请求必须来自当前工作区。", 403)
         if path == "/api/images":
             self.json(api.upload(store, self), 201)
-        elif path == "/demo":
+        elif path in {"/demo", "/demo-batch"}:
             payload(self, 0)
-            self.redirect(f"/plans/{workspace.sample(store)['id']}")
+            self.redirect(f"/plans/{workspace.sample(store, bulk=path == '/demo-batch')['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":
             result = api.write_plan(store, self, parts[1:])
-            self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
+            next_page = (result.get("saved") or {}).get("next")
+            self.redirect(next_page or f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
         else:
             raise Problem("route", "找不到该入口。", 404)
 

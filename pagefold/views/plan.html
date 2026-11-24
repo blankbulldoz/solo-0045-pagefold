@@ -1,8 +1,14 @@
 <a class="back" href="/">← 工作区</a>
-<section class="heading plan-heading"><div><h1>合流计划 <code>$short</code></h1><p>第 $revision 版 · $state</p></div><span class="tag">$unresolved 项待裁决</span></section>
+<section class="heading plan-heading"><div><h1>合流计划 <code>$short</code></h1><p>第 $revision 版 · $state · $scope</p></div><span class="tag">$unresolved 项待裁决</span></section>
 <nav class="sources" aria-label="三方镜像">$roles</nav>
+$notice
 <div class="work-grid plan-grid">
-  <section class="paper"><div class="panel-title"><h2>主键行差异</h2><span class="tag">$count 项</span></div><div class="entries">$items</div></section>
+  <section class="paper">
+    <div class="panel-title"><h2>$panel</h2><span class="tag">$count</span></div>
+    <div class="filters-wrap">$filters</div>
+    <div class="entries">$items</div>
+    <nav class="pager" aria-label="计划行分页">$pager</nav>
+  </section>
   <aside><section class="paper"><div class="panel-title"><h2>重演与封存</h2></div><div class="actions">$actions</div></section>
   <section class="paper workspace-history"><div class="panel-title"><h2>重演历史</h2></div><div class="history">$history</div></section></aside>
 </div>

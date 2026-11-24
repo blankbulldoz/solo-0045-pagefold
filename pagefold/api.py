@@ -8,7 +8,7 @@ from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
-from .plans import create_plan, list_plans, read_plan
+from .plans import create_plan, list_plans, read_plan, view_fields, view_options
 from .releases import get_release, seal
 from .sqlite_image import MAX_BYTES
 
@@ -27,7 +27,8 @@ def read(store, parts, query):
             if not tail:
                 return list_plans(db)
             if len(tail) == 1:
-                return read_plan(db, tail[0])
+                options = view_options(query, default_pending=False, default_limit=None)
+                return read_plan(db, tail[0], **options)
             if len(tail) == 2 and tail[1] == "attempts":
                 return list_attempts(db, tail[0])
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
@@ -56,7 +57,8 @@ def write_plan(store, handler, tail):
         choice = data.get("choice")
         if choice not in (*ROLES, "clear"):
             raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
-        return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+        context = view_fields(data) if any(key in data for key in ("table", "pending", "limit", "cursor")) else None
+        return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice, context)
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)

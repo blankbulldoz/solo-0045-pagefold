@@ -6,7 +6,7 @@ from .images import get_image, image_record, list_images, register, table_page
 from .inputs import unsigned
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
-from .plans import create_plan, list_plans, read_plan
+from .plans import PAGE_LIMIT, create_plan, list_plans, read_plan, view_options
 from .render import HERE, page, safe
 
 
@@ -18,7 +18,8 @@ def workspace(store, parts, query):
                         images=image_links(images) or '<li class="muted">尚未登记镜像。</li>',
                         plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
         if len(parts) == 2 and parts[0] == "plans":
-            plan = read_plan(db, parts[1])
+            options = view_options(query, default_pending=True, default_limit=PAGE_LIMIT)
+            plan = read_plan(db, parts[1], **options)
             images = [get_image(db, plan["sources"][role]) for role in ROLES]
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
@@ -33,9 +34,14 @@ def workspace(store, parts, query):
     raise Problem("route", "找不到该入口。", 404)
 
 
-def sample(store):
-    entries = {role: register(store, image(flavor), label)["id"] for role, flavor, label in zip(
-        ROLES, ("quartz", "cerulean", "umber"), ("石英祖本", "青蓝分支", "赤褐分支"))}
+def sample(store, bulk=False):
+    if bulk:
+        pairs = (("base", "bulk-quartz", "分批祖本"), ("left", "bulk-cerulean", "分批青蓝"),
+                 ("right", "bulk-umber", "分批赤褐"))
+    else:
+        pairs = (("base", "quartz", "石英祖本"), ("left", "cerulean", "青蓝分支"),
+                 ("right", "umber", "赤褐分支"))
+    entries = {role: register(store, image(flavor), label)["id"] for role, flavor, label in pairs}
     return create_plan(store, entries)
 
 
