@@ -13,8 +13,8 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts",
+             "compare", "seal", "certificate", "download", "archive")
 
 
 def expect(condition, description):
@@ -56,7 +56,29 @@ def mismatched_schema():
         db.close()
 
 
-def run(client, goal):
+def collision_image(flavor):
+    """同一计划内先通过、后因唯一键选择受阻所需的三份镜像。
+
+    g1 是双边冲突：左支改成 left-label，右支改成 dup；左支单边插入的
+    g2 也使用 dup。选左支全部唯一，选右支则与 g2 撞唯一约束。
+    """
+    db = sqlite3.connect(":memory:")
+    try:
+        db.execute("CREATE TABLE gadget(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID")
+        db.execute("INSERT INTO gadget VALUES('g1','one')")
+        if flavor == "collision-left":
+            db.execute("UPDATE gadget SET label='left-label' WHERE code='g1'")
+            db.execute("INSERT INTO gadget VALUES('g2','dup')")
+        elif flavor == "collision-right":
+            db.execute("UPDATE gadget SET label='dup' WHERE code='g1'")
+            db.execute("INSERT INTO gadget VALUES('g3','right-only')")
+        db.commit()
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def run(client, goal, state_path=None):
     def done(workflow, result):
         if goal in (workflow, "all"):
             print(f"{workflow} ✓ {result}")
@@ -133,6 +155,85 @@ def run(client, goal):
     expect(client.call(route + "/decisions", dict(decision, revision=2), 409)["code"] == "closed_plan", "封存可编辑")
     if done("seal", "原子封存当前候选，重复封存稳定"):
         return
+    pair = client.call(route + "/compare?a=1&b=2")
+    expect(pair["state"] == "candidate_diff" and pair["same_candidate"] is False, "成功/成功比较状态错误")
+    north = next(e for e in pair["changes"] if e["table"] == "node" and e["proven_change"] is True)
+    expect(north["choice_changed"] is True, "候选实证差异未关联选择变化")
+    expect(north["a"]["choice"] == "right" and north["b"]["choice"] == "base", "未关联两版当时的选择")
+    expect(north["a"]["row_evidence"] == "proven" and north["b"]["row_evidence"] == "proven",
+           "成功侧行未由候选证明")
+    expect(client.call(route + "/attempts/compare?a=1&b=2")["state"] == pair["state"],
+           "attempts/compare 别名入口不一致")
+    same = client.call(route + "/compare?a=1&b=1")
+    expect(same["same_candidate"] is True and same["state"] == "same_candidate", "同版比较未识别同一候选")
+    verified = client.call(route + "/compare?a=1&b=2&verify=1")
+    expect(all(side["reproduction"].get("reproduced") is True for side in verified["sides"]),
+           "可重现来源的离线复核未通过")
+    compare_page = client.call(f"/plans/{plan['id']}/compare?a=1&b=2&verify=1")
+    for token in ("两版重演比较", "已证明", "候选实证", "可重现的来源", "离线重放得到相同候选摘要"):
+        expect(token.encode() in compare_page, f"成功/成功比较页缺少 {token}")
+    plan_page_html = client.call(f"/plans/{plan['id']}")
+    expect(b"history-compare" in plan_page_html and b"/compare?" in plan_page_html, "计划页缺少比较入口")
+    expect(client.call(route + "/compare", status=400)["code"] == "compare_revisions", "缺少比较版本未拒绝")
+    expect(client.call(route + "/compare?a=1&b=99", status=404)["code"] == "unknown_attempt",
+           "未知重演版本未拒绝")
+    csources = {"base": client.upload("collision-base", collision_image("base"))["id"],
+                "left": client.upload("collision-left", collision_image("collision-left"))["id"],
+                "right": client.upload("collision-right", collision_image("collision-right"))["id"]}
+    cplan = client.call("/api/plans", csources, 201)
+    grow = next(item for item in cplan["items"] if not item["automatic"])
+    croute = f"/api/plans/{cplan['id']}"
+    client.call(croute + "/decisions", {"item": grow["id"], "choice": "left", "revision": 0})
+    first = client.call(croute + "/rehearse", {"revision": 1})
+    expect(first["status"] == "passed", "成功/阻断样本的第一版未通过")
+    client.call(croute + "/decisions", {"item": grow["id"], "choice": "right", "revision": 1})
+    blocked = client.call(croute + "/rehearse", {"revision": 2})
+    expect(blocked["status"] == "blocked" and blocked["problem"]["code"] == "constraint",
+           "第二版未被唯一约束阻断")
+    mixed = client.call(croute + "/compare?a=1&b=2")
+    expect(mixed["state"] == "passed_blocked", "成功/阻断比较状态错误")
+    grow_row = next(e for e in mixed["rows"] if e["item_id"] == grow["id"])
+    expect(grow_row["a"]["choice"] == "left" and grow_row["b"]["choice"] == "right", "阻断侧未关联当时选择")
+    expect(grow_row["a"]["row_evidence"] == "proven" and grow_row["b"]["row_evidence"] == "inferred",
+           "阻断侧不应把推断声称为证明")
+    expect(any(e["blocker"] for e in mixed["rows"]), "未标记约束失败的操作行")
+    mixed_verify = client.call(croute + "/compare?a=1&b=2&verify=1")
+    expect(mixed_verify["b"]["reproduction"].get("reproduced") is True, "阻断点未离线重现")
+    blocked_page = client.call(f"/plans/{cplan['id']}/compare?a=1&b=2&verify=1")
+    for token in ("成功 / 阻断", "唯一约束", "待重演推断", "触发约束失败", "阻断点可重现"):
+        expect(token.encode() in blocked_page, f"成功/阻断比较页缺少 {token}")
+    if state_path is not None:
+        legacy_db = sqlite3.connect(state_path)
+        try:
+            stored = legacy_db.execute(
+                "SELECT revision,result FROM attempts WHERE plan_id=?", (cplan["id"],)).fetchall()
+            for rev, text in stored:
+                legacy = json.loads(text)
+                legacy.pop("choices", None)
+                legacy.pop("decision_digest", None)
+                legacy_db.execute("UPDATE attempts SET result=? WHERE plan_id=? AND revision=?",
+                                  (json.dumps(legacy, sort_keys=True, separators=(",", ":")),
+                                   cplan["id"], rev))
+            legacy_db.commit()
+        finally:
+            legacy_db.close()
+        old_pair = client.call(croute + "/compare?a=1&b=2")
+        old_row = next(e for e in old_pair["rows"] if e["item_id"] == grow["id"])
+        expect(old_row["a"]["choice_evidence"] == "candidate", "旧通过记录未走候选反查来源")
+        expect(old_row["b"]["choice_evidence"] == "current", "旧阻断记录未回退到当前选择推断")
+        old_page = client.call(f"/plans/{cplan['id']}/compare?a=1&b=2")
+        for token in ("候选反查来源", "当前版推断", "旧记录未留存选择"):
+            expect(token.encode() in old_page, f"旧数据缺失选择的呈现缺少 {token}")
+        client.call(croute + "/decisions", {"item": grow["id"], "choice": "clear", "revision": 2})
+        missing_pair = client.call(croute + "/compare?a=1&b=2")
+        missing_row = next(e for e in missing_pair["rows"] if e["item_id"] == grow["id"])
+        expect(missing_row["b"]["choice_evidence"] == "missing"
+               and missing_row["b"]["row_evidence"] == "unknown", "选择缺失未明确呈现")
+        missing_page = client.call(f"/plans/{cplan['id']}/compare?a=1&b=2")
+        expect("选择缺失".encode() in missing_page and "不能还原".encode() in missing_page,
+               "缺失选择的页面标记不足")
+    if done("compare", "成功/成功与成功/阻断可比较，候选实证、推断边界、可重现来源和旧数据缺失均有交代"):
+        return
     proof = client.call(route + "/certificate")
     expect(proof["sources"] == sources and proof["candidate_digest"] == current["candidate_digest"] and
            proof["schema"] == catalog["signature"] and proof["revision"] == 2, "封存凭证来源错误")
@@ -163,11 +264,12 @@ def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
-        with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
+        state_path = Path(root) / "state.sqlite"
+        with make_server(Store(state_path), 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()
             try:
-                run(Client(server.server_port), parser.parse_args().workflow)
+                run(Client(server.server_port), parser.parse_args().workflow, state_path)
             finally:
                 server.shutdown()
                 thread.join()

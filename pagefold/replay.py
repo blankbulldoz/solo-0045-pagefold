@@ -33,7 +33,9 @@ def apply_rows(db, table, operations):
             try:
                 db.execute(f"INSERT OR ABORT INTO main.{name} ({columns}) VALUES ({params})", tuple(map(unpack, row)))
             except sqlite3.IntegrityError as exc:
-                raise Problem("constraint", f"{table['name']} {canonical(item['key'])}：{exc}") from exc
+                problem = Problem("constraint", f"{table['name']} {canonical(item['key'])}：{exc}",
+                                  context={"table": table["name"], "key": item["key"], "id": item["id"]})
+                raise problem from exc
 
 
 def rebuild(ancestor, catalog, operations):

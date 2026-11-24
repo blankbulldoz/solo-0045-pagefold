@@ -1,4 +1,5 @@
 from .attempts import list_attempts
+from .compare_views import comparison_workspace
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
@@ -23,6 +24,18 @@ def workspace(store, parts, query):
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
+        if parts and parts[0] == "plans" and len(parts) == 3 and parts[2] in {"compare", "diff"}:
+            return comparison_workspace(db, parts[1], query)
+        if parts and parts[0] == "plans" and len(parts) == 4 \
+                and parts[2] == "attempts" and parts[3] in {"compare", "diff"}:
+            return comparison_workspace(db, parts[1], query)
+        if parts and parts[0] == "plans" and len(parts) == 5 and parts[2] in {"compare", "diff"}:
+            pair = (unsigned(parts[3], "a"), unsigned(parts[4], "b"))
+            return comparison_workspace(db, parts[1], query, path_pair=pair)
+        if parts and parts[0] == "plans" and len(parts) == 5 and parts[2] == "attempts" \
+                and parts[3].isdigit() and parts[4].isdigit():
+            return comparison_workspace(db, parts[1], query,
+                                        path_pair=(int(parts[3]), int(parts[4])))
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:

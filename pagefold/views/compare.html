@@ -1,0 +1,17 @@
+<a class="back" href="/plans/$plan">← 返回计划</a>
+<section class="heading compare-heading">
+  <div><h1>两版重演比较</h1><p>计划 <code>$short</code> · 第 $a_rev 版 对照 第 $b_rev 版 · $state_label</p></div>
+</section>
+<section class="paper compare-picker"><div class="panel-title"><h2>选择两版重演记录</h2></div><div class="picker-body">$picker</div></section>
+$banner
+$guide
+<section class="paper compare-table-paper">
+  <div class="panel-title"><h2>变更行与当时选择、候选的关联</h2><span class="tag">$row_count 行列入</span></div>
+  <div class="scroll"><table class="compare-table">
+    <thead><tr><th>表 / 主键</th><th>第 $a_rev 版</th><th>第 $b_rev 版</th><th>变化</th><th>证据说明</th></tr></thead>
+    <tbody>$rows</tbody>
+  </table></div>
+  $unchanged
+</section>
+$side_cards
+$sources

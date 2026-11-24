@@ -21,6 +21,7 @@ python3 -m examples.make_images ./demo-images
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
+- `GET /api/plans/{id}/compare?a=1&b=2`（同义入口 `/attempts/compare`、`/compare/1/2`，参数也接受 `old/new`、`from/to`）比较两版重演：把变更行与该版留存的选择、来源镜像和候选摘要关联；通过侧读候选实物给出已证明差异，阻断侧只给待重演推断。加 `&verify=1` 按留存选择在内存中复核候选摘要或阻断点的可重现性。网页入口 `/plans/{id}/compare`，计划页“重演历史”内也有比较表单与逐记录链接。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
