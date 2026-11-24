@@ -1,6 +1,10 @@
-<form class="decision" action="/plans/$plan/decisions" method="post">
+<form class="decision $manualclass" action="/plans/$plan/decisions" method="post"
+      data-item="$item" data-revision="$revision" data-rows="$rowsjson">
  <input type="hidden" name="revision" value="$revision">
  <input type="hidden" name="item" value="$item">
- <label>行裁决 <select name="choice">$options</select></label>
- <button>保存</button>
+ <div class="decision-bar">
+  <label>行裁决 <select name="choice" class="choice-select">$options</select></label>
+  <button class="primary">保存裁决</button>
+ </div>
+ $editor
 </form>

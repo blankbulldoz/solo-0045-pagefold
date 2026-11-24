@@ -40,7 +40,11 @@ def sample(store):
 
 
 def error(problem, path):
-    return page("error", "操作未完成", detail=safe(problem.detail),
+    stage = {"decision_input": "裁决输入 / 类型转换步骤",
+             "decision": "裁决版本检查步骤",
+             "rehearse": "重演 / 约束校验步骤"}.get(problem.info.get("stage"), "")
+    return page("error", "操作未完成", detail=safe(problem.detail), code=safe(problem.code),
+                stage=safe(stage),
                 link=safe(path if path.startswith("/plans/") and not path.startswith("//") else "/"))
 
 

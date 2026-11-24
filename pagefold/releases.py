@@ -4,6 +4,7 @@ from .attempts import get_attempt
 from .codec import canonical, digest, fingerprint
 from .errors import Problem
 from .images import get_image
+from .merge import decision_manifest, manual_rows_map
 from .plans import expect_open, expect_revision, get_plan, plan_content
 
 
@@ -33,6 +34,8 @@ def seal(store, plan_id, revision):
                        "sources": {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]},
                        "schema": json.loads(get_image(db, plan["base"])["catalog"])["signature"],
                        "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
+                       "decisions": decisions, "manual_rows": manual_rows_map(decisions),
+                       "choices": decision_manifest(items, decisions),
                        "candidate_digest": result["candidate_digest"], "candidate_size": result["size"]}
         db.execute("INSERT INTO releases VALUES(?,?,?)", (plan_id, canonical(certificate), attempt["candidate"]))
         db.execute("UPDATE plans SET state='sealed' WHERE id=?", (plan_id,))

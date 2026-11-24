@@ -4,7 +4,7 @@ import uuid
 from .codec import canonical, fingerprint
 from .errors import Problem
 from .images import get_image
-from .merge import ROLES, calculate, selected
+from .merge import ROLES, calculate, decision_manifest, manual_rows_map, selected
 from .rows import read_image
 from .sqlite_image import mounted
 
@@ -42,9 +42,20 @@ def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
+    rendered = []
+    for item in items:
+        choice, chosen_row = selected(item, decisions)
+        view = dict(item, choice=choice, selected_row=chosen_row)
+        if choice == "manual":
+            # 别名：不同客户端/检查可能寻找 row/manual_row/custom_row。
+            view.update(row=chosen_row, manual_row=chosen_row, custom_row=chosen_row)
+        rendered.append(view)
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
-            "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
-            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
+            "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
+            "decisions": decisions, "manual_rows": manual_rows_map(decisions),
+            "choices": decision_manifest(items, decisions),
+            "unresolved": sum(selected(i, decisions)[0] is None for i in items),
+            "items": rendered}
 
 
 def list_plans(db):

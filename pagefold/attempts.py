@@ -1,7 +1,7 @@
 import json
 import sqlite3
 
-from .codec import canonical, digest
+from .codec import canonical, digest, fingerprint
 from .errors import Problem
 from .images import get_image
 from .plans import expect_open, expect_revision, get_plan, plan_content
@@ -31,13 +31,18 @@ def rehearse(store, plan_id, revision):
         operations = amendments(items, decisions)
         ancestor = get_image(db, plan["base"], body=True)
         candidate = None
-        result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}
+        result = {"id": plan_id, "revision": revision,
+                  "decision_digest": fingerprint(decisions),
+                  "changed": sum(map(len, operations.values()))}
         try:
             candidate = rebuild(ancestor["body"], json.loads(ancestor["catalog"]), operations)
             result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))
         except Problem as exc:
-            result.update(status="blocked", problem=exc.as_dict())
-        except sqlite3.Error as exc:
-            result.update(status="blocked", problem={"code": "sqlite_replay", "detail": str(exc)})
+            problem = exc.as_dict()
+            problem.setdefault("stage", "rehearse")
+            result.update(status="blocked", problem=problem)
+        except (sqlite3.Error, ValueError, TypeError, OverflowError, UnicodeError) as exc:
+            result.update(status="blocked",
+                          problem={"code": "sqlite_replay", "detail": str(exc), "stage": "rehearse"})
         db.execute("INSERT INTO attempts VALUES(?,?,?,?)", (plan_id, revision, canonical(result), candidate))
         return result
