@@ -15,8 +15,27 @@ def relation(db, name):
         if any(part[5] and part[4].upper() != "BINARY" for part in parts):
             raise Problem("key_collation", f"表 {name} 的主键须使用 BINARY 比较。")
     foreign = db.execute(f"PRAGMA main.foreign_key_list({ident(name)})").fetchall()
+    unique_keys = []
+    pk_index = next((index_name for _, index_name, _, origin, _ in
+                     db.execute(f"PRAGMA main.index_list({ident(name)})") if origin == "pk"), None)
+    pk_parts = db.execute(f"PRAGMA main.index_xinfo({ident(pk_index)})").fetchall() if pk_index else []
+    pk_signature = [(part[1], part[4]) for part in sorted(pk_parts, key=lambda part: part[0])]
+    for _, index_name, unique, origin, partial in db.execute(
+            f"PRAGMA main.index_list({ident(name)})"):
+        if not unique or origin == "pk" or partial:
+            continue
+        parts = db.execute(f"PRAGMA main.index_xinfo({ident(index_name)})").fetchall()
+        columns = [part for part in parts if part[1] >= 0]
+        if not columns:
+            continue
+        signature = [(part[1], part[4]) for part in sorted(columns, key=lambda part: part[0])]
+        if signature == pk_signature:
+            continue
+        key_parts = [part for part in columns if part[5]] or columns
+        unique_keys.append([part[2] for part in sorted(key_parts, key=lambda part: part[0])])
     return {"name": name, "columns": [f[1] for f in fields], "types": [f[2] for f in fields],
-            "key": [col for _, col in position], "foreign_keys": [list(row) for row in foreign]}
+            "key": [col for _, col in position], "foreign_keys": [list(row) for row in foreign],
+            "unique_keys": unique_keys}
 
 
 def describe(db):

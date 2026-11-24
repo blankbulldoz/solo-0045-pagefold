@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS plans (
     id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
     left_id TEXT NOT NULL REFERENCES images(id), right_id TEXT NOT NULL REFERENCES images(id),
     items TEXT NOT NULL, decisions TEXT NOT NULL DEFAULT '{}', revision INTEGER NOT NULL DEFAULT 0,
-    state TEXT NOT NULL DEFAULT 'open' CHECK(state IN ('open', 'sealed', 'archived'))
+    state TEXT NOT NULL DEFAULT 'open' CHECK(state IN ('open', 'sealed', 'archived')),
+    scope TEXT, amendments TEXT NOT NULL DEFAULT '[]'
 );
 CREATE TABLE IF NOT EXISTS attempts (
     plan_id TEXT NOT NULL REFERENCES plans(id), revision INTEGER NOT NULL,
@@ -23,12 +24,21 @@ CREATE TABLE IF NOT EXISTS releases (
 """
 
 
+def migrate(db):
+    columns = {row[1] for row in db.execute("PRAGMA main.table_info(plans)")}
+    if "scope" not in columns:
+        db.execute("ALTER TABLE plans ADD COLUMN scope TEXT")
+    if "amendments" not in columns:
+        db.execute("ALTER TABLE plans ADD COLUMN amendments TEXT NOT NULL DEFAULT '[]'")
+
+
 class Store:
     def __init__(self, path):
         self.path = path
         with self.connect(snapshot=False) as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
+            migrate(db)
 
     @contextmanager
     def connect(self, write=False, snapshot=True):

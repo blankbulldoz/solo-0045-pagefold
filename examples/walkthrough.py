@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "archive", "scope")
 
 
 def expect(condition, description):
@@ -54,6 +54,77 @@ def mismatched_schema():
         return db.serialize()
     finally:
         db.close()
+
+
+def run_scope(client):
+    quartz = client.upload("quartz")
+    left = client.upload("cedar-left")
+    right = client.upload("cedar-right")
+    plan = client.call("/api/plans", {"base": quartz["id"], "left": left["id"], "right": right["id"],
+                                      "scope": ["node"]}, 201)
+    route = f"/api/plans/{plan['id']}"
+    report = client.call(route)["scope_report"]
+    expect(report["scope"] == ["node"], "范围未保存")
+    expect({a["table"] for a in report["active"]} == {"node"}, "主动变更未限定在 node")
+    derived = {(d["table"], json.dumps(d["key"])) for d in report["derived"]}
+    expect(("binding", json.dumps([["i", "1"]])) in derived, "复合外键未派生范围外删除")
+    blocker = report["blocked"][0]
+    expect(blocker["kind"] == "orphan_parent" and blocker["remedy"] == {"action": "expand", "tables": ["bench"]},
+           "缺父行阻塞未给出扩大范围建议")
+    expect(set(report["untouched_tables"]) == {"bench", "ledger", "alias"}, "未参与表清单不符")
+    expect("binding" not in report["untouched_tables"], "派生删除表被误判为未参与")
+    expect(client.call(route + "/rehearse", {"revision": 0}, 409)["code"] == "scope_blocked",
+           "带阻塞的范围可重演")
+    # 扩大范围到 bench：上游阻塞解除，但派生删除仍需显式确认。
+    widened = client.call(route + "/scope", {"revision": 0, "scope": ["node", "bench"]})
+    expect(widened["revision"] == 1 and not widened["blocked"] and len(widened["pending_derived"]) == 1,
+           "扩大范围后未解除阻塞")
+    expect(client.call(route + "/rehearse", {"revision": 1}, 409)["code"] == "scope_amendment",
+           "未确认派生变更即可重演")
+    report = client.call(route)["scope_report"]
+    confirmed = client.call(route + "/amendments",
+                            {"revision": 1, "confirm": [d["id"] for d in report["derived"]]})
+    expect(confirmed["revision"] == 2, "确认派生变更未推进版本")
+    attempt = client.call(route + "/rehearse", {"revision": 2})
+    expect(attempt["status"] == "passed" and attempt["active_changed"] == 4
+           and attempt["derived_changed"] == 1 and attempt["untouched_tables"] == ["alias", "ledger"],
+           "扩大范围后的候选未通过")
+    certificate = client.call(route + "/seal", {"revision": 2})
+    expect(certificate["scope"] == ["node", "bench"] and len(certificate["amendments"]) == 1,
+           "凭证未绑定关系集合与派生变更")
+    candidate = client.call(route + "/download")
+    result = sqlite3.connect(":memory:")
+    ancestor = sqlite3.connect(":memory:")
+    try:
+        result.deserialize(candidate)
+        ancestor.deserialize(image("quartz"))
+        for table in ("ledger", "alias"):
+            expect(result.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall()
+                   == ancestor.execute(f"SELECT * FROM {table} ORDER BY 1").fetchall(),
+                   f"未参与表 {table} 与祖本不一致")
+        expect(result.execute("SELECT * FROM binding ORDER BY 1").fetchall() == [(2, "south", 1)],
+               "派生删除未生效")
+        expect(result.execute("PRAGMA foreign_key_check").fetchall() == [], "结果存在外键违规")
+    finally:
+        result.close()
+        ancestor.close()
+
+    # 必须收窄的情形：alias.tag 跨支同名，各自合法、合流违反唯一约束。
+    stress_left, stress_right = client.upload("stress-left"), client.upload("stress-right")
+    hard = client.call("/api/plans", {"base": quartz["id"], "left": stress_left["id"],
+                                      "right": stress_right["id"], "scope": ["alias"]}, 201)
+    hard_route = f"/api/plans/{hard['id']}"
+    hard_report = client.call(hard_route)["scope_report"]
+    expect(hard_report["blocked"][0]["remedy"]["action"] == "narrow", "唯一冲突未要求收窄范围")
+    expect(client.call(hard_route + "/rehearse", {"revision": 0}, 409)["code"] == "scope_blocked",
+           "硬冲突范围可重演")
+    narrowed = client.call(hard_route + "/scope", {"revision": 0, "scope": ["bench"]})
+    expect(not narrowed["blocked"] and not narrowed["pending_derived"], "收窄后仍有阻塞")
+    salvage = client.call(hard_route + "/rehearse", {"revision": 1})
+    expect(salvage["status"] == "passed" and salvage["changed"] == 2
+           and "alias" in salvage["untouched_tables"], "收窄交付未成功")
+    expect(client.call(hard_route + "/download", status=404)["code"] == "unpublished",
+           "未封存候选可下载")
 
 
 def run(client, goal):
@@ -157,6 +228,8 @@ def run(client, goal):
     expect(client.call(route + "/download") == candidate and client.call(route + "/certificate") == proof,
            "归档后成果变化")
     done("archive", "停止写入，既有成果和凭证继续可提取")
+    run_scope(client)
+    done("scope", "关系集合合流：扩大范围确认派生变更、硬冲突收窄交付，未参与表与祖本一致")
 
 
 def main():

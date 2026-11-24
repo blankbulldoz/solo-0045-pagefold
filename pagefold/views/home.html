@@ -5,6 +5,7 @@
     <label><span class="input-title">祖本</span><span class="input-desc">左右分支共同的原始镜像</span><select name="base" required>$choices</select></label>
     <label><span class="input-title">左支</span><span class="input-desc">从祖本分离的第一份镜像</span><select name="left" required>$choices</select></label>
     <label><span class="input-title">右支</span><span class="input-desc">从祖本分离的第二份镜像</span><select name="right" required>$choices</select></label>
+    <label><span class="input-title">关系集合范围（可选）</span><span class="input-desc">逗号分隔表名；留空则合流全部表，范围外表保持祖本并自动分析约束</span><input type="text" name="scope" placeholder="例如 node,bench"></label>
     <button class="primary" type="submit">计算三方差异</button>
   </form></section>
   <aside class="paper"><div class="panel-title"><h2>镜像登记</h2></div>

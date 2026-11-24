@@ -10,6 +10,7 @@ from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
 from .releases import get_release, seal
+from .scoping import change_scope, confirm_amendments
 from .sqlite_image import MAX_BYTES
 
 
@@ -43,10 +44,20 @@ def upload(store, handler):
     return register(store, payload(handler, MAX_BYTES), label[:100])
 
 
+def scope_value(data):
+    if "scope" not in data or data["scope"] in ("", None):
+        return None
+    scope = data["scope"]
+    if isinstance(scope, str):
+        scope = [part.strip() for part in scope.split(",") if part.strip()]
+    return scope
+
+
 def write_plan(store, handler, tail):
     if not tail:
         data = fields(handler, 32_768)
-        return create_plan(store, {role: token(data.get(role), role) for role in ROLES})
+        return create_plan(store, {role: token(data.get(role), role) for role in ROLES},
+                           scope_value(data))
     if len(tail) != 2:
         raise Problem("route", "找不到该入口。", 404)
     plan_id, action = tail
@@ -57,6 +68,13 @@ def write_plan(store, handler, tail):
         if choice not in (*ROLES, "clear"):
             raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
         return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+    if action == "scope":
+        return change_scope(store, plan_id, revision, scope_value(data))
+    if action == "amendments":
+        confirmed = data.get("confirm", [])
+        if isinstance(confirmed, str):
+            confirmed = [part.strip() for part in confirmed.split(",") if part.strip()]
+        return confirm_amendments(store, plan_id, revision, confirmed)
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)

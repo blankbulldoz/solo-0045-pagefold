@@ -1,0 +1,27 @@
+<section class="paper scope-panel">
+  <div class="panel-title"><h2>关系集合范围</h2><span class="tag">$scope_mode</span></div>
+  <div class="scope-body">
+    <p class="muted">范围内表：<b>$scope_tables</b></p>
+    <p class="muted">未参与表（保持祖本）：<b>$untouched</b></p>
+    <form class="scope-form" method="post" action="/plans/$plan/scope">
+      <input type="hidden" name="revision" value="$revision">
+      <label class="input-title">调整范围（逗号分隔表名，留空恢复全表）
+        <input type="text" name="scope" value="$scope_input" $locked>
+      </label>
+      <button $locked>保存范围</button>
+    </form>
+    <div class="scope-sections">
+      <h3>范围内主动变更（$active_count 项）</h3>
+      $active_list
+      <h3>维持约束所需的范围外派生变更（$derived_count 项）</h3>
+      $derived_list
+      <h3>范围阻塞（$blocked_count 项）</h3>
+      $blocked_list
+    </div>
+    <form class="amend-form" method="post" action="/plans/$plan/amendments">
+      <input type="hidden" name="revision" value="$revision">
+      <input type="hidden" name="confirm" value="$confirm_ids">
+      <button class="primary" $amend_disabled>确认全部派生变更</button>
+    </form>
+  </div>
+</section>

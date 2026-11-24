@@ -29,10 +29,14 @@ def seal(store, plan_id, revision):
         if digest(attempt["candidate"]) != result.get("candidate_digest"):
             raise Problem("candidate_digest", "候选摘要不一致，无法封存。", 409)
         items, decisions = plan_content(plan)
+        amendments = json.loads(plan["amendments"])
+        scope = None if plan["scope"] is None else json.loads(plan["scope"])
         certificate = {"format": "pagefold-certificate-v1", "plan": plan_id, "revision": revision,
                        "sources": {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]},
                        "schema": json.loads(get_image(db, plan["base"])["catalog"])["signature"],
                        "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
+                       "scope": scope, "amendments": amendments,
+                       "scope_digest": fingerprint({"scope": scope, "amendments": amendments}),
                        "candidate_digest": result["candidate_digest"], "candidate_size": result["size"]}
         db.execute("INSERT INTO releases VALUES(?,?,?)", (plan_id, canonical(certificate), attempt["candidate"]))
         db.execute("UPDATE plans SET state='sealed' WHERE id=?", (plan_id,))

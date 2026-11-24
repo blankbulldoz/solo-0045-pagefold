@@ -6,15 +6,44 @@ from .errors import Problem
 from .images import get_image
 from .merge import ROLES, calculate, selected
 from .rows import read_image
+from .scope import analyze
 from .sqlite_image import mounted
 
 
-def create_plan(store, sources):
+def normalize_scope(scope, catalog):
+    if scope is None:
+        return None
+    if not isinstance(scope, list) or not scope or not all(isinstance(name, str) for name in scope):
+        raise Problem("scope", "范围须是非空的表名数组，或省略以纳入全部表。", 400)
+    names = [table["name"] for table in catalog["tables"]]
+    if len(set(scope)) != len(scope) or any(name not in names for name in scope):
+        raise Problem("scope", "范围含有重复或不存在的表名。", 400)
+    return list(scope)
+
+
+def scope_report(row, base_image=None):
+    items, decisions = plan_content(row)
+    catalog = json.loads(base_image["catalog"])
+    scope = names_of(catalog) if row["scope"] is None else json.loads(row["scope"])
+    with mounted(base_image["body"]) as snapshot:
+        base_snapshot = read_image(snapshot, catalog)
+    report = analyze(catalog, base_snapshot, items, decisions, scope,
+                     json.loads(row["amendments"]))
+    report["full_schema"] = row["scope"] is None
+    return report
+
+
+def names_of(catalog):
+    return [table["name"] for table in catalog["tables"]]
+
+
+def create_plan(store, sources, scope=None):
     with store.connect() as db:
         images = [get_image(db, sources[role], body=True) for role in ROLES]
     catalogs = [json.loads(image["catalog"]) for image in images]
     if len({catalog["signature"] for catalog in catalogs}) != 1:
         raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
+    scope = normalize_scope(scope, catalogs[0])
     snapshots = []
     for image, catalog in zip(images, catalogs):
         with mounted(image["body"]) as snapshot:
@@ -22,8 +51,11 @@ def create_plan(store, sources):
     items = calculate(*snapshots)
     plan_id = uuid.uuid4().hex
     with store.connect(write=True) as db:
-        db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
-                   (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+        db.execute(
+            "INSERT INTO plans(id,base,left_id,right_id,items,scope,amendments) "
+            "VALUES(?,?,?,?,?,?,?)",
+            (plan_id, *[sources[role] for role in ROLES], canonical(items),
+             canonical(scope) if scope is not None else None, "[]"))
         return read_plan(db, plan_id)
 
 
@@ -42,8 +74,13 @@ def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
+    base = get_image(db, row["base"], body=True)
+    report = scope_report(row, base)
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
-            "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
+            "plan_digest": fingerprint(items),
+            "unresolved": sum(1 for entry in report["active"] if entry["choice"] is None),
+            "scope_blocked": len(report["blocked"]),
+            "scope_report": report,
             "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
 
 
