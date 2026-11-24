@@ -7,6 +7,51 @@ def plan_links(plans):
                    f'<small>{STATE_LABELS[p["state"]]} · 第 {p["revision"]} 版</small></a>' for p in plans)
 
 
+def source_cards(images):
+    content = [image["content_digest"] for image in images]
+    cards = []
+    for index, (label, image) in enumerate(zip(ROLE_LABELS.values(), images)):
+        badges = []
+        for other_index, other in enumerate(images):
+            if other_index == index:
+                continue
+            if image["id"] == other["id"]:
+                badges.append('<span class="tag" title="三个角色选用了同一个文件摘要">与另一角色为同一登记件</span>')
+            elif image["content_digest"] and image["content_digest"] == content[other_index]:
+                badges.append('<span class="tag auto" title="文件摘要不同，但模式与类型化内容完全一致，常见于 VACUUM 后重新登记">'
+                              '碎片整理等价件</span>')
+        badge_html = "".join(dict.fromkeys(badges))
+        cards.append(
+            f'<a href="/images/{image["id"]}"><small>{label}</small><b>{safe(image["label"])}</b>'
+            f'<code>文件 {image["id"][:14]}</code>'
+            f'<code class="content-id">内容 {safe((image["content_digest"] or "—")[:14])}</code>'
+            f'{badge_html}</a>')
+    return "".join(cards)
+
+
+def identity_strip(pairs):
+    if not pairs:
+        return ""
+    chips = []
+    for label_a, label_b, id_a, id_b, report in pairs:
+        verdict = report["verdict"]
+        cls = "eq" if verdict == "defragmented_equivalent" else "shift" if verdict == "type_shifted_lookalike" else ""
+        if verdict == "same_file":
+            text = "同一文件摘要"
+        elif verdict == "defragmented_equivalent":
+            text = "碎片整理后等价"
+        elif verdict == "type_shifted_lookalike":
+            text = f'行位置相同但类型不同 · {report["type_change_count"]} 处'
+        else:
+            text = f'内容不同 · 类型差异 {report["type_change_count"]}'
+        chips.append(
+            f'<a class="identity-pair {cls}" href="/images/compare?a={id_a}&amp;b={id_b}">'
+            f'<b>{label_a} ↔ {label_b}</b><span>{text}</span></a>')
+    return ('<section class="paper identity-strip"><div class="panel-title"><h2>来源身份对照</h2>'
+            '<span class="tag">文件摘要决定凭证来源</span></div>'
+            f'<div class="identity-pairs">{"".join(chips)}</div></section>')
+
+
 def entries(plan):
     blocks = []
     for item in sorted(plan["items"], key=lambda item: bool(item["automatic"])):
@@ -38,7 +83,7 @@ def action_form(plan, action, label, style="", disabled=False):
                     label=label, style=style, disabled=" disabled" if disabled else "")
 
 
-def plan_page(plan, images, attempts, published):
+def plan_page(plan, images, attempts, published, identity_html=""):
     actions = []
     if plan["state"] == "open":
         passed = any(a["revision"] == plan["revision"] and a["status"] == "passed" for a in attempts)
@@ -48,9 +93,9 @@ def plan_page(plan, images, attempts, published):
         actions.append(action_form(plan, "archive", "归档计划", "quiet"))
     if published:
         actions.append(fragment("release", plan=plan["id"]))
-    roles = "".join(f'<a href="/images/{i["id"]}"><small>{label}</small><b>{safe(i["label"])}</b>'
-                    f'<code>{i["id"][:14]}</code></a>' for label, i in zip(ROLE_LABELS.values(), images))
+    roles = source_cards(images)
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
+                identity=identity_html,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
                 actions="".join(actions))

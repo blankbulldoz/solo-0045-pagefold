@@ -5,7 +5,8 @@ from .archive import archive
 from .attempts import list_attempts, rehearse
 from .decisions import resolve
 from .errors import Problem
-from .images import get_image, image_record, list_images, register, table_page
+from .identity import compare_dossier
+from .images import identity_summary, image_dossier, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
@@ -19,8 +20,18 @@ def read(store, parts, query):
         if resource == "images":
             if not tail:
                 return list_images(db)
+            if len(tail) == 1 and tail[0] == "compare":
+                left = query.get("a") or query.get("left")
+                right = query.get("b") or query.get("right")
+                if not left or not right:
+                    raise Problem("compare_params", "请提供 a、b 两个镜像摘要。", 400)
+                return compare_dossier(db, left, right)
             if len(tail) == 1:
-                return image_record(get_image(db, tail[0]))
+                return image_dossier(db, tail[0])
+            if len(tail) == 2 and tail[1] == "identity":
+                return identity_summary(db, tail[0])
+            if len(tail) == 3 and tail[1] == "compare":
+                return compare_dossier(db, tail[0], tail[2])
             if len(tail) == 2 and tail[1] == "rows":
                 return table_page(db, tail[0], query.get("table"), unsigned(query.get("offset", "0"), "offset"))
         if resource == "plans":

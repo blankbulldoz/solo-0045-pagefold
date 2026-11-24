@@ -31,6 +31,9 @@ def seal(store, plan_id, revision):
         items, decisions = plan_content(plan)
         certificate = {"format": "pagefold-certificate-v1", "plan": plan_id, "revision": revision,
                        "sources": {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]},
+                       "source_content": {role: get_image(db, plan[column])["content_digest"]
+                                          for role, column in
+                                          (("base", "base"), ("left", "left_id"), ("right", "right_id"))},
                        "schema": json.loads(get_image(db, plan["base"])["catalog"])["signature"],
                        "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
                        "candidate_digest": result["candidate_digest"], "candidate_size": result["size"]}

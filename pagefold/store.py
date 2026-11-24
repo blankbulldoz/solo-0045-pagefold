@@ -4,7 +4,8 @@ from contextlib import contextmanager
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS images (
-    id TEXT PRIMARY KEY, label TEXT NOT NULL, catalog TEXT NOT NULL, body BLOB NOT NULL
+    id TEXT PRIMARY KEY, label TEXT NOT NULL, catalog TEXT NOT NULL, body BLOB NOT NULL,
+    content_digest TEXT
 );
 CREATE TABLE IF NOT EXISTS plans (
     id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
@@ -29,6 +30,11 @@ class Store:
         with self.connect(snapshot=False) as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
+            columns = {row[1] for row in db.execute("PRAGMA table_info(images)")}
+            if "content_digest" not in columns:
+                db.execute("ALTER TABLE images ADD COLUMN content_digest TEXT")
+            db.execute("CREATE INDEX IF NOT EXISTS images_content_digest "
+                       "ON images(content_digest)")
 
     @contextmanager
     def connect(self, write=False, snapshot=True):

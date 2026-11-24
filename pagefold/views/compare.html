@@ -1,0 +1,10 @@
+<a class="back" href="/">← 工作区</a>
+<section class="heading"><div><h1>镜像身份对照</h1><p>文件摘要与内容摘要分开判定；存储类型逐单元格保真比较。</p></div>
+  <span class="tag $verdict_class">$verdict_text</span>
+</section>
+<section class="paper compare-verdict"><div class="panel-title"><h2>$verdict_label</h2><span class="tag $verdict_class">$verdict_text</span></div>
+  <div class="compare-summary">$summary</div>
+  <div class="compare-sides">$sides</div>
+  <p class="muted compare-note">文件摘要是登记主键，也是计划与凭证绑定的精确来源；内容摘要只用于识别 VACUUM/重写后逻辑等价的登记件，不替代文件摘要。</p>
+</section>
+$sections

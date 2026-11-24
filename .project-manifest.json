@@ -12,6 +12,11 @@
       "responsibility": "实现 validate_header"
     },
     {
+      "id": "identity",
+      "path": "pagefold/identity.py",
+      "responsibility": "实现 content_identity、compare_packs 与等价/类型漂移来源识别"
+    },
+    {
       "id": "catalog",
       "path": "pagefold/catalog.py",
       "responsibility": "实现 describe"

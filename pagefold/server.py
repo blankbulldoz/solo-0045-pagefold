@@ -6,6 +6,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from . import api, workspace
 from .errors import Problem
+from .identity import backfill_content_identity
 from .inputs import payload
 
 
@@ -71,6 +72,9 @@ class Handler(BaseHTTPRequestHandler):
         elif path == "/demo":
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
+        elif path == "/identity-demo":
+            payload(self, 0)
+            self.redirect(f"/plans/{workspace.identity_sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
             self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
         elif parts and parts[0] == "plans":
@@ -117,6 +121,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def make_server(store, port):
+    backfill_content_identity(store)
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     server.store = store
     address = server.server_port

@@ -37,3 +37,60 @@ def image(flavor):
         return db.serialize()
     finally:
         db.close()
+
+
+IDENTITY_SCHEMA = """
+CREATE TABLE reading(
+    id INTEGER PRIMARY KEY,
+    label TEXT NOT NULL,
+    measure,
+    payload BLOB
+);
+"""
+
+
+def identity_base():
+    """三行灵活类型列样本：包含整数、NULL 与非空 BLOB。"""
+    db = sqlite3.connect(":memory:")
+    try:
+        db.executescript(IDENTITY_SCHEMA)
+        db.executemany("INSERT INTO reading VALUES(?,?,?,?)", [
+            (1, "alpha", 42, None),
+            (2, "beta", 7, b"\x01"),
+            (3, "gamma", 99, b"\x02\x03"),
+        ])
+        db.commit()
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def vacuum_copy(data):
+    """制造碎片后 VACUUM：目录与类型化内容不变，文件字节几乎必然改变。"""
+    db = sqlite3.connect(":memory:", isolation_level=None)
+    try:
+        db.deserialize(data)
+        db.execute("CREATE TABLE IF NOT EXISTS _churn(id INTEGER PRIMARY KEY, pad TEXT)")
+        db.executemany("INSERT INTO _churn VALUES(?,?)",
+                       [(index, "x" * 40) for index in range(1500)])
+        db.execute("DROP TABLE _churn")
+        db.execute("VACUUM")
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def type_shifted():
+    """同模式、同行数、同行位置，但整数变文本、NULL 变空 BLOB。"""
+    db = sqlite3.connect(":memory:")
+    try:
+        db.executescript(IDENTITY_SCHEMA)
+        db.executemany("INSERT INTO reading VALUES(?,?,?,?)", [
+            (1, "alpha", "42", b""),
+            (2, "beta", "7", b"\x01"),
+            (3, "gamma", "99", b"\x02\x03"),
+        ])
+        db.commit()
+        return db.serialize()
+    finally:
+        db.close()

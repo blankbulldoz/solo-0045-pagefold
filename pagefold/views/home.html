@@ -1,15 +1,22 @@
-<section class="heading"><div><h1>三方合流工作区</h1><p>从祖本和两份分支创建计划，裁决主键行差异并重演 SQLite 候选。</p></div><form method="post" action="/demo"><button>载入示例</button></form></section>
+<section class="heading"><div><h1>三方合流工作区</h1><p>从祖本和两份分支创建计划，裁决主键行差异并重演 SQLite 候选。</p></div>
+  <div class="heading-actions">
+    <form method="post" action="/identity-demo"><button type="submit">身份对照样本</button></form>
+    <form method="post" action="/demo"><button>载入示例</button></form>
+  </div>
+</section>
 <div class="work-grid">
   <section class="paper"><div class="panel-title"><h2>建立合流计划</h2><span class="tag">SQLite</span></div>
   <form class="new-plan" method="post" action="/plans">
     <label><span class="input-title">祖本</span><span class="input-desc">左右分支共同的原始镜像</span><select name="base" required>$choices</select></label>
     <label><span class="input-title">左支</span><span class="input-desc">从祖本分离的第一份镜像</span><select name="left" required>$choices</select></label>
     <label><span class="input-title">右支</span><span class="input-desc">从祖本分离的第二份镜像</span><select name="right" required>$choices</select></label>
+    <div id="source-identity-hint" class="source-hint" aria-live="polite"></div>
     <button class="primary" type="submit">计算三方差异</button>
   </form></section>
   <aside class="paper"><div class="panel-title"><h2>镜像登记</h2></div>
     <form class="upload" id="image-upload"><label class="pick">选择 SQLite 文件<input type="file" name="image" accept=".sqlite,.sqlite3,.db" required></label><button type="submit">登记</button><p id="upload-status" aria-live="polite">独立镜像，每份上限 4 MiB。</p></form>
     <ul class="image-links">$images</ul>
+    <p class="identity-hint">每件镜像同时保存精确<b>文件摘要</b>与 VACUUM 后保持不变的<b>内容摘要</b>。打开镜像可查“碎片整理后等价”的登记件、“行位置相同但类型不同”的来源，以及使用过它的计划与凭证。</p>
   </aside>
 </div>
 <section class="workspace-history paper"><div class="panel-title"><h2>合流计划</h2></div><div class="plan-links">$plans</div></section>

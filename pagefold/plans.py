@@ -42,7 +42,13 @@ def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
-    return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
+    source_identities = {}
+    for role in ROLES:
+        image = get_image(db, sources[role])
+        source_identities[role] = {"id": image["id"], "label": image["label"], "size": image["size"],
+                                   "content_digest": image["content_digest"]}
+    return {"id": plan_id, "sources": sources, "source_identities": source_identities,
+            "revision": row["revision"], "state": row["state"],
             "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
             "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
 
