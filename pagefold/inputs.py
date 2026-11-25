@@ -1,5 +1,7 @@
 import json
 import re
+from email.parser import BytesParser
+from email.policy import default
 from urllib.parse import parse_qs
 
 from .errors import Problem
@@ -50,3 +52,33 @@ def token(value, name):
     if isinstance(value, str) and TOKEN.fullmatch(value):
         return value
     raise Problem("token", f"字段 {name} 须为 64 位十六进制摘要。", 400)
+
+
+def multipart(handler, limit):
+    """解析 multipart/form-data，返回 (字段名, 文件名, 字节) 列表。
+
+    只服务于镜像组登记：每个部分须是带文件名的文件字段，且不接受嵌套内容。
+    """
+    content_type = handler.headers.get("Content-Type", "")
+    if "boundary=" not in content_type:
+        raise Problem("media_type", "multipart 请求缺少 boundary。", 400)
+    data = payload(handler, limit)
+    try:
+        message = BytesParser(policy=default).parsebytes(
+            b"Content-Type: " + content_type.encode("iso-8859-1") + b"\r\n\r\n" + data)
+        parts = list(message.iter_parts())
+    except (ValueError, TypeError, UnicodeError) as exc:
+        raise Problem("body", "multipart 请求内容无法读取。", 400) from exc
+    if not parts or any(part.is_multipart() for part in parts):
+        raise Problem("body", "组登记只接受单层文件字段。", 400)
+    result = []
+    for part in parts:
+        name = part.get_param("name", header="content-disposition")
+        filename = part.get_filename()
+        if not name or filename is None:
+            raise Problem("body", "组登记的每个部分都须是带文件名的文件字段。", 400)
+        payload_bytes = part.get_payload(decode=True)
+        if payload_bytes is None:
+            raise Problem("body", "multipart 部分无法解码。", 400)
+        result.append((name, filename, payload_bytes))
+    return result

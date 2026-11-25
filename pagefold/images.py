@@ -9,7 +9,8 @@ from .rows import read_image, read_table
 from .sqlite_image import mounted
 
 
-def register(store, data, label):
+def prepare_image(data):
+    """读取并完整校验一份镜像，但不写入状态库。"""
     checksum = digest(data)
     try:
         with mounted(data) as image:
@@ -20,9 +21,19 @@ def register(store, data, label):
         raise Problem("image_invalid", f"SQLite 无法读取镜像：{exc}") from exc
     for table in catalog["tables"]:
         table["rows"] = len(rows[table["name"]])
+    return checksum, canonical(catalog)
+
+
+def persist_image(db, checksum, label, catalog_text, data):
+    """在已开启的写事务内登记镜像，已存在则复用同一摘要。"""
+    db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
+               (checksum, label, catalog_text, data))
+
+
+def register(store, data, label):
+    checksum, catalog_text = prepare_image(data)
     with store.connect(write=True) as db:
-        db.execute("INSERT OR IGNORE INTO images VALUES(?,?,?,?)",
-                   (checksum, label, canonical(catalog), data))
+        persist_image(db, checksum, label[:100], catalog_text, data)
         return image_record(get_image(db, checksum))
 
 

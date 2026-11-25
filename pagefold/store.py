@@ -6,6 +6,11 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS images (
     id TEXT PRIMARY KEY, label TEXT NOT NULL, catalog TEXT NOT NULL, body BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS groups (
+    id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
+    left_id TEXT NOT NULL REFERENCES images(id), right_id TEXT NOT NULL REFERENCES images(id),
+    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
 CREATE TABLE IF NOT EXISTS plans (
     id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
     left_id TEXT NOT NULL REFERENCES images(id), right_id TEXT NOT NULL REFERENCES images(id),

@@ -1,4 +1,5 @@
 import argparse
+import base64
 import hashlib
 import json
 import sqlite3
@@ -13,7 +14,7 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
-WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
+WORKFLOWS = ("import", "group", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
              "certificate", "download", "archive")
 
 
@@ -45,6 +46,28 @@ class Client:
         return self.call("/api/images", image(name) if data is None else data, status, {
             "X-Image-Name": name, "Content-Type": "application/octet-stream"})
 
+    def group(self, entries, status=201, content_type="json"):
+        if content_type == "json":
+            payload_data = {role: {"label": label, "data": base64.b64encode(blob).decode()}
+                            for role, (blob, label) in entries.items()}
+            return self.call("/api/images", payload_data, status)
+        return self.call("/api/images", _multipart_body(entries), status,
+                         {"Content-Type": "multipart/form-data; boundary=----pagefold-walkthrough-boundary"})
+
+
+def _multipart_body(entries):
+    boundary = "----pagefold-walkthrough-boundary"
+    chunks = []
+    for role, (blob, label) in entries.items():
+        chunks.append(f"--{boundary}\r\n".encode())
+        chunks.append(
+            f'Content-Disposition: form-data; name="{role}"; filename="{label}"\r\n'
+            "Content-Type: application/octet-stream\r\n\r\n".encode())
+        chunks.append(blob)
+        chunks.append(b"\r\n")
+    chunks.append(f"--{boundary}--\r\n".encode())
+    return b"".join(chunks)
+
 
 def mismatched_schema():
     db = sqlite3.connect(":memory:")
@@ -68,6 +91,62 @@ def run(client, goal):
     expect(client.upload("cerulean", image("quartz"))["id"] == base["id"], "重复镜像未复用")
     expect(client.upload("quartz", b"broken", 422)["code"] == "image_header", "坏镜像未拒绝")
     if done("import", "有效文件登记，重复文件复用，坏镜像拒绝"):
+        return
+    # ---- 带角色的三方组登记：原子回执、失败回滚、重试同一组 ----
+    trio = {"base": (image("quartz"), "石英祖本"),
+            "left": (image("cerulean"), "青蓝分支"),
+            "right": (image("umber"), "赤褐分支")}
+    before = {item["id"] for item in client.call("/api/images")}
+    group = client.group(trio)
+    expect(set(group["sources"]) == set(("base", "left", "right")), "组回执缺少角色映射")
+    expect(group["images"]["left"]["label"] == "青蓝分支"
+           and group["images"]["right"]["label"] == "赤褐分支", "组回执未保留角色标签")
+    # 祖本此前已单份登记，内容寻址复用同一镜像与原始标签，不产生重复行。
+    expect(group["sources"]["base"] == base["id"], "组登记未复用已登记镜像")
+    expect(group["images"]["base"]["id"] == base["id"], "组回执未指回既有镜像")
+    expect(len(client.call("/api/groups")) == 1, "组列表未出现新组")
+    after = {item["id"] for item in client.call("/api/images")}
+    expect(after - before == set(group["sources"].values()) - before, "首次组登记落库范围不符")
+    # 完全相同的一批文件重发：复用全部镜像，只认同一组（模拟提交成功但页面未收到响应）。
+    again = client.group(trio)
+    expect(again["id"] == group["id"], "重发同批文件产生了第二组")
+    expect({item["id"] for item in client.call("/api/images")} == after, "重发后出现额外镜像登记")
+    # 混合有效/无效：一份损坏则整组拒绝，状态库不遗留任何部分登记。
+    mixed = dict(trio, left=(b"not-a-sqlite-image", "损坏左支"))
+    problem = client.group(mixed, 422)
+    expect(problem["code"] in {"image_invalid", "image_header"} and "左支" in problem["detail"],
+           "坏文件未标明角色")
+    expect([g["id"] for g in client.call("/api/groups")] == [group["id"]], "失败提交残留了镜像组")
+    expect({item["id"] for item in client.call("/api/images")} == after, "失败提交残留了部分镜像")
+    # 结构合法但模式不一致的文件同样令整组失败。
+    mismatch = dict(trio, right=(mismatched_schema(), "额外索引右支"))
+    expect(client.group(mismatch, 409)["code"] == "schema_mismatch", "模式不一致未在组登记拦截")
+    expect([g["id"] for g in client.call("/api/groups")] == [group["id"]], "模式失败残留了镜像组")
+    # 重发同一批文件（JSON 入口）仍返回同一组。
+    expect(client.group(trio)["id"] == group["id"], "重发同批文件未回到同一组")
+    # multipart 表单入口与 JSON 入口给出同一组回执。
+    expect(client.group(trio, content_type="form")["id"] == group["id"], "multipart 与 JSON 组登记不一致")
+    detail = client.call(f"/api/groups/{group['id']}")
+    expect(detail["sources"] == group["sources"] and len(detail["images"]) == 3, "组详情不完整")
+    expect(client.call("/api/groups/missing", status=404)["code"] == "unknown_group", "未知组未拒绝")
+    # 组可被计划直接承接，角色无需手工再选。
+    plan = client.call("/api/plans", {"group": group["id"]}, 201)
+    expect(plan["sources"] == group["sources"] and len(plan["items"]) == 3, "计划未承接镜像组")
+    expect(client.call("/api/plans", {"group": group["id"], "base": next(iter(before))}, 201)["sources"]
+           == group["sources"], "组承接被多余角色字段干扰")
+    expect(client.call("/api/plans", {"group": "x" * 64}, status=400)["code"] == "token", "组标识未校验")
+    # 已被其他计划用过的镜像仍可在新组复用：内容寻址，不锁定来源。
+    reused = client.group({"base": (image("quartz"), "石英祖本"),
+                           "left": (image("stress-left"), "受压左支"),
+                           "right": (image("stress-right"), "受压右支")})
+    expect(reused["sources"]["base"] == group["sources"]["base"], "已用镜像在新组未复用")
+    expect(len(client.call("/api/groups")) == 2, "复用镜像未能登记第二组")
+    # 缺角色、重复角色和错误媒体类型都被拒绝。
+    expect(client.group({k: v for k, v in trio.items() if k != "right"}, 400)["code"] == "group_role",
+           "缺少角色未拒绝")
+    expect(client.call("/api/images", b"{}", 415, {"Content-Type": "text/plain"})["code"] == "media_type",
+           "错误媒体类型未拒绝")
+    if done("group", "整组原子回执、坏文件回滚、重发同组、计划承接与已用镜像复用"):
         return
     left, right = client.upload("cerulean"), client.upload("umber")
     image_route = f"/api/images/{base['id']}"

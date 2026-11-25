@@ -2,14 +2,24 @@
 <div class="work-grid">
   <section class="paper"><div class="panel-title"><h2>建立合流计划</h2><span class="tag">SQLite</span></div>
   <form class="new-plan" method="post" action="/plans">
+    <input type="hidden" name="group" id="plan-group" value="$selected_group">
     <label><span class="input-title">祖本</span><span class="input-desc">左右分支共同的原始镜像</span><select name="base" required>$choices</select></label>
     <label><span class="input-title">左支</span><span class="input-desc">从祖本分离的第一份镜像</span><select name="left" required>$choices</select></label>
     <label><span class="input-title">右支</span><span class="input-desc">从祖本分离的第二份镜像</span><select name="right" required>$choices</select></label>
+    <p class="input-desc" id="group-hint">也可先在右侧按角色登记镜像组，再一键承接。</p>
     <button class="primary" type="submit">计算三方差异</button>
   </form></section>
   <aside class="paper"><div class="panel-title"><h2>镜像登记</h2></div>
-    <form class="upload" id="image-upload"><label class="pick">选择 SQLite 文件<input type="file" name="image" accept=".sqlite,.sqlite3,.db" required></label><button type="submit">登记</button><p id="upload-status" aria-live="polite">独立镜像，每份上限 4 MiB。</p></form>
+    <form class="upload" id="image-upload"><label class="pick">选择 SQLite 文件<input type="file" name="image" accept=".sqlite,.sqlite3,.db" required></label><button type="submit">登记单份</button><p id="upload-status" aria-live="polite">独立镜像，每份上限 4 MiB。</p></form>
+    <form class="upload group-upload" id="group-upload" method="post" action="/groups">
+      <label class="pick">祖本<input type="file" name="base" accept=".sqlite,.sqlite3,.db" required></label>
+      <label class="pick">左支<input type="file" name="left" accept=".sqlite,.sqlite3,.db" required></label>
+      <label class="pick">右支<input type="file" name="right" accept=".sqlite,.sqlite3,.db" required></label>
+      <button type="submit">按角色登记一组</button>
+      <p id="group-status" aria-live="polite">三份作为同一次提交；任一份不合格则整组不登记。</p>
+    </form>
     <ul class="image-links">$images</ul>
   </aside>
 </div>
+<section class="workspace-history paper"><div class="panel-title"><h2>镜像组</h2></div><div class="plan-links">$groups</div></section>
 <section class="workspace-history paper"><div class="panel-title"><h2>合流计划</h2></div><div class="plan-links">$plans</div></section>
