@@ -32,6 +32,9 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.compat_check --selftest
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+接入方请读 [`docs/database-compatibility.md`](docs/database-compatibility.md)：它按登记四阶段和重演阶段定位“文件不合规 / 数据冲突 / 模式记录不一致”，并给出可复跑的检查例。
