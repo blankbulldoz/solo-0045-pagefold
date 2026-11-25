@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from pagefold.demo import image
+from pagefold.demo import image, succession_image
 
 
 def main():
@@ -13,6 +13,11 @@ def main():
         path = directory / (name + ".sqlite")
         with path.open("xb") as file:
             file.write(image(name))
+        print(path)
+    for name in ("bad", "fixed", "left", "right", "left_fixed", "right_fixed"):
+        path = directory / ("succession-" + name + ".sqlite")
+        with path.open("xb") as file:
+            file.write(succession_image(name))
         print(path)
 
 

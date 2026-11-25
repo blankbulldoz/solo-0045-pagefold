@@ -1,0 +1,6 @@
+<form class="carry-form" method="post" action="/plans/$plan/archive">
+ <input type="hidden" name="revision" value="$revision">
+ <p class="input-desc">归档本计划，并以更正后的祖本建立承接计划；留空的角色沿用当前镜像。系统逐条核对旧手工选择，变化的来源行会留待重审。</p>
+ $selects
+ <button class="quiet" type="submit">归档并建立承接</button>
+</form>

@@ -17,12 +17,16 @@ python3 -m examples.make_images ./demo-images
 
 网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
 
+归档时可以只停止计划，也可以在同一事务内建立承接计划：当一份计划因错误祖本需要停止时，给出更正后的祖本（及必要时更正的分支），系统按主键逐条核对旧的手工选择——来源行未变的选择直接保留（`retained`），来源行已变的留待重审（`needs_review`），已能自动采纳的标记为 `automatic`，新三方下不再有差异的条目标记为 `dropped`。承接报告随承接关系保存，归档前后两个计划页面互相链接。整个过程要么全部完成、要么整体回滚，已封存的 SQLite 与凭证在归档后仍可原样下载。
+
 - `POST /api/images` 接收 `application/octet-stream`，`X-Image-Name` 是可选的 URL 编码标签。
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
+- `POST /api/plans/{id}/archive` 可额外携带任意 `base`、`left`、`right` 镜像摘要：留空的角色沿用当前镜像。给出至少一个角色时，归档与「建立承接计划」在同一事务内完成。
+- `GET /api/plans/{id}/carryover` 读取承接关系与逐条核对报告（无承接关系时返回 404）。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
@@ -32,6 +36,7 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.succession_drill
 ```
 
-工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+工作流检查使用临时状态库和本机 HTTP 服务。`walkthrough` 覆盖镜像登记到归档的既有流程；`succession_drill` 覆盖可承接与需重审两个计划、四种承接去向、归档/承接中途失败的整体回滚，以及归档后封存成果仍可提取。正式自动化测试套件延期。

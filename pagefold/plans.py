@@ -39,11 +39,13 @@ def plan_content(row):
 
 
 def read_plan(db, plan_id):
+    from .successions import succession_view
     row = get_plan(db, plan_id)
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
             "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
+            "succession": succession_view(db, plan_id),
             "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
 
 

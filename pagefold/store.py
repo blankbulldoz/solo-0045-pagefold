@@ -20,6 +20,10 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS successions (
+    predecessor_id TEXT PRIMARY KEY REFERENCES plans(id), successor_id TEXT NOT NULL UNIQUE REFERENCES plans(id),
+    report TEXT NOT NULL
+);
 """
 
 
@@ -38,7 +42,12 @@ class Store:
             db.execute("PRAGMA foreign_keys=ON")
             if write or snapshot:
                 db.execute("BEGIN IMMEDIATE" if write else "BEGIN")
-            yield db
+            try:
+                yield db
+            except Exception:
+                if write:
+                    db.rollback()
+                raise
             if write:
                 db.commit()
         finally:

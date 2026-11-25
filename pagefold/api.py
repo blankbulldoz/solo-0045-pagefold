@@ -8,9 +8,10 @@ from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
-from .plans import create_plan, list_plans, read_plan
+from .plans import create_plan, get_plan, list_plans, read_plan
 from .releases import get_release, seal
 from .sqlite_image import MAX_BYTES
+from .successions import succession_view
 
 
 def read(store, parts, query):
@@ -30,6 +31,11 @@ def read(store, parts, query):
                 return read_plan(db, tail[0])
             if len(tail) == 2 and tail[1] == "attempts":
                 return list_attempts(db, tail[0])
+            if len(tail) == 2 and tail[1] == "carryover":
+                record = succession_view(db, tail[0])
+                if record is None:
+                    raise Problem("no_succession", "该计划没有承接关系。", 404)
+                return record
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
                 release = get_release(db, tail[0], body=tail[1] == "download")
                 return release["candidate"] if tail[1] == "download" else json.loads(release["certificate"])
@@ -59,5 +65,19 @@ def write_plan(store, handler, tail):
         return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
+        if action == "archive":
+            sources = None
+            if any(data.get(role) for role in ROLES):
+                plan_sources = _plan_sources(store, plan_id)
+                sources = {role: token(data.get(role), role) if data.get(role) else plan_sources[role]
+                           for role in ROLES}
+            drill_fail = data.get("drill_fail") in ("1", "true", "yes")
+            return archive(store, plan_id, revision, sources, drill_fail)
         return writes[action](store, plan_id, revision)
     raise Problem("route", "找不到该入口。", 404)
+
+
+def _plan_sources(store, plan_id):
+    with store.connect() as db:
+        plan = get_plan(db, plan_id)
+        return {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]}
