@@ -1,0 +1,6 @@
+<form class="decision" action="/plans/$plan/escalations" method="post">
+ <input type="hidden" name="revision" value="$revision">
+ <input type="hidden" name="item" value="$item">
+ <label>复核理由 <input type="text" name="reason" maxlength="200" required placeholder="说明为何从自动转为人工"></label>
+ <button>转为待复核</button>
+</form>

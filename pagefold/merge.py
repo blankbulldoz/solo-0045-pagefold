@@ -22,6 +22,7 @@ def calculate(base, left, right):
     return result
 
 
-def selected(item, decisions):
-    role = item["automatic"] or decisions.get(item["id"])
+def selected(item, decisions, escalations):
+    override = item["automatic"] if item["id"] not in escalations else None
+    role = override or decisions.get(item["id"])
     return (role, item[role] if role else None)

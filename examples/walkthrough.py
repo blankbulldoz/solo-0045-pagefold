@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "recover", "archive")
 
 
 def expect(condition, description):
@@ -51,6 +51,24 @@ def mismatched_schema():
     try:
         db.deserialize(image("quartz"))
         db.execute("CREATE INDEX bench_label_sample ON bench(label)")
+        return db.serialize()
+    finally:
+        db.close()
+
+
+def fk_image(flavor):
+    db = sqlite3.connect(":memory:")
+    try:
+        db.deserialize(image("quartz"))
+        db.execute("PRAGMA foreign_keys=ON")
+        if flavor == "left":
+            db.execute("DELETE FROM binding WHERE id=1")
+            db.execute("DELETE FROM node WHERE bench='north' AND slot=1")
+            db.execute("UPDATE node SET note='左支备注' WHERE bench='south' AND slot=1")
+        else:
+            db.execute("INSERT INTO binding VALUES(2,'north',1)")
+            db.execute("UPDATE node SET note='右支备注' WHERE bench='south' AND slot=1")
+        db.commit()
         return db.serialize()
     finally:
         db.close()
@@ -151,6 +169,85 @@ def run(client, goal):
         db.close()
     if done("download", "下载摘要校验一致，SQLite 可独立打开和查询"):
         return
+    stress_now = client.call(stress_route)
+    target = next(item for item in stress_now["items"] if item["key"] == [["t", "stress-right"]])
+    expect(target["automatic"] == "right" and target["escalation"] is None, "压力样例应为明确的自动项")
+    expect(client.call(stress_route + "/escalations", {"item": target["id"], "reason": "  ", "revision": 0}, 400)
+           ["code"] == "reason", "空理由未拒绝")
+    expect(client.call(stress_route + "/escalations", {"item": target["id"], "reason": "理由", "revision": 9}, 409)
+           ["code"] == "stale_revision", "过期转复核未拒绝")
+    moved = client.call(stress_route + "/escalations",
+                        {"item": target["id"], "reason": "两侧唯一标签撞名，保留左支行", "revision": 0})
+    expect(moved["revision"] == 1, "转复核未推进版本")
+    pending = client.call(stress_route)
+    expect(pending["unresolved"] == 1, "待复核项未计入未决")
+    record = next(item for item in pending["items"] if item["id"] == target["id"])["escalation"]
+    expect(record["reason"] == "两侧唯一标签撞名，保留左支行" and record["automatic"] == "right", "复核理由未保存")
+    expect(client.call(stress_route + "/rehearse", {"revision": 1}, 409)["code"] == "unresolved", "待复核项未拦住重演")
+    client.call(stress_route + "/decisions", {"item": target["id"], "choice": "base", "revision": 1})
+    recovered = client.call(stress_route + "/rehearse", {"revision": 2})
+    expect(recovered["status"] == "passed" and recovered["changed"] == 1, "唯一键压力样例未恢复")
+    stress_proof = client.call(stress_route + "/seal", {"revision": 2})
+    expect("escalation_digest" in stress_proof, "凭证缺少复核摘要")
+    history = client.call(stress_route + "/attempts")
+    expect([a["status"] for a in history] == ["passed", "blocked"], "压力样例受阻历史未保留")
+    merged = client.call(stress_route + "/download")
+    db = sqlite3.connect(":memory:")
+    try:
+        db.deserialize(merged)
+        expect(db.execute("SELECT label FROM bench WHERE code='stress-left'").fetchone() == ("共享键值",),
+               "左支唯一行未保留")
+        expect(db.execute("SELECT 1 FROM bench WHERE code='stress-right'").fetchone() is None, "右支行应被拒绝")
+    finally:
+        db.close()
+    fk_sources = {"base": base["id"], "left": client.upload("fk-left", fk_image("left"))["id"],
+                  "right": client.upload("fk-right", fk_image("right"))["id"]}
+    fk_plan = client.call("/api/plans", fk_sources, 201)
+    fk_route = f"/api/plans/{fk_plan['id']}"
+    expect(fk_plan["unresolved"] == 1 and len(fk_plan["items"]) == 4, "外键样例计划内容不符")
+    clash = next(item for item in fk_plan["items"] if not item["automatic"])
+    binding = next(item for item in fk_plan["items"] if item["table"] == "binding" and item["key"] == [["i", "1"]])
+    node = next(item for item in fk_plan["items"] if item["table"] == "node" and item["key"][0] == ["t", "north"])
+    expect(client.call(fk_route + "/escalations", {"item": binding["id"], "reason": "过早", "revision": 0}, 409)
+           ["code"] == "not_blocked", "未受阻计划允许转复核")
+    client.call(fk_route + "/decisions", {"item": clash["id"], "choice": "left", "revision": 0})
+    issue = client.call(fk_route + "/rehearse", {"revision": 1})
+    expect(issue["status"] == "blocked" and issue["problem"]["code"] == "foreign_key", "外键受阻未捕获")
+    expect(client.call(fk_route + "/escalations", {"item": clash["id"], "reason": "冲突项", "revision": 1}, 409)
+           ["code"] == "not_automatic", "非自动项允许转复核")
+    client.call(fk_route + "/escalations", {"item": binding["id"], "reason": "绑定删除牵涉外键，先保留该行", "revision": 1})
+    client.call(fk_route + "/decisions", {"item": binding["id"], "choice": "right", "revision": 2})
+    again = client.call(fk_route + "/rehearse", {"revision": 3})
+    expect(again["status"] == "blocked" and again["problem"]["code"] == "foreign_key", "保留单行后应仍受阻")
+    expect(client.call(fk_route + "/escalations", {"item": binding["id"], "reason": "重复", "revision": 3}, 409)
+           ["code"] == "already_escalated", "重复转复核未拒绝")
+    client.call(fk_route + "/escalations", {"item": node["id"], "reason": "保留父行使两条绑定外键同时成立", "revision": 3})
+    client.call(fk_route + "/decisions", {"item": node["id"], "choice": "base", "revision": 4})
+    fixed = client.call(fk_route + "/rehearse", {"revision": 5})
+    expect(fixed["status"] == "passed" and fixed["changed"] == 2, "外键样例未恢复")
+    fk_proof = client.call(fk_route + "/seal", {"revision": 5})
+    expect("escalation_digest" in fk_proof and fk_proof["escalation_digest"] != stress_proof["escalation_digest"],
+           "复核摘要未区分计划")
+    history = client.call(fk_route + "/attempts")
+    expect([a["status"] for a in history] == ["passed", "blocked", "blocked"], "外键受阻历史未保留")
+    expect([a["revision"] for a in history] == [5, 3, 1], "历史版本顺序不符")
+    page = client.call(f"/plans/{fk_plan['id']}")
+    expect("保留父行使两条绑定外键同时成立".encode() in page and "人工 · ".encode() in page, "计划页未展示复核理由")
+    merged = client.call(fk_route + "/download")
+    db = sqlite3.connect(":memory:")
+    try:
+        db.deserialize(merged)
+        expect(db.execute("PRAGMA foreign_key_check").fetchall() == [], "结果存在外键违规")
+        expect(sorted(db.execute("SELECT id,bench,slot FROM binding")) == [(1, "north", 1), (2, "north", 1)],
+               "绑定行不符")
+        expect(db.execute("SELECT note FROM node WHERE bench='north' AND slot=1").fetchone() == ("祖本节点",),
+               "父行未保留")
+        expect(db.execute("SELECT note FROM node WHERE bench='south' AND slot=1").fetchone() == ("左支备注",),
+               "冲突裁决未生效")
+    finally:
+        db.close()
+    if done("recover", "唯一键与外键受阻计划经转复核恢复，受阻历史与复核理由保留"):
+        return
     client.call(route + "/archive", {"revision": 2})
     expect(client.call(route)["state"] == "archived", "归档状态丢失")
     expect(client.call(route + "/rehearse", {"revision": 2}, 409)["code"] == "closed_plan", "归档计划可重演")
@@ -163,6 +260,18 @@ def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
+        legacy = Path(root) / "legacy-state.sqlite"
+        db = sqlite3.connect(legacy)
+        try:
+            db.executescript("""CREATE TABLE plans(id TEXT PRIMARY KEY, base TEXT NOT NULL,
+                left_id TEXT NOT NULL, right_id TEXT NOT NULL, items TEXT NOT NULL,
+                decisions TEXT NOT NULL DEFAULT '{}', revision INTEGER NOT NULL DEFAULT 0,
+                state TEXT NOT NULL DEFAULT 'open')""")
+        finally:
+            db.close()
+        with Store(legacy).connect() as check:
+            columns = {row[1] for row in check.execute("PRAGMA table_info(plans)")}
+        expect("escalations" in columns, "旧状态库未迁移出 escalations 列")
         with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()

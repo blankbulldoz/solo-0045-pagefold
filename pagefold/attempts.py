@@ -27,8 +27,8 @@ def rehearse(store, plan_id, revision):
         previous = get_attempt(db, plan_id, revision)
         if previous:
             return json.loads(previous["result"])
-        items, decisions = plan_content(plan)
-        operations = amendments(items, decisions)
+        items, decisions, escalations = plan_content(plan)
+        operations = amendments(items, decisions, escalations)
         ancestor = get_image(db, plan["base"], body=True)
         candidate = None
         result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}

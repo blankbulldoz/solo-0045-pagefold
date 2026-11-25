@@ -5,6 +5,7 @@ from .archive import archive
 from .attempts import list_attempts, rehearse
 from .decisions import resolve
 from .errors import Problem
+from .escalations import MAX_REASON, escalate
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
@@ -57,6 +58,11 @@ def write_plan(store, handler, tail):
         if choice not in (*ROLES, "clear"):
             raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
         return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+    if action == "escalations":
+        reason = data.get("reason")
+        if not isinstance(reason, str) or not 1 <= len(reason.strip()) <= MAX_REASON:
+            raise Problem("reason", f"请填写 1 至 {MAX_REASON} 字的复核理由。", 400)
+        return escalate(store, plan_id, revision, token(data.get("item"), "item"), reason.strip())
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)

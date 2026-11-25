@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS plans (
     id TEXT PRIMARY KEY, base TEXT NOT NULL REFERENCES images(id),
     left_id TEXT NOT NULL REFERENCES images(id), right_id TEXT NOT NULL REFERENCES images(id),
-    items TEXT NOT NULL, decisions TEXT NOT NULL DEFAULT '{}', revision INTEGER NOT NULL DEFAULT 0,
+    items TEXT NOT NULL, decisions TEXT NOT NULL DEFAULT '{}',
+    escalations TEXT NOT NULL DEFAULT '{}', revision INTEGER NOT NULL DEFAULT 0,
     state TEXT NOT NULL DEFAULT 'open' CHECK(state IN ('open', 'sealed', 'archived'))
 );
 CREATE TABLE IF NOT EXISTS attempts (
@@ -29,6 +30,9 @@ class Store:
         with self.connect(snapshot=False) as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
+            columns = {row[1] for row in db.execute("PRAGMA table_info(plans)")}
+            if "escalations" not in columns:
+                db.execute("ALTER TABLE plans ADD COLUMN escalations TEXT NOT NULL DEFAULT '{}'")
 
     @contextmanager
     def connect(self, write=False, snapshot=True):

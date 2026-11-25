@@ -7,20 +7,28 @@ def plan_links(plans):
                    f'<small>{STATE_LABELS[p["state"]]} · 第 {p["revision"]} 版</small></a>' for p in plans)
 
 
-def entries(plan):
+def entries(plan, blocked):
     blocks = []
-    for item in sorted(plan["items"], key=lambda item: bool(item["automatic"])):
-        form = ""
-        auto = item["automatic"]
-        if plan["state"] == "open" and auto is None:
-            options = option("clear", "保留未决", chosen=item["choice"] is None)
-            options += "".join(option(role, label, chosen=role == item["choice"])
-                               for role, label in ROLE_LABELS.items())
-            form = fragment("decision", plan=plan["id"], revision=plan["revision"], item=item["id"], options=options)
-        choice = ROLE_LABELS.get(item["choice"], "待裁决")
-        chosen = ("自动 · " if auto else "") + choice
+    for item in sorted(plan["items"], key=lambda item: bool(item["automatic"] and not item["escalation"])):
+        form, note = "", ""
+        record = item["escalation"]
+        auto = item["automatic"] if record is None else None
+        if record is not None:
+            note = (f'<p class="note">复核理由：{safe(record["reason"])}'
+                    f'（原自动采纳{safe(ROLE_LABELS[record["automatic"]])} · 第 {record["revision"]} 版转入人工）</p>')
+        if plan["state"] == "open":
+            if auto is None:
+                options = option("clear", "保留未决", chosen=item["choice"] is None)
+                options += "".join(option(role, label, chosen=role == item["choice"])
+                                   for role, label in ROLE_LABELS.items())
+                form = fragment("decision", plan=plan["id"], revision=plan["revision"], item=item["id"], options=options)
+            elif blocked:
+                form = fragment("escalate", plan=plan["id"], revision=plan["revision"], item=item["id"])
+        choice = ROLE_LABELS.get(item["choice"], "待复核" if record is not None else "待裁决")
+        prefix = ("人工 · " if item["choice"] else "") if record is not None else ("自动 · " if auto else "")
+        badge = "review" if record is not None else ("auto" if auto else "conflict")
         blocks.append(fragment("entry", table=safe(item["table"]), key=values(item["key"]),
-                               choice=chosen, badge="auto" if auto else "conflict", form=form,
+                               choice=prefix + choice, badge=badge, form=form, note=note,
                                **{role: values(item[role]) for role in ROLE_LABELS}))
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
@@ -50,7 +58,8 @@ def plan_page(plan, images, attempts, published):
         actions.append(fragment("release", plan=plan["id"]))
     roles = "".join(f'<a href="/images/{i["id"]}"><small>{label}</small><b>{safe(i["label"])}</b>'
                     f'<code>{i["id"][:14]}</code></a>' for label, i in zip(ROLE_LABELS.values(), images))
+    blocked = any(a["revision"] == plan["revision"] and a["status"] == "blocked" for a in attempts)
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
-                count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
+                count=len(plan["items"]), items=entries(plan, blocked), history=attempts_list(attempts, plan["revision"]),
                 actions="".join(actions))

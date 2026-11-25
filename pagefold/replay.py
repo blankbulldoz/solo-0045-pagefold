@@ -9,10 +9,10 @@ from .rows import read_image
 from .sqlite_image import ident, mounted, validate_header
 
 
-def amendments(items, decisions):
+def amendments(items, decisions, escalations):
     changed = defaultdict(list)
     for item in items:
-        role, row = selected(item, decisions)
+        role, row = selected(item, decisions, escalations)
         if role is None:
             raise Problem("unresolved", "存在未裁决的行，请先完成裁决。", 409)
         if row != item["base"]:

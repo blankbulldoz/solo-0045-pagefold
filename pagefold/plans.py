@@ -35,16 +35,18 @@ def get_plan(db, plan_id):
 
 
 def plan_content(row):
-    return json.loads(row["items"]), json.loads(row["decisions"])
+    return json.loads(row["items"]), json.loads(row["decisions"]), json.loads(row["escalations"])
 
 
 def read_plan(db, plan_id):
     row = get_plan(db, plan_id)
-    items, decisions = plan_content(row)
+    items, decisions, escalations = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
-            "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
-            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
+            "plan_digest": fingerprint(items),
+            "unresolved": sum(selected(i, decisions, escalations)[0] is None for i in items),
+            "items": [dict(i, choice=selected(i, decisions, escalations)[0],
+                           escalation=escalations.get(i["id"])) for i in items]}
 
 
 def list_plans(db):
