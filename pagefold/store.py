@@ -20,6 +20,15 @@ CREATE TABLE IF NOT EXISTS releases (
     plan_id TEXT PRIMARY KEY REFERENCES plans(id), certificate TEXT NOT NULL,
     candidate BLOB NOT NULL
 );
+CREATE TABLE IF NOT EXISTS plan_previews (
+    token TEXT PRIMARY KEY,
+    base TEXT NOT NULL REFERENCES images(id),
+    left_id TEXT NOT NULL REFERENCES images(id),
+    right_id TEXT NOT NULL REFERENCES images(id),
+    items TEXT NOT NULL, summary TEXT NOT NULL,
+    plan_id TEXT REFERENCES plans(id),
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 

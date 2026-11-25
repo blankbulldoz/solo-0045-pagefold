@@ -7,6 +7,8 @@ from .inputs import unsigned
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
+from .previews import read_preview
+from .preview_views import preview_page
 from .render import HERE, page, safe
 
 
@@ -17,6 +19,8 @@ def workspace(store, parts, query):
             return page("home", "三方合流工作区", choices=image_options(images),
                         images=image_links(images) or '<li class="muted">尚未登记镜像。</li>',
                         plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
+        if len(parts) == 3 and parts[:2] == ["plans", "preview"]:
+            return preview_page(read_preview(db, parts[2]))
         if len(parts) == 2 and parts[0] == "plans":
             plan = read_plan(db, parts[1])
             images = [get_image(db, plan["sources"][role]) for role in ROLES]

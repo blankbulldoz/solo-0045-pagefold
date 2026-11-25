@@ -1,0 +1,31 @@
+<a class="back" href="/">← 放弃预览并返回工作区</a>
+<section class="heading preview-heading"><div><h1>创建前预览：请核对来源与差异代价</h1>
+<p>预览凭证 <code>$token_short…</code> · 差异摘要 <code>$digest…</code> · 确认后才会写入正式计划，中途退出不产生计划记录。</p></div>
+<span class="tag$large_marker">$total 项差异 · $conflicts 项待裁决</span></section>
+
+<section class="paper preview-roles-panel">
+  <div class="panel-title"><h2>选定角色（按字节摘要绑定，不按标签）</h2><span class="tag">base / left / right</span></div>
+  <ul class="preview-roles">$roles</ul>
+</section>
+
+<ul class="preview-stats">$stats</ul>
+
+<section class="paper preview-changes">
+  <div class="panel-title"><h2>变更类型与预估处理量</h2><span class="tag">$total 项</span></div>
+  <div class="preview-change-body">$changes</div>
+</section>
+
+<section class="preview-scale">$scale</section>
+
+<section class="paper preview-confirm">
+  <div class="panel-title"><h2>确认创建正式计划</h2></div>
+  <form method="post" action="/plans" class="confirm-form" data-preview-token="$token">
+    <input type="hidden" name="preview_token" value="$token">
+    $hidden_sources
+    <p class="muted">两个窗口提交同一份预览会落到同一个正式计划；若提交的来源摘要与预览不符，系统会拒绝写入。</p>
+    <div class="confirm-actions">
+      <button class="primary" type="submit">$confirm_label</button>
+      <a class="button-quiet" href="/">取消，不创建计划</a>
+    </div>
+  </form>
+</section>

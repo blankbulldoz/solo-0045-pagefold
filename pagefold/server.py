@@ -58,6 +58,9 @@ class Handler(BaseHTTPRequestHandler):
                     headers.append(("Content-Disposition", f'attachment; filename="pagefold-{parts[2]}.json"'))
                 self.json(result, headers=headers)
         else:
+            if path == "/plans/preview":
+                self.redirect("/")
+                return
             self.send_bytes(workspace.workspace(store, parts, query), "text/html; charset=utf-8")
 
     def route_post(self, store, path, parts):
@@ -72,8 +75,17 @@ class Handler(BaseHTTPRequestHandler):
             payload(self, 0)
             self.redirect(f"/plans/{workspace.sample(store)['id']}")
         elif len(parts) >= 2 and parts[:2] == ["api", "plans"]:
-            self.json(api.write_plan(store, self, parts[2:]), 201 if len(parts) == 2 else 200)
+            result = api.write_plan(store, self, parts[2:])
+            if len(parts) == 2:
+                status = 200 if isinstance(result, dict) and result.get("state") == "preview" else 201
+            else:
+                status = 200
+            self.json(result, status)
         elif parts and parts[0] == "plans":
+            if parts == ["plans", "preview"]:
+                preview = api.write_plan(store, self, ["preview"])
+                self.redirect(f"/plans/preview/{preview['preview_token']}")
+                return
             result = api.write_plan(store, self, parts[1:])
             self.redirect(f"/plans/{parts[1] if len(parts) > 1 else result['id']}")
         else:

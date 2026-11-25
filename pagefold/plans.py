@@ -9,7 +9,13 @@ from .rows import read_image
 from .sqlite_image import mounted
 
 
-def create_plan(store, sources):
+def prepare(store, sources):
+    """Load and validate the three sources and compute the three-way items.
+
+    Nothing is written here, so callers can show a preview without leaving a
+    plan record behind.  Image ids are byte digests and therefore pin the
+    exact content for every role.
+    """
     with store.connect() as db:
         images = [get_image(db, sources[role], body=True) for role in ROLES]
     catalogs = [json.loads(image["catalog"]) for image in images]
@@ -19,11 +25,20 @@ def create_plan(store, sources):
     for image, catalog in zip(images, catalogs):
         with mounted(image["body"]) as snapshot:
             snapshots.append(read_image(snapshot, catalog))
-    items = calculate(*snapshots)
+    return images, calculate(*snapshots)
+
+
+def insert_plan(db, sources, items):
     plan_id = uuid.uuid4().hex
+    db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
+               (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+    return plan_id
+
+
+def create_plan(store, sources):
+    _images, items = prepare(store, sources)
     with store.connect(write=True) as db:
-        db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
-                   (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+        plan_id = insert_plan(db, sources, items)
         return read_plan(db, plan_id)
 
 
