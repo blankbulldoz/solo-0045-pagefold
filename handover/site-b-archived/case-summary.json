@@ -1,0 +1,62 @@
+{
+  "case": "site-b-archived",
+  "title": "已归档未封存：只剩历史记录，无交付物",
+  "plan_id": "2f89d7094c9042fcaf84d1b2484c068a",
+  "state": "archived",
+  "revision": 0,
+  "unresolved": 0,
+  "blocked_attempt": {
+    "id": "2f89d7094c9042fcaf84d1b2484c068a",
+    "revision": 0,
+    "changed": 2,
+    "status": "blocked",
+    "problem": {
+      "code": "constraint",
+      "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+    }
+  },
+  "seal_before_archive_rejection": {
+    "code": "rehearsal_required",
+    "detail": "当前版本须先通过重演。"
+  },
+  "closed_write_rejections": {
+    "rehearse": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    },
+    "seal": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    },
+    "decisions": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  "archive_idempotent_reply": {
+    "id": "2f89d7094c9042fcaf84d1b2484c068a",
+    "revision": 0,
+    "state": "archived"
+  },
+  "download_after_archive": {
+    "code": "unpublished",
+    "detail": "该计划还没有封存成果。"
+  },
+  "attempts_history": [
+    {
+      "changed": 2,
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "problem": {
+        "code": "constraint",
+        "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+      },
+      "revision": 0,
+      "status": "blocked"
+    }
+  ],
+  "entries": {
+    "plan_page": "/plans/2f89d7094c9042fcaf84d1b2484c068a",
+    "plan_api": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a",
+    "attempts": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/attempts"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "case": "site-c-sealed",
+  "title": "封存后归档：成果保留、可领取可离线复核",
+  "plan_id": "c1212bba111f4ac19af7f65522bbf60f",
+  "state": "archived",
+  "revision": 1,
+  "unresolved": 0,
+  "sealed_certificate": {
+    "format": "pagefold-certificate-v1",
+    "plan": "c1212bba111f4ac19af7f65522bbf60f",
+    "revision": 1,
+    "sources": {
+      "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+    },
+    "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+    "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+    "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+    "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+    "candidate_size": 24576
+  },
+  "sealed_write_rejection": {
+    "code": "closed_plan",
+    "detail": "封存或归档后的计划不可继续编辑或重演。"
+  },
+  "archived_rehearse_rejection": {
+    "code": "closed_plan",
+    "detail": "封存或归档后的计划不可继续编辑或重演。"
+  },
+  "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "candidate_size": 24576,
+  "download_stable_after_archive": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "independent_check": {
+    "foreign_key_check": [],
+    "integrity_check": "ok",
+    "north_node_note": "祖本节点",
+    "note_expected_from_right_choice": "祖本节点"
+  },
+  "attempts_history": [
+    {
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "changed": 3,
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "revision": 1,
+      "size": 24576,
+      "status": "passed"
+    }
+  ],
+  "entries": {
+    "plan_page": "/plans/c1212bba111f4ac19af7f65522bbf60f",
+    "plan_api": "/api/plans/c1212bba111f4ac19af7f65522bbf60f",
+    "attempts": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/attempts",
+    "download": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/download",
+    "certificate": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/certificate"
+  }
+}

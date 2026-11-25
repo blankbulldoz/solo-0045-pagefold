@@ -1,0 +1,35 @@
+{
+  "case": "site-a-open",
+  "title": "开放计划：仍有裁决工作，无可领取成果",
+  "plan_id": "d03c789f8bae405297ffb67095e7edc0",
+  "stress_plan_id": "4a7b6336536542e58f011232d7463681",
+  "state": "open",
+  "revision": 3,
+  "unresolved": 1,
+  "historical_passed_attempt_revision": 1,
+  "historical_passed_candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "stale_seal_rejection": {
+    "code": "rehearsal_required",
+    "detail": "当前版本须先通过重演。"
+  },
+  "unresolved_rehearsal_rejection": {
+    "code": "unresolved",
+    "detail": "存在未裁决的行，请先完成裁决。"
+  },
+  "stress_blocked_attempt": {
+    "id": "4a7b6336536542e58f011232d7463681",
+    "revision": 0,
+    "changed": 2,
+    "status": "blocked",
+    "problem": {
+      "code": "constraint",
+      "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+    }
+  },
+  "entries": {
+    "plan_page": "/plans/d03c789f8bae405297ffb67095e7edc0",
+    "plan_api": "/api/plans/d03c789f8bae405297ffb67095e7edc0",
+    "attempts": "/api/plans/d03c789f8bae405297ffb67095e7edc0/attempts",
+    "stress_plan_page": "/plans/4a7b6336536542e58f011232d7463681"
+  }
+}

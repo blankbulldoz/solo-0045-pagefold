@@ -1,0 +1,15 @@
+{
+  "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "candidate_size": 24576,
+  "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+  "format": "pagefold-certificate-v1",
+  "plan": "c1212bba111f4ac19af7f65522bbf60f",
+  "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+  "revision": 1,
+  "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+  "sources": {
+    "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+    "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+    "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+  }
+}

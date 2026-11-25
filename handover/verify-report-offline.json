@@ -1,0 +1,254 @@
+{
+  "mode": "offline",
+  "total": 22,
+  "failed": 0,
+  "checks": [
+    {
+      "status": "SECTION",
+      "check": "site-a-open 开放计划：仍有裁决工作，无可领取成果",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "计划存在且版本/状态与摘要一致",
+      "detail": {
+        "db": {
+          "revision": 3,
+          "state": "open",
+          "decisions": "{}"
+        },
+        "summary": {
+          "revision": 3,
+          "state": "open"
+        }
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "现场仍开放（还有工作）",
+      "detail": "open"
+    },
+    {
+      "status": "PASS",
+      "check": "当前版有 1 项未裁决",
+      "detail": {
+        "unresolved": 1,
+        "decisions": "{}"
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "保留一条已通过但非当前版的历史尝试",
+      "detail": [
+        {
+          "revision": 1,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "status": "PASS",
+      "check": "历史通过尝试带候选字节，但 releases 表无封存对象",
+      "detail": {
+        "attempts": [
+          {
+            "revision": 1,
+            "has_candidate": 1
+          }
+        ],
+        "release_exists": false
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "封存被拒原因记录为 rehearsal_required",
+      "detail": {
+        "code": "rehearsal_required",
+        "detail": "当前版本须先通过重演。"
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "受阻旁证计划只有 blocked 尝试且无候选",
+      "detail": [
+        {
+          "revision": 0,
+          "result": "blocked",
+          "has_candidate": 0
+        }
+      ]
+    },
+    {
+      "status": "PASS",
+      "check": "受阻旁证计划无封存成果",
+      "detail": {
+        "release_exists": false
+      }
+    },
+    {
+      "status": "SECTION",
+      "check": "site-b-archived 已归档未封存：只剩历史记录，无交付物",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "计划存在且版本/状态与摘要一致",
+      "detail": {
+        "db": {
+          "revision": 0,
+          "state": "archived",
+          "decisions": "{}"
+        },
+        "summary": {
+          "revision": 0,
+          "state": "archived"
+        }
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "计划已归档",
+      "detail": "archived"
+    },
+    {
+      "status": "PASS",
+      "check": "重演历史仅一条 blocked 记录、无候选",
+      "detail": [
+        {
+          "revision": 0,
+          "status": "blocked",
+          "has_candidate": 0
+        }
+      ]
+    },
+    {
+      "status": "PASS",
+      "check": "归档后仍无封存对象（历史不可当交付）",
+      "detail": {
+        "release_exists": false
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "写入口拒绝码为 closed_plan",
+      "detail": {
+        "rehearse": {
+          "code": "closed_plan",
+          "detail": "封存或归档后的计划不可继续编辑或重演。"
+        },
+        "seal": {
+          "code": "closed_plan",
+          "detail": "封存或归档后的计划不可继续编辑或重演。"
+        },
+        "decisions": {
+          "code": "closed_plan",
+          "detail": "封存或归档后的计划不可继续编辑或重演。"
+        }
+      }
+    },
+    {
+      "status": "SECTION",
+      "check": "site-c-sealed 封存后归档：成果保留、可领取可离线复核",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "计划存在且版本/状态与摘要一致",
+      "detail": {
+        "db": {
+          "revision": 1,
+          "state": "archived",
+          "decisions": "{\"3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf\":\"right\"}"
+        },
+        "summary": {
+          "revision": 1,
+          "state": "archived"
+        }
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "封存后已归档但 release 保留",
+      "detail": {
+        "state": "archived",
+        "release_exists": true
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "凭证候选摘要与状态库候选字节一致",
+      "detail": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24"
+    },
+    {
+      "status": "PASS",
+      "check": "下载制品落盘且摘要与凭证一致",
+      "detail": {
+        "file": "handover/site-c-sealed/release/candidate.sqlite",
+        "digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "certificate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24"
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "落盘凭证与状态库凭证逐字节一致",
+      "detail": {
+        "plan": "c1212bba111f4ac19af7f65522bbf60f",
+        "revision": 1
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "候选可独立打开：完整性/外键通过，裁决结果落库",
+      "detail": {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "north_node_note": "祖本节点"
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "写入口拒绝码为 closed_plan",
+      "detail": {
+        "rehearse": {
+          "code": "closed_plan",
+          "detail": "封存或归档后的计划不可继续编辑或重演。"
+        },
+        "decide": {
+          "code": "closed_plan",
+          "detail": "封存或归档后的计划不可继续编辑或重演。"
+        }
+      }
+    },
+    {
+      "status": "SECTION",
+      "check": "跨现场一致性",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "check": "三个现场状态分别为 open / archived / archived",
+      "detail": {
+        "expected": {
+          "d03c789f8bae405297ffb67095e7edc0": "open",
+          "2f89d7094c9042fcaf84d1b2484c068a": "archived",
+          "c1212bba111f4ac19af7f65522bbf60f": "archived"
+        },
+        "actual": {
+          "d03c789f8bae405297ffb67095e7edc0": "open",
+          "4a7b6336536542e58f011232d7463681": "open",
+          "2f89d7094c9042fcaf84d1b2484c068a": "archived",
+          "c1212bba111f4ac19af7f65522bbf60f": "archived"
+        }
+      }
+    },
+    {
+      "status": "PASS",
+      "check": "只有封存现场存在可领取 release",
+      "detail": {
+        "release_plan_ids": [
+          "c1212bba111f4ac19af7f65522bbf60f"
+        ]
+      }
+    }
+  ]
+}

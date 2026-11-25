@@ -1,0 +1,2106 @@
+[
+  {
+    "route": "/api/images",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "label": "quartz",
+      "size": 24576,
+      "catalog": {
+        "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "tables": [
+          {
+            "columns": [
+              "code",
+              "label"
+            ],
+            "foreign_keys": [],
+            "key": [
+              "code"
+            ],
+            "name": "bench",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "TEXT"
+            ]
+          },
+          {
+            "columns": [
+              "id",
+              "bench",
+              "slot"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "node",
+                "bench",
+                "bench",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ],
+              [
+                0,
+                1,
+                "node",
+                "slot",
+                "slot",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "id"
+            ],
+            "name": "binding",
+            "rows": 1,
+            "types": [
+              "INTEGER",
+              "TEXT",
+              "INTEGER"
+            ]
+          },
+          {
+            "columns": [
+              "bench",
+              "slot",
+              "note",
+              "payload",
+              "weight"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "bench",
+                "bench",
+                "code",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "bench",
+              "slot"
+            ],
+            "name": "node",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "INTEGER",
+              "TEXT",
+              "BLOB",
+              "REAL"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "route": "/api/images",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "label": "cerulean",
+      "size": 24576,
+      "catalog": {
+        "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "tables": [
+          {
+            "columns": [
+              "code",
+              "label"
+            ],
+            "foreign_keys": [],
+            "key": [
+              "code"
+            ],
+            "name": "bench",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "TEXT"
+            ]
+          },
+          {
+            "columns": [
+              "id",
+              "bench",
+              "slot"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "node",
+                "bench",
+                "bench",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ],
+              [
+                0,
+                1,
+                "node",
+                "slot",
+                "slot",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "id"
+            ],
+            "name": "binding",
+            "rows": 1,
+            "types": [
+              "INTEGER",
+              "TEXT",
+              "INTEGER"
+            ]
+          },
+          {
+            "columns": [
+              "bench",
+              "slot",
+              "note",
+              "payload",
+              "weight"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "bench",
+                "bench",
+                "code",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "bench",
+              "slot"
+            ],
+            "name": "node",
+            "rows": 3,
+            "types": [
+              "TEXT",
+              "INTEGER",
+              "TEXT",
+              "BLOB",
+              "REAL"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "route": "/api/images",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+      "label": "umber",
+      "size": 24576,
+      "catalog": {
+        "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "tables": [
+          {
+            "columns": [
+              "code",
+              "label"
+            ],
+            "foreign_keys": [],
+            "key": [
+              "code"
+            ],
+            "name": "bench",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "TEXT"
+            ]
+          },
+          {
+            "columns": [
+              "id",
+              "bench",
+              "slot"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "node",
+                "bench",
+                "bench",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ],
+              [
+                0,
+                1,
+                "node",
+                "slot",
+                "slot",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "id"
+            ],
+            "name": "binding",
+            "rows": 1,
+            "types": [
+              "INTEGER",
+              "TEXT",
+              "INTEGER"
+            ]
+          },
+          {
+            "columns": [
+              "bench",
+              "slot",
+              "note",
+              "payload",
+              "weight"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "bench",
+                "bench",
+                "code",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "bench",
+              "slot"
+            ],
+            "name": "node",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "INTEGER",
+              "TEXT",
+              "BLOB",
+              "REAL"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "route": "/api/images",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+      "label": "stress-left",
+      "size": 24576,
+      "catalog": {
+        "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "tables": [
+          {
+            "columns": [
+              "code",
+              "label"
+            ],
+            "foreign_keys": [],
+            "key": [
+              "code"
+            ],
+            "name": "bench",
+            "rows": 3,
+            "types": [
+              "TEXT",
+              "TEXT"
+            ]
+          },
+          {
+            "columns": [
+              "id",
+              "bench",
+              "slot"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "node",
+                "bench",
+                "bench",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ],
+              [
+                0,
+                1,
+                "node",
+                "slot",
+                "slot",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "id"
+            ],
+            "name": "binding",
+            "rows": 1,
+            "types": [
+              "INTEGER",
+              "TEXT",
+              "INTEGER"
+            ]
+          },
+          {
+            "columns": [
+              "bench",
+              "slot",
+              "note",
+              "payload",
+              "weight"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "bench",
+                "bench",
+                "code",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "bench",
+              "slot"
+            ],
+            "name": "node",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "INTEGER",
+              "TEXT",
+              "BLOB",
+              "REAL"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "route": "/api/images",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814",
+      "label": "stress-right",
+      "size": 24576,
+      "catalog": {
+        "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "tables": [
+          {
+            "columns": [
+              "code",
+              "label"
+            ],
+            "foreign_keys": [],
+            "key": [
+              "code"
+            ],
+            "name": "bench",
+            "rows": 3,
+            "types": [
+              "TEXT",
+              "TEXT"
+            ]
+          },
+          {
+            "columns": [
+              "id",
+              "bench",
+              "slot"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "node",
+                "bench",
+                "bench",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ],
+              [
+                0,
+                1,
+                "node",
+                "slot",
+                "slot",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "id"
+            ],
+            "name": "binding",
+            "rows": 1,
+            "types": [
+              "INTEGER",
+              "TEXT",
+              "INTEGER"
+            ]
+          },
+          {
+            "columns": [
+              "bench",
+              "slot",
+              "note",
+              "payload",
+              "weight"
+            ],
+            "foreign_keys": [
+              [
+                0,
+                0,
+                "bench",
+                "bench",
+                "code",
+                "NO ACTION",
+                "NO ACTION",
+                "NONE"
+              ]
+            ],
+            "key": [
+              "bench",
+              "slot"
+            ],
+            "name": "node",
+            "rows": 2,
+            "types": [
+              "TEXT",
+              "INTEGER",
+              "TEXT",
+              "BLOB",
+              "REAL"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "route": "/api/plans",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "revision": 0,
+      "state": "open",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "unresolved": 1,
+      "items": [
+        {
+          "automatic": "right",
+          "base": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        },
+        {
+          "automatic": null,
+          "base": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ],
+          "table": "node",
+          "choice": null
+        },
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ],
+          "right": null,
+          "table": "node",
+          "choice": "left"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/decisions",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "revision": 1,
+      "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+      "choice": "right"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/rehearse",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "revision": 1,
+      "changed": 3,
+      "status": "passed",
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "size": 24576
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/decisions",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "revision": 2,
+      "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+      "choice": "base"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/seal",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "rehearsal_required",
+      "detail": "当前版本须先通过重演。"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/decisions",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "revision": 3,
+      "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+      "choice": null
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/rehearse",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "unresolved",
+      "detail": "存在未裁决的行，请先完成裁决。"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/download",
+    "method": "GET",
+    "expected": 404,
+    "actual": 404,
+    "content_type": "application/json",
+    "body": {
+      "code": "unpublished",
+      "detail": "该计划还没有封存成果。"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0/certificate",
+    "method": "GET",
+    "expected": 404,
+    "actual": 404,
+    "content_type": "application/json",
+    "body": {
+      "code": "unpublished",
+      "detail": "该计划还没有封存成果。"
+    }
+  },
+  {
+    "route": "/api/plans",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "4a7b6336536542e58f011232d7463681",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "right": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814"
+      },
+      "revision": 0,
+      "state": "open",
+      "plan_digest": "3e0fa0eb28737f222f1530455bbb466bf7b016275a24d0962c12525d0f358a8e",
+      "unresolved": 0,
+      "items": [
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "stress-left"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "right": null,
+          "table": "bench",
+          "choice": "left"
+        },
+        {
+          "automatic": "right",
+          "base": null,
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "left": null,
+          "right": [
+            [
+              "t",
+              "stress-right"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/4a7b6336536542e58f011232d7463681/rehearse",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "4a7b6336536542e58f011232d7463681",
+      "revision": 0,
+      "changed": 2,
+      "status": "blocked",
+      "problem": {
+        "code": "constraint",
+        "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+      }
+    }
+  },
+  {
+    "route": "/api/plans/4a7b6336536542e58f011232d7463681/download",
+    "method": "GET",
+    "expected": 404,
+    "actual": 404,
+    "content_type": "application/json",
+    "body": {
+      "code": "unpublished",
+      "detail": "该计划还没有封存成果。"
+    }
+  },
+  {
+    "route": "/api/plans/d03c789f8bae405297ffb67095e7edc0",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "d03c789f8bae405297ffb67095e7edc0",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "revision": 3,
+      "state": "open",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "unresolved": 1,
+      "items": [
+        {
+          "automatic": "right",
+          "base": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        },
+        {
+          "automatic": null,
+          "base": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ],
+          "table": "node",
+          "choice": null
+        },
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ],
+          "right": null,
+          "table": "node",
+          "choice": "left"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "right": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814"
+      },
+      "revision": 0,
+      "state": "open",
+      "plan_digest": "3e0fa0eb28737f222f1530455bbb466bf7b016275a24d0962c12525d0f358a8e",
+      "unresolved": 0,
+      "items": [
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "stress-left"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "right": null,
+          "table": "bench",
+          "choice": "left"
+        },
+        {
+          "automatic": "right",
+          "base": null,
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "left": null,
+          "right": [
+            [
+              "t",
+              "stress-right"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/rehearse",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "revision": 0,
+      "changed": 2,
+      "status": "blocked",
+      "problem": {
+        "code": "constraint",
+        "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+      }
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/seal",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "rehearsal_required",
+      "detail": "当前版本须先通过重演。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/download",
+    "method": "GET",
+    "expected": 404,
+    "actual": 404,
+    "content_type": "application/json",
+    "body": {
+      "code": "unpublished",
+      "detail": "该计划还没有封存成果。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/archive",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "revision": 0,
+      "state": "archived"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "right": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814"
+      },
+      "revision": 0,
+      "state": "archived",
+      "plan_digest": "3e0fa0eb28737f222f1530455bbb466bf7b016275a24d0962c12525d0f358a8e",
+      "unresolved": 0,
+      "items": [
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "stress-left"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "right": null,
+          "table": "bench",
+          "choice": "left"
+        },
+        {
+          "automatic": "right",
+          "base": null,
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "left": null,
+          "right": [
+            [
+              "t",
+              "stress-right"
+            ],
+            [
+              "t",
+              "共享键值"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/rehearse",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/seal",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/decisions",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/archive",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "2f89d7094c9042fcaf84d1b2484c068a",
+      "revision": 0,
+      "state": "archived"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/download",
+    "method": "GET",
+    "expected": 404,
+    "actual": 404,
+    "content_type": "application/json",
+    "body": {
+      "code": "unpublished",
+      "detail": "该计划还没有封存成果。"
+    }
+  },
+  {
+    "route": "/api/plans/2f89d7094c9042fcaf84d1b2484c068a/attempts",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": [
+      {
+        "changed": 2,
+        "id": "2f89d7094c9042fcaf84d1b2484c068a",
+        "problem": {
+          "code": "constraint",
+          "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+        },
+        "revision": 0,
+        "status": "blocked"
+      }
+    ]
+  },
+  {
+    "route": "/api/plans",
+    "method": "POST",
+    "expected": 201,
+    "actual": 201,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "revision": 0,
+      "state": "open",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "unresolved": 1,
+      "items": [
+        {
+          "automatic": "right",
+          "base": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        },
+        {
+          "automatic": null,
+          "base": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ],
+          "table": "node",
+          "choice": null
+        },
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ],
+          "right": null,
+          "table": "node",
+          "choice": "left"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/decisions",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "revision": 1,
+      "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+      "choice": "right"
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/rehearse",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "revision": 1,
+      "changed": 3,
+      "status": "passed",
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "size": 24576
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/seal",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "format": "pagefold-certificate-v1",
+      "plan": "c1212bba111f4ac19af7f65522bbf60f",
+      "revision": 1,
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "candidate_size": 24576
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "revision": 1,
+      "state": "sealed",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "unresolved": 0,
+      "items": [
+        {
+          "automatic": "right",
+          "base": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        },
+        {
+          "automatic": null,
+          "base": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ],
+          "table": "node",
+          "choice": "right"
+        },
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ],
+          "right": null,
+          "table": "node",
+          "choice": "left"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/decisions",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/download",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/vnd.sqlite3",
+    "sha256": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+    "bytes": 24576
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/certificate",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "candidate_size": 24576,
+      "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+      "format": "pagefold-certificate-v1",
+      "plan": "c1212bba111f4ac19af7f65522bbf60f",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "revision": 1,
+      "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      }
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/archive",
+    "method": "POST",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "revision": 1,
+      "state": "archived"
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "id": "c1212bba111f4ac19af7f65522bbf60f",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "revision": 1,
+      "state": "archived",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "unresolved": 0,
+      "items": [
+        {
+          "automatic": "right",
+          "base": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ],
+          "table": "bench",
+          "choice": "right"
+        },
+        {
+          "automatic": null,
+          "base": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "right": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ],
+          "table": "node",
+          "choice": "right"
+        },
+        {
+          "automatic": "left",
+          "base": null,
+          "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "left": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ],
+          "right": null,
+          "table": "node",
+          "choice": "left"
+        }
+      ]
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/rehearse",
+    "method": "POST",
+    "expected": 409,
+    "actual": 409,
+    "content_type": "application/json",
+    "body": {
+      "code": "closed_plan",
+      "detail": "封存或归档后的计划不可继续编辑或重演。"
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/download",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/vnd.sqlite3",
+    "sha256": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+    "bytes": 24576
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/certificate",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": {
+      "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "candidate_size": 24576,
+      "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+      "format": "pagefold-certificate-v1",
+      "plan": "c1212bba111f4ac19af7f65522bbf60f",
+      "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+      "revision": 1,
+      "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+      "sources": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      }
+    }
+  },
+  {
+    "route": "/api/plans/c1212bba111f4ac19af7f65522bbf60f/attempts",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "application/json",
+    "body": [
+      {
+        "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "changed": 3,
+        "id": "c1212bba111f4ac19af7f65522bbf60f",
+        "revision": 1,
+        "size": 24576,
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "route": "/plans/d03c789f8bae405297ffb67095e7edc0",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "text/html",
+    "body_text": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>合流计划 · Pagefold</title>\n<link rel=\"stylesheet\" href=\"/assets/workspace.css\">\n<script defer src=\"/assets/upload.js\"></script>\n</head>\n<body>\n<header class=\"mast\"><div class=\"frame mast-inner\"><a class=\"brand\" href=\"/\"><span class=\"fold\" aria-hidden=\"true\"></span><span>Pagefold</span></a><span class=\"brand-sub\">数据页合流</span><a class=\"home-link\" href=\"/\">合流工作区</a></div></header>\n<main class=\"frame\"><a class=\"back\" href=\"/\">← 工作区</a>\n<section class=\"heading plan-heading\"><div><h1>合流计划 <code>d03c789f8bae</code></h1><p>第 3 版 · 裁决中</p></div><span class=\"tag\">1 项待裁决</span></section>\n<nav class=\"sources\" aria-label=\"三方镜像\"><a href=\"/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25\"><small>祖本</small><b>quartz</b><code>90438d5a76cd07</code></a><a href=\"/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75\"><small>左支</small><b>cerulean</b><code>ab1bceb83ee559</code></a><a href=\"/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009\"><small>右支</small><b>umber</b><code>d6a547d0982d61</code></a></nav>\n<div class=\"work-grid plan-grid\">\n  <section class=\"paper\"><div class=\"panel-title\"><h2>主键行差异</h2><span class=\"tag\">3 项</span></div><div class=\"entries\"><article class=\"entry\">\n  <div class=\"entry-head\"><h3>node <span><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span></span></h3><span class=\"tag conflict\">待裁决</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">祖本节点</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">ABQ=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.8000000000000p+0</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">左支覆写</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">ABQ=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.8000000000000p+0</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">祖本节点</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">/wA=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.2000000000000p+1</span></dd></div></dl>\n  <form class=\"decision\" action=\"/plans/d03c789f8bae405297ffb67095e7edc0/decisions\" method=\"post\">\n <input type=\"hidden\" name=\"revision\" value=\"3\">\n <input type=\"hidden\" name=\"item\" value=\"3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf\">\n <label>行裁决 <select name=\"choice\"><option value=\"clear\" selected>保留未决</option><option value=\"base\">祖本</option><option value=\"left\">左支</option><option value=\"right\">右支</option></select></label>\n <button>保存</button>\n</form>\n\n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">south</span></span></h3><span class=\"tag auto\">自动 · 右支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">砂层</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">砂层</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">右支更名</span></dd></div></dl>\n  \n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>node <span><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">2</span></span></h3><span class=\"tag auto\">自动 · 左支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">2</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">左支新增</span> <span class=\"sep\">·</span> <span class=\"null\">NULL</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.0000000000000p+2</span></dd></div><div><dt>右支</dt><dd><span class=\"null\">缺席</span></dd></div></dl>\n  \n</article>\n</div></section>\n  <aside><section class=\"paper\"><div class=\"panel-title\"><h2>重演与封存</h2></div><div class=\"actions\"><form method=\"post\" action=\"/plans/d03c789f8bae405297ffb67095e7edc0/rehearse\"><input type=\"hidden\" name=\"revision\" value=\"3\"><button class=\"primary\" disabled>重演当前版</button></form>\n<form method=\"post\" action=\"/plans/d03c789f8bae405297ffb67095e7edc0/seal\"><input type=\"hidden\" name=\"revision\" value=\"3\"><button class=\"\" disabled>封存成果</button></form>\n<form method=\"post\" action=\"/plans/d03c789f8bae405297ffb67095e7edc0/archive\"><input type=\"hidden\" name=\"revision\" value=\"3\"><button class=\"quiet\">归档计划</button></form>\n</div></section>\n  <section class=\"paper workspace-history\"><div class=\"panel-title\"><h2>重演历史</h2></div><div class=\"history\"><article class=\"attempt\"><b>第 1 版 · 通过 · 历史版</b><small>应用 3 行</small><code>c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24</code></article>\n</div></section></aside>\n</div>\n</main>\n</body>\n</html>\n"
+  },
+  {
+    "route": "/plans/2f89d7094c9042fcaf84d1b2484c068a",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "text/html",
+    "body_text": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>合流计划 · Pagefold</title>\n<link rel=\"stylesheet\" href=\"/assets/workspace.css\">\n<script defer src=\"/assets/upload.js\"></script>\n</head>\n<body>\n<header class=\"mast\"><div class=\"frame mast-inner\"><a class=\"brand\" href=\"/\"><span class=\"fold\" aria-hidden=\"true\"></span><span>Pagefold</span></a><span class=\"brand-sub\">数据页合流</span><a class=\"home-link\" href=\"/\">合流工作区</a></div></header>\n<main class=\"frame\"><a class=\"back\" href=\"/\">← 工作区</a>\n<section class=\"heading plan-heading\"><div><h1>合流计划 <code>2f89d7094c90</code></h1><p>第 0 版 · 已归档</p></div><span class=\"tag\">0 项待裁决</span></section>\n<nav class=\"sources\" aria-label=\"三方镜像\"><a href=\"/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25\"><small>祖本</small><b>quartz</b><code>90438d5a76cd07</code></a><a href=\"/images/6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662\"><small>左支</small><b>stress-left</b><code>6b7331fe95f7c5</code></a><a href=\"/images/c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814\"><small>右支</small><b>stress-right</b><code>c11f0aad7784ca</code></a></nav>\n<div class=\"work-grid plan-grid\">\n  <section class=\"paper\"><div class=\"panel-title\"><h2>主键行差异</h2><span class=\"tag\">2 项</span></div><div class=\"entries\"><article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">stress-left</span></span></h3><span class=\"tag auto\">自动 · 左支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">stress-left</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">共享键值</span></dd></div><div><dt>右支</dt><dd><span class=\"null\">缺席</span></dd></div></dl>\n  \n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">stress-right</span></span></h3><span class=\"tag auto\">自动 · 右支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">stress-right</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">共享键值</span></dd></div></dl>\n  \n</article>\n</div></section>\n  <aside><section class=\"paper\"><div class=\"panel-title\"><h2>重演与封存</h2></div><div class=\"actions\"></div></section>\n  <section class=\"paper workspace-history\"><div class=\"panel-title\"><h2>重演历史</h2></div><div class=\"history\"><article class=\"attempt\"><b>第 0 版 · 受阻 · 当前版</b><small>应用 2 行</small><code>bench [[&quot;t&quot;,&quot;stress-right&quot;]]：UNIQUE constraint failed: bench.label</code></article>\n</div></section></aside>\n</div>\n</main>\n</body>\n</html>\n"
+  },
+  {
+    "route": "/plans/c1212bba111f4ac19af7f65522bbf60f",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "text/html",
+    "body_text": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>合流计划 · Pagefold</title>\n<link rel=\"stylesheet\" href=\"/assets/workspace.css\">\n<script defer src=\"/assets/upload.js\"></script>\n</head>\n<body>\n<header class=\"mast\"><div class=\"frame mast-inner\"><a class=\"brand\" href=\"/\"><span class=\"fold\" aria-hidden=\"true\"></span><span>Pagefold</span></a><span class=\"brand-sub\">数据页合流</span><a class=\"home-link\" href=\"/\">合流工作区</a></div></header>\n<main class=\"frame\"><a class=\"back\" href=\"/\">← 工作区</a>\n<section class=\"heading plan-heading\"><div><h1>合流计划 <code>c1212bba111f</code></h1><p>第 1 版 · 已归档</p></div><span class=\"tag\">0 项待裁决</span></section>\n<nav class=\"sources\" aria-label=\"三方镜像\"><a href=\"/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25\"><small>祖本</small><b>quartz</b><code>90438d5a76cd07</code></a><a href=\"/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75\"><small>左支</small><b>cerulean</b><code>ab1bceb83ee559</code></a><a href=\"/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009\"><small>右支</small><b>umber</b><code>d6a547d0982d61</code></a></nav>\n<div class=\"work-grid plan-grid\">\n  <section class=\"paper\"><div class=\"panel-title\"><h2>主键行差异</h2><span class=\"tag\">3 项</span></div><div class=\"entries\"><article class=\"entry\">\n  <div class=\"entry-head\"><h3>node <span><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span></span></h3><span class=\"tag conflict\">右支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">祖本节点</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">ABQ=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.8000000000000p+0</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">左支覆写</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">ABQ=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.8000000000000p+0</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">north</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">1</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">祖本节点</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"二进制\">/wA=</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.2000000000000p+1</span></dd></div></dl>\n  \n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">south</span></span></h3><span class=\"tag auto\">自动 · 右支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">砂层</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">砂层</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">右支更名</span></dd></div></dl>\n  \n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>node <span><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">2</span></span></h3><span class=\"tag auto\">自动 · 左支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">south</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"整数\">2</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">左支新增</span> <span class=\"sep\">·</span> <span class=\"null\">NULL</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"实数\">0x1.0000000000000p+2</span></dd></div><div><dt>右支</dt><dd><span class=\"null\">缺席</span></dd></div></dl>\n  \n</article>\n</div></section>\n  <aside><section class=\"paper\"><div class=\"panel-title\"><h2>重演与封存</h2></div><div class=\"actions\"><nav class=\"release-links\" aria-label=\"封存结果\"><a href=\"/api/plans/c1212bba111f4ac19af7f65522bbf60f/download\">下载 SQLite 成果 ↓</a><a href=\"/api/plans/c1212bba111f4ac19af7f65522bbf60f/certificate\">下载来源凭证 ↓</a></nav>\n</div></section>\n  <section class=\"paper workspace-history\"><div class=\"panel-title\"><h2>重演历史</h2></div><div class=\"history\"><article class=\"attempt\"><b>第 1 版 · 通过 · 当前版</b><small>应用 3 行</small><code>c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24</code></article>\n</div></section></aside>\n</div>\n</main>\n</body>\n</html>\n"
+  },
+  {
+    "route": "/plans/4a7b6336536542e58f011232d7463681",
+    "method": "GET",
+    "expected": 200,
+    "actual": 200,
+    "content_type": "text/html",
+    "body_text": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>合流计划 · Pagefold</title>\n<link rel=\"stylesheet\" href=\"/assets/workspace.css\">\n<script defer src=\"/assets/upload.js\"></script>\n</head>\n<body>\n<header class=\"mast\"><div class=\"frame mast-inner\"><a class=\"brand\" href=\"/\"><span class=\"fold\" aria-hidden=\"true\"></span><span>Pagefold</span></a><span class=\"brand-sub\">数据页合流</span><a class=\"home-link\" href=\"/\">合流工作区</a></div></header>\n<main class=\"frame\"><a class=\"back\" href=\"/\">← 工作区</a>\n<section class=\"heading plan-heading\"><div><h1>合流计划 <code>4a7b63365365</code></h1><p>第 0 版 · 裁决中</p></div><span class=\"tag\">0 项待裁决</span></section>\n<nav class=\"sources\" aria-label=\"三方镜像\"><a href=\"/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25\"><small>祖本</small><b>quartz</b><code>90438d5a76cd07</code></a><a href=\"/images/6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662\"><small>左支</small><b>stress-left</b><code>6b7331fe95f7c5</code></a><a href=\"/images/c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814\"><small>右支</small><b>stress-right</b><code>c11f0aad7784ca</code></a></nav>\n<div class=\"work-grid plan-grid\">\n  <section class=\"paper\"><div class=\"panel-title\"><h2>主键行差异</h2><span class=\"tag\">2 项</span></div><div class=\"entries\"><article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">stress-left</span></span></h3><span class=\"tag auto\">自动 · 左支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"atom\" title=\"文本\">stress-left</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">共享键值</span></dd></div><div><dt>右支</dt><dd><span class=\"null\">缺席</span></dd></div></dl>\n  \n</article>\n<article class=\"entry\">\n  <div class=\"entry-head\"><h3>bench <span><span class=\"atom\" title=\"文本\">stress-right</span></span></h3><span class=\"tag auto\">自动 · 右支</span></div>\n  <dl class=\"triptych\"><div><dt>祖本</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>左支</dt><dd><span class=\"null\">缺席</span></dd></div><div><dt>右支</dt><dd><span class=\"atom\" title=\"文本\">stress-right</span> <span class=\"sep\">·</span> <span class=\"atom\" title=\"文本\">共享键值</span></dd></div></dl>\n  \n</article>\n</div></section>\n  <aside><section class=\"paper\"><div class=\"panel-title\"><h2>重演与封存</h2></div><div class=\"actions\"><form method=\"post\" action=\"/plans/4a7b6336536542e58f011232d7463681/rehearse\"><input type=\"hidden\" name=\"revision\" value=\"0\"><button class=\"primary\">重演当前版</button></form>\n<form method=\"post\" action=\"/plans/4a7b6336536542e58f011232d7463681/seal\"><input type=\"hidden\" name=\"revision\" value=\"0\"><button class=\"\" disabled>封存成果</button></form>\n<form method=\"post\" action=\"/plans/4a7b6336536542e58f011232d7463681/archive\"><input type=\"hidden\" name=\"revision\" value=\"0\"><button class=\"quiet\">归档计划</button></form>\n</div></section>\n  <section class=\"paper workspace-history\"><div class=\"panel-title\"><h2>重演历史</h2></div><div class=\"history\"><article class=\"attempt\"><b>第 0 版 · 受阻 · 当前版</b><small>应用 2 行</small><code>bench [[&quot;t&quot;,&quot;stress-right&quot;]]：UNIQUE constraint failed: bench.label</code></article>\n</div></section></aside>\n</div>\n</main>\n</body>\n</html>\n"
+  }
+]
