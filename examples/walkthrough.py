@@ -22,6 +22,14 @@ def expect(condition, description):
         raise RuntimeError(description)
 
 
+def state_row(state_path, sql, params=()):
+    db = sqlite3.connect(state_path)
+    try:
+        return db.execute(sql, params).fetchone()
+    finally:
+        db.close()
+
+
 class Client:
     def __init__(self, port):
         self.origin = f"http://127.0.0.1:{port}"
@@ -56,7 +64,7 @@ def mismatched_schema():
         db.close()
 
 
-def run(client, goal):
+def run(client, goal, state_path=None):
     def done(workflow, result):
         if goal in (workflow, "all"):
             print(f"{workflow} ✓ {result}")
@@ -100,6 +108,7 @@ def run(client, goal):
     expect("主键行差异".encode() in page and "1 项待裁决".encode() in page, "计划页未展示冲突")
     expect(client.call(route)["unresolved"] == 1, "未决数不符")
     expect(client.call(route + "/rehearse", {"revision": 0}, 409)["code"] == "unresolved", "未决重演未拦住")
+    expect(client.call(route + "/attempts") == [], "未决拒绝不应写入重演历史")
     if done("review", "待决数与可重演条件一致"):
         return
     conflict = next(item for item in plan["items"] if not item["automatic"])
@@ -117,10 +126,26 @@ def run(client, goal):
     stress_route = f"/api/plans/{failed_plan['id']}"
     issue = client.call(stress_route + "/rehearse", {"revision": 0})
     expect(issue["status"] == "blocked" and issue["problem"]["code"] == "constraint", "合成唯一性问题未捕获")
+    expect(client.call(stress_route + "/attempts") == [issue], "约束失败未持久化重演结果")
+    if state_path is not None:
+        failed_attempt = state_row(
+            state_path, "SELECT candidate FROM attempts WHERE plan_id=? AND revision=0",
+            (failed_plan["id"],))
+        expect(failed_attempt is not None and failed_attempt[0] is None, "约束失败候选不应有字节")
     expect(client.call(stress_route + "/download", status=404)["code"] == "unpublished", "失败候选可下载")
     if done("rehearse", "有效候选通过，两个合法输入的唯一键冲突产生诊断"):
         return
+    if state_path is not None:
+        before = state_row(
+            state_path, "SELECT candidate FROM attempts WHERE plan_id=? AND revision=1",
+            (plan["id"],))[0]
     expect(client.call(route + "/rehearse", {"revision": 1}) == accepted, "同版重演没有复用证据")
+    if state_path is not None:
+        after = state_row(
+            state_path, "SELECT candidate FROM attempts WHERE plan_id=? AND revision=1",
+            (plan["id"],))[0]
+        expect(after == before and hashlib.sha256(after).hexdigest() == accepted["candidate_digest"],
+               "同版重演改写了封存候选字节")
     client.call(route + "/decisions", dict(decision, revision=1, choice="base"))
     history = client.call(route + "/attempts")
     expect(history == [accepted], "历史记录改变")
@@ -163,11 +188,12 @@ def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
-        with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
+        state_path = Path(root) / "state.sqlite"
+        with make_server(Store(state_path), 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()
             try:
-                run(Client(server.server_port), parser.parse_args().workflow)
+                run(Client(server.server_port), parser.parse_args().workflow, state_path)
             finally:
                 server.shutdown()
                 thread.join()
