@@ -11,6 +11,19 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
+状态库只保存元数据；镜像、重演候选和封存成果等不可变文件按原始字节的 SHA-256 存放在 `<状态库>.blobs/` 内容库中，同一内容跨来源、跨成果只保存一份，写入经临时文件原子换名。读取时按摘要重新校验，下载与凭证始终字节一致。
+
+## 迁移
+
+内嵌二进制的旧结构状态库（v1）用迁移命令升级为元数据加内容库的新结构（v2）。迁移可续执行：复制按批提交，中断只留下"文件已写、状态未换"的现场，重新运行自动接续；全部复制并预校验通过后才在单事务内切换，旧结构可用到最后一刻。
+
+```sh
+python3 -m pagefold.migrate run ./pagefold-state.sqlite     # 迁移并自动校验
+python3 -m pagefold.migrate verify ./pagefold-state.sqlite  # 逐项核对历史凭证字节
+```
+
+服务启动时检测到旧结构会拒绝启动并提示迁移。迁移演练（`examples/migration_check`）覆盖中断恢复与新旧下载对照。
+
 可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
 ## 操作和接口
@@ -32,6 +45,7 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.migration_check
 ```
 
-工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+工作流检查使用临时状态库和本机 HTTP 服务。迁移演练用历史提交中的旧代码造出旧结构状态库，覆盖中断恢复、逐项凭证校验和新旧服务下载对照。正式自动化测试套件延期。

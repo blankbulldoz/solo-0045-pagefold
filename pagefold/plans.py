@@ -11,13 +11,13 @@ from .sqlite_image import mounted
 
 def create_plan(store, sources):
     with store.connect() as db:
-        images = [get_image(db, sources[role], body=True) for role in ROLES]
+        images = [get_image(db, sources[role]) for role in ROLES]
     catalogs = [json.loads(image["catalog"]) for image in images]
     if len({catalog["signature"] for catalog in catalogs}) != 1:
         raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
     snapshots = []
     for image, catalog in zip(images, catalogs):
-        with mounted(image["body"]) as snapshot:
+        with mounted(store.blobs.get(image["id"])) as snapshot:
             snapshots.append(read_image(snapshot, catalog))
     items = calculate(*snapshots)
     plan_id = uuid.uuid4().hex

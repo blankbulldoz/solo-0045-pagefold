@@ -28,7 +28,7 @@ def workspace(store, parts, query):
             if len(parts) == 2:
                 return image_page(entry)
             if parts[2] == "rows":
-                return rows_page(entry, table_page(db, parts[1], query.get("table"),
+                return rows_page(entry, table_page(store, db, parts[1], query.get("table"),
                                                    unsigned(query.get("offset", "0"), "offset")))
     raise Problem("route", "找不到该入口。", 404)
 
