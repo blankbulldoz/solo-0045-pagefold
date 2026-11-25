@@ -27,11 +27,19 @@ python3 -m examples.make_images ./demo-images
 
 写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
 
+## 影响事实与旧版凭证
+
+通过的重演在结果中附带 `impact`（`pagefold-impact-v1`）：逐条区分左右分支的提议（`proposals`）、自动采纳与人工裁决（`origin`、`choice`）以及候选库相对祖本的最终变动（`write`：`insert`/`update`/`delete`/`none`）。保留祖本与选择缺席都可能出现在差异项里，但只有真正改写祖本的条目才计入写入；`written_tables` 列出确实被写过的表，未写入的表同样给出候选行数与行摘要。封存凭证升级为 `pagefold-certificate-v2`，在事务内独立解包候选字节重算影响事实并与重演记录交叉核对，不一致时以 `impact_mismatch` 拒绝封存，凭证同时冻结 `impact_digest`。
+
+旧版（`pagefold-certificate-v1`、无影响事实）凭证照常读取，接口和计划页会补上 `impact.scope = "unknown"` 的显式标注并把 `impact_digest` 置空，候选字节摘要仍可校验；独立核验器见 `examples/impact_check.py`。
+
 ## 验证
 
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
 ```
+
+`impact` 演练用一次封存覆盖三类易被混算的差异（保留祖本、双边相同插入、删除后键缺席），并解包实际数据库逐表对账，同时对改造出的旧版凭证给出明确的未知结论。
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。

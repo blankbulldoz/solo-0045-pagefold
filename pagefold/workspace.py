@@ -1,3 +1,5 @@
+import json
+
 from .attempts import list_attempts
 from .demo import image
 from .errors import Problem
@@ -7,6 +9,7 @@ from .inputs import unsigned
 from .merge import ROLES
 from .plan_views import plan_links, plan_page
 from .plans import create_plan, list_plans, read_plan
+from .releases import present
 from .render import HERE, page, safe
 
 
@@ -21,8 +24,16 @@ def workspace(store, parts, query):
             plan = read_plan(db, parts[1])
             images = [get_image(db, plan["sources"][role]) for role in ROLES]
             attempts = list_attempts(db, parts[1])
-            published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
-            return plan_page(plan, images, attempts, bool(published))
+            release = db.execute("SELECT certificate FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
+            published = bool(release)
+            if release:
+                # 已封存：凭证中的影响事实为准，旧凭证在此标明未知范围
+                impact = present(json.loads(release["certificate"]))["impact"]
+            else:
+                current = next((a for a in attempts if a["revision"] == plan["revision"]
+                                and a["status"] == "passed"), None)
+                impact = current["impact"] if current and "impact" in current else None
+            return plan_page(plan, images, attempts, published, impact)
         if len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:

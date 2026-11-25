@@ -67,9 +67,14 @@
       "responsibility": "实现 rebuild、amendments"
     },
     {
+      "id": "impact",
+      "path": "pagefold/impact.py",
+      "responsibility": "实现 impact_report、impact_from_candidate、write_kind、classify"
+    },
+    {
       "id": "releases",
       "path": "pagefold/releases.py",
-      "responsibility": "实现 seal、get_release"
+      "responsibility": "实现 seal、get_release、present"
     },
     {
       "id": "api",
@@ -291,6 +296,25 @@
         "archive",
         "plans",
         "releases"
+      ]
+    },
+    {
+      "id": "impact",
+      "name": "核验影响事实",
+      "entry": "GET /api/plans/{id}/certificate",
+      "success": "凭证区分分支提议、人工选择与候选最终变动，写过表可逐表对账",
+      "failure": "影响事实与候选数据库不一致时封存拒绝，旧版凭证标明未知范围",
+      "verification": "python3 -m examples.walkthrough impact",
+      "steps": [
+        "从公开入口取得请求 POST /api/plans/{id}/rehearse",
+        "解包候选数据库重算逐表行摘要与写入计数并在封存时交叉核对"
+      ],
+      "module_ids": [
+        "impact",
+        "attempts",
+        "releases",
+        "replay",
+        "rows"
       ]
     }
   ],

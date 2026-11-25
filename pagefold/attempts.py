@@ -6,6 +6,7 @@ from .errors import Problem
 from .images import get_image
 from .plans import expect_open, expect_revision, get_plan, plan_content
 from .replay import amendments, rebuild
+from .impact import impact_from_candidate
 
 
 def get_attempt(db, plan_id, revision):
@@ -30,11 +31,13 @@ def rehearse(store, plan_id, revision):
         items, decisions = plan_content(plan)
         operations = amendments(items, decisions)
         ancestor = get_image(db, plan["base"], body=True)
+        catalog = json.loads(ancestor["catalog"])
         candidate = None
         result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}
         try:
-            candidate = rebuild(ancestor["body"], json.loads(ancestor["catalog"]), operations)
-            result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))
+            candidate = rebuild(ancestor["body"], catalog, operations)
+            result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate),
+                          impact=impact_from_candidate(candidate, catalog, items, decisions))
         except Problem as exc:
             result.update(status="blocked", problem=exc.as_dict())
         except sqlite3.Error as exc:

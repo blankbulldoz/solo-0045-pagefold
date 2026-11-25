@@ -13,8 +13,10 @@ from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
+from examples.impact_check import verify
+
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "archive", "impact")
 
 
 def expect(condition, description):
@@ -56,7 +58,7 @@ def mismatched_schema():
         db.close()
 
 
-def run(client, goal):
+def run(client, goal, state_path):
     def done(workflow, result):
         if goal in (workflow, "all"):
             print(f"{workflow} ✓ {result}")
@@ -157,17 +159,110 @@ def run(client, goal):
     expect(client.call(route + "/download") == candidate and client.call(route + "/certificate") == proof,
            "归档后成果变化")
     done("archive", "停止写入，既有成果和凭证继续可提取")
+    if goal in ("impact", "all"):
+        run_impact(client, state_path)
+        print("impact ✓ 影响事实区分提议/选择/最终变动，旧凭证标明未知范围")
+
+
+def run_impact(client, state_path):
+    """一次封存覆盖：保留祖本、双边相同插入、删除后缺席三类易被混算的差异。"""
+    base = client.upload("impact-base")
+    left = client.upload("impact-left")
+    right = client.upload("impact-right")
+    sources = {"base": base["id"], "left": left["id"], "right": right["id"]}
+    plan = client.call("/api/plans", sources, 201)
+    route = f"/api/plans/{plan['id']}"
+    expect(plan["revision"] == 0 and len(plan["items"]) == 4, "影响场景的计划项数量不符")
+    def tkey(code, kind):
+        return [["t", code], ["t", kind]]
+
+    by_key = {json.dumps(item["key"]): item for item in plan["items"]}
+    conflict = by_key[json.dumps(tkey("beta", "one"))]
+    expect(conflict["automatic"] is None, "beta 应为双边不同的人工冲突项")
+    automatic = {json.dumps(item["key"]): item for item in plan["items"] if item["automatic"]}
+    expect(set(automatic) == {json.dumps(tkey(*k)) for k in
+                              (("alpha", "one"), ("gamma", "two"), ("delta", "one"))},
+            "自动项集合不符")
+    # 人工选择保留祖本：该项最终不产生任何写入
+    decision = {"item": conflict["id"], "choice": "base", "revision": 0}
+    expect(client.call(route + "/decisions", decision)["revision"] == 1, "冲突裁决未推进版本")
+    rehearsal = client.call(route + "/rehearse", {"revision": 1})
+    expect(rehearsal["status"] == "passed", "影响场景重演未通过")
+    impact = rehearsal["impact"]
+    expect(impact["format"] == "pagefold-impact-v1", "重演结果缺少影响事实")
+    # 提议侧别：双边同插/同删 proposals 为双边，左支单边修改仅 left
+    facts = {json.dumps(fact["key"]): fact for fact in impact["items"]}
+    expect(facts[json.dumps(tkey("alpha", "one"))]["proposals"] == ["left", "right"]
+           and facts[json.dumps(tkey("alpha", "one"))]["write"] == "insert", "双边同插分类错误")
+    expect(facts[json.dumps(tkey("gamma", "two"))]["proposals"] == ["left", "right"]
+           and facts[json.dumps(tkey("gamma", "two"))]["write"] == "delete", "双边同删分类错误")
+    expect(facts[json.dumps(tkey("delta", "one"))]["proposals"] == ["left"]
+           and facts[json.dumps(tkey("delta", "one"))]["write"] == "update", "单边修改分类错误")
+    expect(facts[json.dumps(tkey("beta", "one"))]["origin"] == "manual"
+           and facts[json.dumps(tkey("beta", "one"))]["choice"] == "base"
+           and facts[json.dumps(tkey("beta", "one"))]["write"] == "none", "保留祖本应是人工且无写入")
+    totals = impact["totals"]
+    expect(totals["writes"] == {"insert": 1, "update": 1, "delete": 1, "none": 1}, "最终变动计数错误")
+    expect(totals["origins"] == {"automatic": 3, "manual": 1}, "自动/人工计数错误")
+    expect(totals["proposals"] == {"left": 1, "right": 0, "both": 3}, "左右提议计数错误")
+    expect(impact["written_tables"] == ["ledger"], "写过表集合错误（journal、shelf 不应出现）")
+    ledger = impact["tables"]["ledger"]
+    expect(ledger["writes"] == {"insert": 1, "update": 1, "delete": 1, "none": 1}, "ledger 写入计数错误")
+    expect(impact["tables"]["shelf"]["writes"] == {"insert": 0, "update": 0, "delete": 0, "none": 0}
+           and impact["tables"]["shelf"]["rows"] == 2, "未写表被误记为受影响")
+    expect(impact["tables"]["journal"]["rows"] == 2
+           and impact["tables"]["journal"]["writes"]["none"] == 0, "无差异表不应有计划项")
+    certificate = client.call(route + "/seal", {"revision": 1})
+    expect(certificate["format"] == "pagefold-certificate-v2" and certificate["impact"] == impact
+           and certificate["impact_digest"], "封存凭证未冻结影响事实")
+    candidate = client.call(route + "/download")
+    expect(hashlib.sha256(candidate).hexdigest() == certificate["candidate_digest"], "候选摘要不符")
+    # 解包实际数据库，核对最终行状态
+    db = sqlite3.connect(":memory:")
+    try:
+        db.deserialize(candidate)
+        expect(db.execute("SELECT amount,note FROM ledger WHERE code='alpha'").fetchone()
+               == (11, "双边同插"), "双边同插未落地")
+        expect(db.execute("SELECT amount,note FROM ledger WHERE code='beta'").fetchone()
+               == (10, "祖本内容"), "保留祖本未保持祖本行")
+        expect(db.execute("SELECT 1 FROM ledger WHERE code='gamma'").fetchone() is None, "删除后键仍然存在")
+        expect(db.execute("SELECT amount,note FROM ledger WHERE code='delta'").fetchone()
+               == (31, "左支修改"), "左支单边修改未落地")
+        expect(db.execute("SELECT count(*) FROM shelf").fetchone() == (2,), "未写入表行被改变")
+    finally:
+        db.close()
+    # 用独立核验器重算并对账凭证
+    catalog = client.call(f"/api/images/{base['id']}")["catalog"]
+    errors, detail = verify(certificate, candidate, catalog, plan["items"])
+    expect(not errors, f"影响事实核验失败：{errors}")
+    expect(detail["rows_digest"] == impact["rows_digest"]
+           and detail["counted_written"] == impact["written_tables"], "独立重算的摘要与凭证不符")
+    # 旧版（v1、无 impact）凭证照常读取，并显式标明未知范围
+    legacy = dict(certificate)
+    legacy.pop("impact")
+    legacy.pop("impact_digest")
+    legacy["format"] = "pagefold-certificate-v1"
+    with sqlite3.connect(state_path) as state:
+        state.execute("UPDATE releases SET certificate=? WHERE plan_id=?",
+                      (json.dumps(legacy, separators=(",", ":"), sort_keys=True), plan["id"]))
+    seen = client.call(route + "/certificate")
+    expect(seen["impact"]["scope"] == "unknown" and seen["impact_digest"] is None
+           and seen["candidate_digest"] == certificate["candidate_digest"], "旧版凭证未标明未知范围")
+    legacy_errors, _ = verify(seen, candidate, catalog, plan["items"])
+    expect(legacy_errors and "未知" in "".join(legacy_errors), "旧版凭证应给出明确的未知结论")
+    expect(client.call(route + "/download") == candidate, "标注未知范围后下载内容变化")
 
 
 def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
-        with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
+        state_path = str(Path(root) / "state.sqlite")
+        with make_server(Store(Path(state_path)), 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()
             try:
-                run(Client(server.server_port), parser.parse_args().workflow)
+                run(Client(server.server_port), parser.parse_args().workflow, state_path)
             finally:
                 server.shutdown()
                 thread.join()

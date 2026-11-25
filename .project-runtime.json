@@ -57,6 +57,10 @@
     {
       "workflow_id": "archive",
       "command": "python3 -m examples.walkthrough archive"
+    },
+    {
+      "workflow_id": "impact",
+      "command": "python3 -m examples.walkthrough impact"
     }
   ]
 }

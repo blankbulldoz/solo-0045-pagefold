@@ -1,5 +1,7 @@
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
+WRITE_LABELS = {"insert": "插入", "update": "修改", "delete": "删除", "none": "无写入"}
+
 
 def plan_links(plans):
     return "".join(f'<a class="plan-link" href="/plans/{p["id"]}">'
@@ -25,12 +27,40 @@ def entries(plan):
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
 
+def impact_summary(impact):
+    if not impact or impact.get("format") != "pagefold-impact-v1":
+        return "影响范围待重演"
+    writes = impact["totals"]["writes"]
+    parts = [f'{WRITE_LABELS[kind]} {writes[kind]}' for kind in ("insert", "update", "delete")]
+    return "、".join(parts) + f' · 写过 {impact["totals"]["written_tables"]} 张表'
+
+
+def impact_panel(impact):
+    if impact and impact.get("format") == "pagefold-impact-unknown":
+        return f'<p class="muted">{safe(impact["detail"])}</p>'
+    if not impact or impact.get("format") != "pagefold-impact-v1":
+        return '<p class="muted">通过重演后在此查看逐表影响事实。</p>'
+    rows = []
+    for name, stats in impact["tables"].items():
+        writes = stats["writes"]
+        written = any(writes[kind] for kind in ("insert", "update", "delete"))
+        badge = '<span class="tag">已写入</span>' if written else '<span class="tag quiet">未写入</span>'
+        detail = "、".join(f'{WRITE_LABELS[kind]} {writes[kind]}'
+                          for kind in ("insert", "update", "delete") if writes[kind]) or "无最终变动"
+        rows.append(f'<li><b>{safe(name)}</b> {badge}<small>{detail} · 候选 {stats["rows"]} 行 '
+                    f'<code>{stats["rows_digest"][:12]}</code></small></li>')
+    return ('<div class="impact-head"><span class="tag">影响事实 '
+            f'{safe(impact["format"])}</span><code>{safe(impact["rows_digest"])}</code></div>'
+            '<ul class="impact-tables">' + "".join(rows) + "</ul>")
+
+
 def attempts_list(attempts, revision):
     return "".join(fragment("attempt", revision=a["revision"],
                             status="通过" if a["status"] == "passed" else "受阻",
                             marker=" · 当前版" if revision == a["revision"] else " · 历史版",
                             evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
-                            changes=a["changed"]) for a in attempts) or '<p class="muted">暂无重演记录。</p>'
+                            changes=a["changed"], impact=safe(impact_summary(a.get("impact")))
+                            ) for a in attempts) or '<p class="muted">暂无重演记录。</p>'
 
 
 def action_form(plan, action, label, style="", disabled=False):
@@ -38,7 +68,7 @@ def action_form(plan, action, label, style="", disabled=False):
                     label=label, style=style, disabled=" disabled" if disabled else "")
 
 
-def plan_page(plan, images, attempts, published):
+def plan_page(plan, images, attempts, published, impact=None):
     actions = []
     if plan["state"] == "open":
         passed = any(a["revision"] == plan["revision"] and a["status"] == "passed" for a in attempts)
@@ -53,4 +83,4 @@ def plan_page(plan, images, attempts, published):
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
-                actions="".join(actions))
+                actions="".join(actions), impact=impact_panel(impact))
