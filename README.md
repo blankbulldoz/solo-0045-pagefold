@@ -32,6 +32,34 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.conformance checks
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+### 三方合流保证检查
+
+`examples.conformance` 是不依赖 HTTP 的可重复合流保证检查，覆盖存在/缺席、
+单改/双改、SQLite 类型键相等与序列化表示的区分，以及重演后的业务值一致性：
+
+```sh
+python3 -m examples.conformance checks             # 全部 8 层 40 项断言
+python3 -m examples.conformance matrix             # 打印 31 个场景的存在矩阵与分类
+python3 -m examples.conformance fixtures ./cf-img  # 导出合成镜像供 sqlite3 手工复查
+python3 -m examples.conformance checks --keep DIR  # 保留检查所用状态库
+```
+
+- **独立判断依据**：`conformance/oracle.py` 不导入 `pagefold.merge`、
+  `pagefold.rows` 或 `pagefold.codec`，仅通过 SQLite 引擎探针（`table_xinfo`、
+  全表扫描、`WHERE 主键=?`）与定义性三方规则重算预期计划、预期业务库和
+  delete/insert/update 操作痕迹，再与产品实现逐层对照。
+- **检查分层**：A 引擎证据（整/实同身份、NULL 键拒绝）、B 表示区分
+  （`i`/`r`/`t`/`b` 与 `-0.0` 编码）、C 计划分类、D 冲突项四种裁决的重演业务值、
+  E 操作痕迹、F 左右支互换对照、G 错误分类但结果巧合相同的检出、H 持久化入口。
+- **巧合相同如何检出**：G 层用 BLOB 亲和键列构造磁盘上分别为整数 `202` 与
+  等值实数 `202.0` 的同一行身份；按序列化表示分键的错误孪生会把它拆成
+  delete+insert 两项，重演终态与正确分类完全一致，但分区集合与操作痕迹
+  两层仍能稳定暴露差异——因此检查不只比较最终数据库。
+- **互换左右支**：单边修改项的采纳侧随支系对调翻转（left↔right），双支同值
+  项（含双删）固定自动采纳；互换后镜像裁决重演的业务库必须与原计划相同。
+
