@@ -32,6 +32,23 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.concurrency_check            # 可加 --json 证据路径、--keep 保留状态库
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+`concurrency_check` 不依赖重复撞调度，而是在真实 HTTP 入口与生产写事务
+（`BEGIN IMMEDIATE` / `COMMIT`）之间插入确定性时序门，把封存、重新选择、
+归档、重演的每个交错顺序固定下来：
+
+- 六个三操作排列与两方相遇场景：终态只由 SQLite 实际提交次序决定，
+  按计划状态机（`open->sealed`、`open->archived`、`sealed->archived`）
+  给出互斥结果，并逐个核对 200/409 与 `stale_revision`、`closed_plan`。
+- 候选已重演但选择随后改变：分别固定"重演先提交"和"选择先提交"两种
+  次序，核对 `attempts` 证据、旧候选不可封存与新版本必须重新重演。
+- HTTP 断开窗口：原始 socket 客户端在服务端 `COMMIT` 之后、响应发出
+  之前断开，核对状态已 durable、服务端无异常日志，并验证重试语义
+  （旧版本 `stale_revision`、封存/归档幂等）。
+- 持久状态核对：每个场景后以只读连接直接检查状态库的 `plans`、
+  `attempts`、`releases`；最后用独立子进程重启生产入口，重新下载
+  SQLite 镜像并校验凭证摘要、完整性、外键和冲突行内容。
