@@ -4,4 +4,5 @@ __pycache__/
 *.sqlite-shm
 *.sqlite-wal
 demo-images/
+exercises/two-party-adjudication/evidence/
 .DS_Store
