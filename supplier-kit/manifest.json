@@ -1,0 +1,181 @@
+{
+  "kit": "pagefold-compliance-samples",
+  "sqlite_version": "3.40.1",
+  "cases": [
+    {
+      "case": "01-generated-column",
+      "point": "普通表与生成列的差别（table_xinfo hidden 标志非 0 即不可写）",
+      "bad": {
+        "path": "01-generated-column/bad/part-ledger-generated.sqlite",
+        "sha256": "6bb6f5d742d3f00e0f9f69f39d0e5b08ff7e71e51d9039a7a7693cbe11fa23c0",
+        "size": 12288,
+        "column_hidden_flags": {
+          "sku": 0,
+          "qty": 0,
+          "total": 2
+        },
+        "expected_rejection": {
+          "http": 422,
+          "code": "table_shape"
+        }
+      },
+      "fixed": {
+        "path": "01-generated-column/fixed/part-ledger-plain.sqlite",
+        "sha256": "3567be4b9edf45e4edbfa100e45016f6223ac0f4cbe1d3b5d88c95660ec8f321",
+        "size": 12288,
+        "column_hidden_flags": {
+          "sku": 0,
+          "qty": 0,
+          "total": 0
+        },
+        "expected": {
+          "http": 201
+        }
+      }
+    },
+    {
+      "case": "02-wal-runtime-file",
+      "point": "运行中的 WAL 文件与独立镜像的差别（文件头偏移 18、19 字节）",
+      "bad": {
+        "path": "02-wal-runtime-file/bad/sensor-reading-wal.sqlite",
+        "sha256": "ba07a50dadb151be2c6093ac976171de8a4fbc8fdd5cb1769e581d96c512977b",
+        "size": 8192,
+        "journal_mode": "wal",
+        "header_bytes_18_19_hex": "0202",
+        "sidecars_left_in_bad_dir": [],
+        "expected_rejection": {
+          "http": 422,
+          "code": "image_journal"
+        }
+      },
+      "fix_steps": [
+        "复制坏样件（不直接改原件）",
+        "PRAGMA wal_checkpoint(TRUNCATE);",
+        "PRAGMA journal_mode=DELETE;"
+      ],
+      "checkpoint_result": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "fixed": {
+        "path": "02-wal-runtime-file/fixed/sensor-reading-standalone.sqlite",
+        "sha256": "8d11310290728923e9a72b46d50d5260c7c001fe69a6e6205b2c22c3d88c9976",
+        "size": 8192,
+        "journal_mode": "delete",
+        "header_bytes_18_19_hex": "0101",
+        "expected": {
+          "http": 201
+        }
+      },
+      "original_bad_unchanged": true
+    },
+    {
+      "case": "03-same-index-name",
+      "point": "索引名称相同不代表目录相同：目录指纹覆盖完整建表/建索引 SQL 记录",
+      "index_name_shared": "stock_lookup",
+      "bad": {
+        "entries": {
+          "base": {
+            "path": "03-same-index-name/bad/inventory-base.sqlite",
+            "sha256": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(bin)",
+            "index_columns": [
+              "bin"
+            ],
+            "signature": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af",
+            "upload_expected": {
+              "http": 201
+            }
+          },
+          "left": {
+            "path": "03-same-index-name/bad/inventory-left.sqlite",
+            "sha256": "4df1ff2f339aaf1ef294823299037a9ab51fa414b51b2c444cce6299f9edb40f",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(qty)",
+            "index_columns": [
+              "qty"
+            ],
+            "signature": "722d997c1177306f67d1e6182e392382a2deb7de0b4499888201f1f1346005ff",
+            "upload_expected": {
+              "http": 201
+            }
+          },
+          "right": {
+            "path": "03-same-index-name/bad/inventory-right.sqlite",
+            "sha256": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(bin)",
+            "index_columns": [
+              "bin"
+            ],
+            "signature": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af",
+            "upload_expected": {
+              "http": 201
+            }
+          }
+        },
+        "signatures": {
+          "base": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af",
+          "left": "722d997c1177306f67d1e6182e392382a2deb7de0b4499888201f1f1346005ff",
+          "right": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af"
+        },
+        "signatures_identical": false,
+        "expected_plan_rejection": {
+          "http": 409,
+          "code": "schema_mismatch"
+        }
+      },
+      "fixed": {
+        "entries": {
+          "base": {
+            "path": "03-same-index-name/fixed/inventory-base.sqlite",
+            "sha256": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(bin)",
+            "index_columns": [
+              "bin"
+            ],
+            "signature": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af"
+          },
+          "left": {
+            "path": "03-same-index-name/fixed/inventory-left.sqlite",
+            "sha256": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(bin)",
+            "index_columns": [
+              "bin"
+            ],
+            "signature": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af"
+          },
+          "right": {
+            "path": "03-same-index-name/fixed/inventory-right.sqlite",
+            "sha256": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384,
+            "ddl": "CREATE INDEX stock_lookup ON inventory(bin)",
+            "index_columns": [
+              "bin"
+            ],
+            "signature": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af"
+          }
+        },
+        "signatures": {
+          "base": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af",
+          "left": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af",
+          "right": "deb8b62a1902acf466637dd35b58ae46f63374e3e626acbfded2fb40e03063af"
+        },
+        "signatures_identical": true,
+        "expected_plan": {
+          "http": 201
+        },
+        "expected_rehearse": {
+          "status": "passed",
+          "changed": 0
+        }
+      }
+    }
+  ]
+}

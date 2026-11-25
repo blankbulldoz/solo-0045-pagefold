@@ -1,0 +1,116 @@
+{
+  "origin": "http://127.0.0.1:43901",
+  "cases": [
+    {
+      "case": "01-generated-column",
+      "ok": true,
+      "summary": "坏件 table_shape / 修正件 HTTP 201",
+      "steps": [
+        {
+          "step": "upload_bad",
+          "http": 422,
+          "body": {
+            "code": "table_shape",
+            "detail": "表 part_ledger 需要显式主键，并且所有列须可写入。"
+          }
+        },
+        {
+          "step": "upload_fixed",
+          "http": 201,
+          "image_id": "3567be4b9edf45e4edbfa100e45016f6223ac0f4cbe1d3b5d88c95660ec8f321"
+        }
+      ]
+    },
+    {
+      "case": "02-wal-runtime-file",
+      "ok": true,
+      "summary": "坏件 image_journal / 修正件 HTTP 201",
+      "steps": [
+        {
+          "step": "upload_bad",
+          "http": 422,
+          "body": {
+            "code": "image_journal",
+            "detail": "请先完成检查点并保存为独立的 SQLite 文件。"
+          }
+        },
+        {
+          "step": "upload_fixed",
+          "http": 201,
+          "image_id": "8d11310290728923e9a72b46d50d5260c7c001fe69a6e6205b2c22c3d88c9976"
+        }
+      ]
+    },
+    {
+      "case": "03-same-index-name",
+      "ok": true,
+      "summary": "三份坏件均上传成功、建计划 schema_mismatch；修正后计划 HTTP 200，重演 passed",
+      "steps": [
+        {
+          "step": "upload_bad_base",
+          "http": 201,
+          "image_id": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b"
+        },
+        {
+          "step": "upload_bad_left",
+          "http": 201,
+          "image_id": "4df1ff2f339aaf1ef294823299037a9ab51fa414b51b2c444cce6299f9edb40f"
+        },
+        {
+          "step": "upload_bad_right",
+          "http": 201,
+          "image_id": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b"
+        },
+        {
+          "step": "create_plan_bad",
+          "http": 409,
+          "body": {
+            "code": "schema_mismatch",
+            "detail": "三份镜像的模式记录不一致。"
+          }
+        },
+        {
+          "step": "upload_fixed_base",
+          "http": 201,
+          "image_id": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b"
+        },
+        {
+          "step": "upload_fixed_left",
+          "http": 201,
+          "image_id": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b"
+        },
+        {
+          "step": "upload_fixed_right",
+          "http": 201,
+          "image_id": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b"
+        },
+        {
+          "step": "create_plan_fixed",
+          "http": 201,
+          "plan_id": "a7df70bd885640fba7bd3381a0e45039",
+          "items": 0,
+          "unresolved": 0
+        },
+        {
+          "step": "rehearse_fixed",
+          "http": 200,
+          "result": {
+            "id": "a7df70bd885640fba7bd3381a0e45039",
+            "revision": 0,
+            "changed": 0,
+            "status": "passed",
+            "candidate_digest": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+            "size": 16384
+          }
+        }
+      ]
+    }
+  ],
+  "seal_proof": {
+    "seal_http": 200,
+    "certificate_http": 200,
+    "candidate_digest_matches_download": true,
+    "candidate_digest": "e9d9ee5c16e0727cac3e674d837c9bb2cd6a36ff7a56caf6c6d8e0946df3331b",
+    "download_size": 16384
+  }
+}
