@@ -1,0 +1,1147 @@
+{
+  "source": "node-reference.sqlite",
+  "schema_signature": "0c9d2cf240a3aa61561e5753c27d522926cdacfee3be38128674e3c1d39851d3",
+  "atom_legend": {
+    "i": "integer，数值以字符串精确承载",
+    "r": "real，IEEE-754 双精度 hex 表示",
+    "t": "text",
+    "b": "blob，base64 承载",
+    "n": "NULL"
+  },
+  "tables": [
+    {
+      "table": "bench",
+      "columns": [
+        "code",
+        "label"
+      ],
+      "declared_types": [
+        "TEXT",
+        "TEXT"
+      ],
+      "key_columns": [
+        "code"
+      ],
+      "row_count": 3,
+      "rows": [
+        {
+          "table": "bench",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "label"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "t",
+              "东线探针"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "text"
+          ]
+        },
+        {
+          "table": "bench",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "north"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "label"
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "t",
+              "玄石"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "text"
+          ]
+        },
+        {
+          "table": "bench",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "label"
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "text"
+          ]
+        }
+      ]
+    },
+    {
+      "table": "binding",
+      "columns": [
+        "id",
+        "bench",
+        "slot"
+      ],
+      "declared_types": [
+        "INTEGER",
+        "TEXT",
+        "INTEGER"
+      ],
+      "key_columns": [
+        "id"
+      ],
+      "row_count": 2,
+      "rows": [
+        {
+          "table": "binding",
+          "key_columns": [
+            "id"
+          ],
+          "key": [
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "value_columns": [
+            "id",
+            "bench",
+            "slot"
+          ],
+          "values": [
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "value_storage_types": [
+            "integer",
+            "text",
+            "integer"
+          ]
+        },
+        {
+          "table": "binding",
+          "key_columns": [
+            "id"
+          ],
+          "key": [
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "value_columns": [
+            "id",
+            "bench",
+            "slot"
+          ],
+          "values": [
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "9007199254740993"
+            ]
+          ],
+          "value_storage_types": [
+            "integer",
+            "text",
+            "integer"
+          ]
+        }
+      ]
+    },
+    {
+      "table": "node",
+      "columns": [
+        "bench",
+        "slot",
+        "note",
+        "payload",
+        "weight"
+      ],
+      "declared_types": [
+        "TEXT",
+        "INTEGER",
+        "TEXT",
+        "BLOB",
+        "REAL"
+      ],
+      "key_columns": [
+        "bench",
+        "slot"
+      ],
+      "row_count": 13,
+      "rows": [
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "-9223372036854775808"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "-9223372036854775808"
+            ],
+            [
+              "t",
+              "负向整数下限键"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.c000000000000p+2"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "100"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "100"
+            ],
+            [
+              "t",
+              "空 BLOB 载体"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x0.0p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "101"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "101"
+            ],
+            [
+              "t",
+              "NULL 载体"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x0.0p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            null,
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "200"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "200"
+            ],
+            [
+              "t",
+              "整数业务值"
+            ],
+            [
+              "i",
+              "3"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "201"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "201"
+            ],
+            [
+              "t",
+              "实数业务值"
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "real",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "202"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "202"
+            ],
+            [
+              "t",
+              "文本业务值"
+            ],
+            [
+              "t",
+              "3"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "text",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "203"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "203"
+            ],
+            [
+              "t",
+              "二进制业务值"
+            ],
+            [
+              "b",
+              "Mw=="
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "300"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "300"
+            ],
+            [
+              "t",
+              ""
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+1"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "4"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "4"
+            ],
+            [
+              "t",
+              "实数写入整数亲和键"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.4000000000000p+1"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            null,
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "9007199254740993"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "9007199254740993"
+            ],
+            [
+              "t",
+              "超出安全整数的复合键"
+            ],
+            [
+              "b",
+              "kAc="
+            ],
+            [
+              "r",
+              "0x1.6000000000000p+2"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "9223372036854775807"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "east"
+            ],
+            [
+              "i",
+              "9223372036854775807"
+            ],
+            [
+              "t",
+              "SQLite 整数上限键"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.9000000000000p+2"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            null,
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        },
+        {
+          "table": "node",
+          "key_columns": [
+            "bench",
+            "slot"
+          ],
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "value_columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "稳定节点"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer",
+            "text",
+            "blob",
+            "real"
+          ]
+        }
+      ]
+    },
+    {
+      "table": "type_probe",
+      "columns": [
+        "code",
+        "sample"
+      ],
+      "declared_types": [
+        "TEXT",
+        "ANY"
+      ],
+      "key_columns": [
+        "code"
+      ],
+      "row_count": 7,
+      "rows": [
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "empty-blob"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "empty-blob"
+            ],
+            [
+              "b",
+              ""
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "blob"
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "empty-text"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "empty-text"
+            ],
+            [
+              "t",
+              ""
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "text"
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "null-sample"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "null-sample"
+            ],
+            [
+              "n"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            null
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "num-blob"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "num-blob"
+            ],
+            [
+              "b",
+              "Mw=="
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "blob"
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "num-int"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "num-int"
+            ],
+            [
+              "i",
+              "3"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "integer"
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "num-real"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "num-real"
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "real"
+          ]
+        },
+        {
+          "table": "type_probe",
+          "key_columns": [
+            "code"
+          ],
+          "key": [
+            [
+              "t",
+              "num-text"
+            ]
+          ],
+          "value_columns": [
+            "code",
+            "sample"
+          ],
+          "values": [
+            [
+              "t",
+              "num-text"
+            ],
+            [
+              "t",
+              "3"
+            ]
+          ],
+          "value_storage_types": [
+            "text",
+            "text"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "mirror": "node-reference.sqlite",
+  "schema_signature": "0c9d2cf240a3aa61561e5753c27d522926cdacfee3be38128674e3c1d39851d3",
+  "overall_pass": true,
+  "checks": [
+    {
+      "check": "Pagefold 登记",
+      "ok": true,
+      "detail": "image_id=fa308fcd4cc466c50ff732a2fa9e12efe99d2ff7bce4d127ba388e0f843baa6a，表=['bench', 'binding', 'node', 'type_probe']"
+    },
+    {
+      "check": "两种读法逐键逐类型一致",
+      "ok": true,
+      "detail": "共比对 25 行；全部一致"
+    },
+    {
+      "check": "Pagefold JSONL 行数与登记读取一致",
+      "ok": true,
+      "detail": "JSONL 25 行"
+    },
+    {
+      "check": "超出 JS 安全整数的复合键可精确定位",
+      "ok": true,
+      "detail": "slot=-9223372036854775808, 9007199254740993, 9223372036854775807"
+    },
+    {
+      "check": "空 BLOB 与 NULL 并存且不同",
+      "ok": true,
+      "detail": "空BLOB行=1 NULL行=1 互判不同=1"
+    },
+    {
+      "check": "同显示异类型样本齐备且类型保留",
+      "ok": true,
+      "detail": "{\"empty-blob\": \"blob\", \"empty-text\": \"text\", \"null-sample\": \"null\", \"num-blob\": \"blob\", \"num-int\": \"integer\", \"num-real\": \"real\", \"num-text\": \"text\"}"
+    },
+    {
+      "check": "SQLite 比较归类符合预期",
+      "ok": true,
+      "detail": "3=3.0:1 '3'=blob:0 ''=x'':0 NULL=NULL:None 数值组并类数:1"
+    },
+    {
+      "check": "母版锚点行与 demo.py 石英镜像逐值一致",
+      "ok": true,
+      "detail": "north/1:一致，south/1:一致，binding/1 一致"
+    }
+  ]
+}
