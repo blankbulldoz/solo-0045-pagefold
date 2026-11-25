@@ -1,0 +1,15 @@
+{
+  "format": "pagefold-certificate-v1",
+  "plan": "1dd21dcca7f44fae86652657b1dcc5cb",
+  "revision": 2,
+  "sources": {
+    "base": "06629967d507b8033fdb30e34a9f94579169c4c22b0df4aedc8eb5282f2e4443",
+    "left": "a5173c7c1bc81629a4e41d35ee23b36a36114d7e0eec18f1db13f15fe435e521",
+    "right": "29b2a65b10e6ff315ff3a628adcc003447fa811f4c53d99e13fb74dd189e5201"
+  },
+  "schema": "8288044e47b01870b4179eca9dd7581e24bf12209ecb1291e3e3c9ca1c20a9f6",
+  "plan_digest": "9841b9fb1af24ba168ac2757028f7cdeb71360d756df3bb9bd97d077b0f37a21",
+  "decision_digest": "e36ca59ce10f0baa24ba53fe74310bd9d6b0f0e5d6d97984831a39117da86a9b",
+  "candidate_digest": "91ee18370d4721ce468314c72217a32d05ec0d48ab13b7911f879a9c6a4e7d76",
+  "candidate_size": 16384
+}

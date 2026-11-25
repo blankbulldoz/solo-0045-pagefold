@@ -1,0 +1,136 @@
+{
+  "format": "pagefold-reporting-pair-v1",
+  "description": "Same source images, opposite decisions, equal counts at different composite keys.",
+  "sources": {
+    "base": {
+      "file": "sources/base.sqlite",
+      "label": "reporting base",
+      "digest": "06629967d507b8033fdb30e34a9f94579169c4c22b0df4aedc8eb5282f2e4443"
+    },
+    "left": {
+      "file": "sources/left.sqlite",
+      "label": "reporting left",
+      "digest": "a5173c7c1bc81629a4e41d35ee23b36a36114d7e0eec18f1db13f15fe435e521"
+    },
+    "right": {
+      "file": "sources/right.sqlite",
+      "label": "reporting right",
+      "digest": "29b2a65b10e6ff315ff3a628adcc003447fa811f4c53d99e13fb74dd189e5201"
+    }
+  },
+  "outcomes": {
+    "left": {
+      "file": "outcomes/decision-left.sqlite",
+      "certificate": "outcomes/decision-left.certificate.json",
+      "plan": "e91c6be511534e71bc9bbdedffab94d8",
+      "revision": 2,
+      "candidate_digest": "05000d08cd429e09caeb3d5a24fdc3117687a1ee3d154180749e9a68d9622f5c",
+      "candidate_size": 16384,
+      "counts": {
+        "nodes": 4,
+        "bindings": 3,
+        "bound_nodes": 2,
+        "unbound_nodes": 2,
+        "multi_bound_nodes": 1,
+        "anomalous_nodes": 3,
+        "histogram": {
+          "0": 2,
+          "1": 1,
+          "2": 1
+        },
+        "per_key": [
+          {
+            "bench": "north",
+            "slot": 1,
+            "bindings": 0
+          },
+          {
+            "bench": "north",
+            "slot": 2,
+            "bindings": 1
+          },
+          {
+            "bench": "south",
+            "slot": 1,
+            "bindings": 0
+          },
+          {
+            "bench": "south",
+            "slot": 2,
+            "bindings": 2
+          }
+        ]
+      }
+    },
+    "right": {
+      "file": "outcomes/decision-right.sqlite",
+      "certificate": "outcomes/decision-right.certificate.json",
+      "plan": "1dd21dcca7f44fae86652657b1dcc5cb",
+      "revision": 2,
+      "candidate_digest": "91ee18370d4721ce468314c72217a32d05ec0d48ab13b7911f879a9c6a4e7d76",
+      "candidate_size": 16384,
+      "counts": {
+        "nodes": 4,
+        "bindings": 3,
+        "bound_nodes": 2,
+        "unbound_nodes": 2,
+        "multi_bound_nodes": 1,
+        "anomalous_nodes": 3,
+        "histogram": {
+          "2": 1,
+          "1": 1,
+          "0": 2
+        },
+        "per_key": [
+          {
+            "bench": "north",
+            "slot": 1,
+            "bindings": 2
+          },
+          {
+            "bench": "north",
+            "slot": 2,
+            "bindings": 1
+          },
+          {
+            "bench": "south",
+            "slot": 1,
+            "bindings": 0
+          },
+          {
+            "bench": "south",
+            "slot": 2,
+            "bindings": 0
+          }
+        ]
+      }
+    }
+  },
+  "invariant": {
+    "nodes": 4,
+    "bindings": 3,
+    "bound_nodes": 2,
+    "unbound_nodes": 2,
+    "multi_bound_nodes": 1,
+    "anomalous_nodes": 3,
+    "histogram": {
+      "0": 2,
+      "1": 1,
+      "2": 1
+    }
+  },
+  "key_differences": [
+    {
+      "bench": "north",
+      "slot": 1,
+      "left": 0,
+      "right": 2
+    },
+    {
+      "bench": "south",
+      "slot": 2,
+      "left": 2,
+      "right": 0
+    }
+  ]
+}

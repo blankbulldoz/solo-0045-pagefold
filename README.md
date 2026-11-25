@@ -35,3 +35,12 @@ python3 -m examples.walkthrough all
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+## 报表演示成果
+
+`deliverables/reporting-pair/` 提供一对由同一组源镜像、不同裁决生成的成果库，用于验证报表对“未绑定节点”和“多重绑定节点”的读法。两库跨表计数相同、明细落在不同复合键，并各带封存凭证；`deliverables/reporting-pair/README.md` 给出逐键对比与分组统计的判读方法。重建命令：
+
+```sh
+python3 -m examples.reporting_pair deliverables/reporting-pair
+python3 deliverables/reporting-pair/verify.py
+```
