@@ -1,5 +1,6 @@
 from urllib.parse import urlencode
 
+from .catalog import Catalog, Table
 from .render import option, page, safe, typed
 
 
@@ -14,29 +15,30 @@ def image_links(images):
 
 
 def image_page(image):
+    catalog = Catalog.from_record(image["catalog"])
     tables = []
-    for table in image["catalog"]["tables"]:
-        url = f'/images/{image["id"]}/rows?' + urlencode({"table": table["name"]})
-        references = "、".join(f"{row[3]} → {row[2]}.{row[4] or '主键'}" for row in table["foreign_keys"]) or "—"
-        tables.append(f'<tr><th><a href="{safe(url)}">{safe(table["name"])}</a></th>'
-                      f'<td>{safe(" · ".join(table["key"]))}</td><td>{safe(references)}</td>'
-                      f'<td>{table["rows"]}</td></tr>')
+    for table in catalog.tables:
+        url = f'/images/{image["id"]}/rows?' + urlencode({"table": table.name})
+        references = "、".join(foreign.label() for foreign in table.foreign_keys) or "—"
+        tables.append(f'<tr><th><a href="{safe(url)}">{safe(table.name)}</a></th>'
+                      f'<td>{safe(" · ".join(table.key_names))}</td><td>{safe(references)}</td>'
+                      f'<td>{table.rows}</td></tr>')
     return page("image", image["label"], label=safe(image["label"]), image_id=image["id"],
-                signature=image["catalog"]["signature"], tables="".join(tables), size=f'{image["size"]:,}')
+                signature=catalog.signature, tables="".join(tables), size=f'{image["size"]:,}')
 
 
 def rows_page(image, result):
-    table = result["table"]
+    table = Table.from_record(result["table"])
     offset, total = result["offset"], result["total"]
-    columns = "".join(f'<th scope="col">{safe(col)}</th>' for col in table["columns"])
+    columns = "".join(f'<th scope="col">{safe(column.name)}</th>' for column in table.columns)
     rows = "".join('<tr>' + "".join(f'<td>{typed(v)}</td>' for v in row["values"]) + '</tr>'
                    for row in result["rows"])
     nav = []
     for label, target, exists in [("上一页", max(0, offset - 50), offset > 0),
                                   ("下一页", offset + 50, offset + 50 < total)]:
         if exists:
-            params = urlencode({"table": table["name"], "offset": target})
+            params = urlencode({"table": table.name, "offset": target})
             nav.append(f'<a href="?{safe(params)}">{label}</a>')
-    return page("rows", table["name"], name=safe(table["name"]), label=safe(image["label"]),
+    return page("rows", table.name, name=safe(table.name), label=safe(image["label"]),
                 image_id=image["id"], columns=columns, rows=rows, nav="".join(nav), total=total,
                 window=f"{offset + 1}–{min(offset + 50, total)}" if rows else "当前页无行")

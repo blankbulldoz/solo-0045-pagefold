@@ -1,29 +1,43 @@
+"""Plan creation, persistence and the read projection.
+
+Persisted plan items use the unchanged wire record (``id``, ``table``,
+``key``, ``base``/``left``/``right`` atoms, ``automatic``).  ``plan_content``
+is the single place that turns those records back into
+:class:`~pagefold.merge.PlanItem` value objects for decisions, replay and
+certificates; HTTP readers get records again via ``read_plan``.
+"""
+
 import json
 import uuid
 
 from .codec import canonical, fingerprint
 from .errors import Problem
-from .images import get_image
-from .merge import ROLES, calculate, selected
-from .rows import read_image
+from .images import get_image, image_catalog
+from .merge import ROLES, PlanItem, calculate, selected
+from .rows import scan_image
 from .sqlite_image import mounted
+
+
+def plan_digest(items):
+    return fingerprint([item.record() for item in items])
 
 
 def create_plan(store, sources):
     with store.connect() as db:
         images = [get_image(db, sources[role], body=True) for role in ROLES]
-    catalogs = [json.loads(image["catalog"]) for image in images]
-    if len({catalog["signature"] for catalog in catalogs}) != 1:
+    catalogs = [image_catalog(image) for image in images]
+    if len({catalog.signature for catalog in catalogs}) != 1:
         raise Problem("schema_mismatch", "三份镜像的模式记录不一致。", 409)
     snapshots = []
     for image, catalog in zip(images, catalogs):
         with mounted(image["body"]) as snapshot:
-            snapshots.append(read_image(snapshot, catalog))
+            snapshots.append(scan_image(snapshot, catalog))
     items = calculate(*snapshots)
     plan_id = uuid.uuid4().hex
     with store.connect(write=True) as db:
         db.execute("INSERT INTO plans(id,base,left_id,right_id,items) VALUES(?,?,?,?,?)",
-                   (plan_id, *[sources[role] for role in ROLES], canonical(items)))
+                   (plan_id, *[sources[role] for role in ROLES],
+                    canonical([item.record() for item in items])))
         return read_plan(db, plan_id)
 
 
@@ -35,7 +49,9 @@ def get_plan(db, plan_id):
 
 
 def plan_content(row):
-    return json.loads(row["items"]), json.loads(row["decisions"])
+    """Parse a stored plan row into typed items and the decision map."""
+    items = [PlanItem.from_record(record) for record in json.loads(row["items"])]
+    return items, json.loads(row["decisions"])
 
 
 def read_plan(db, plan_id):
@@ -43,8 +59,9 @@ def read_plan(db, plan_id):
     items, decisions = plan_content(row)
     sources = {"base": row["base"], "left": row["left_id"], "right": row["right_id"]}
     return {"id": plan_id, "sources": sources, "revision": row["revision"], "state": row["state"],
-            "plan_digest": fingerprint(items), "unresolved": sum(selected(i, decisions)[0] is None for i in items),
-            "items": [dict(i, choice=selected(i, decisions)[0]) for i in items]}
+            "plan_digest": plan_digest(items),
+            "unresolved": sum(selected(item, decisions)[0] is None for item in items),
+            "items": [dict(item.record(), choice=selected(item, decisions)[0]) for item in items]}
 
 
 def list_plans(db):

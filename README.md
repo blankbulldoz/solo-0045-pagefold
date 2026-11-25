@@ -25,13 +25,14 @@ python3 -m examples.make_images ./demo-images
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 
-写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。
+写入端点也接受网页表单的对应字段。镜像为独立、自包含的文件，未外置日志，三份模式须精确匹配。JSON 行表示使用 `i`、`r`、`t`、`b` 分别标记整数、实数、文本、二进制，`n` 表示 NULL。该 JSON 形态只是应用边界格式；内部以 `pagefold/keys.py` 的类型化键和 `pagefold/catalog.py` 的受控列身份流通，见 `docs/typed-keys.md`。
 
 ## 验证
 
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.typed_keys --output /tmp/typed-keys.json
 ```
 
-工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+工作流检查使用临时状态库和本机 HTTP 服务。`examples/typed_keys.py` 只经公开 HTTP 入口记录行窗口、计划项、裁决、重演与封存内容，可对任意版本重跑并逐字节对照。正式自动化测试套件延期。

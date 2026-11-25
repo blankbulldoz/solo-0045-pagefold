@@ -1,41 +1,42 @@
-from .codec import atom, canonical
+"""Typed row scanning over a mounted SQLite image.
+
+Key identity is computed once here (:class:`pagefold.keys.Key`), so plans,
+pages and replay consume the same objects instead of re-parsing serialized
+keys.  ``scan`` never renames or reorders columns: the projection and key
+positions come from the catalog's :class:`Table`.
+"""
+
 from .errors import Problem
+from .keys import Key, Row
 from .sqlite_image import ident
 
 MAX_ROWS = 20_000
 
 
-def key_atom(value):
-    if isinstance(value, float) and value.is_integer() and -(2**63) <= value < 2**63:
-        return atom(int(value))
-    return atom(value)
-
-
-def read_table(db, table, allowance=MAX_ROWS):
-    name = table["name"]
-    positions = [table["columns"].index(key) for key in table["key"]]
-    cols = ",".join(map(ident, table["columns"]))
+def scan(db, table, allowance=MAX_ROWS):
+    """Read one table as ``{Key: Row}`` with duplicate and NULL key checks."""
     result = {}
-    cursor = db.execute(f"SELECT {cols} FROM main.{ident(name)} LIMIT ?", (allowance + 1,))
+    positions = table.key_positions()
+    cursor = db.execute(f"SELECT {table.projection()} FROM main.{ident(table.name)} LIMIT ?",
+                        (allowance + 1,))
     for raw in cursor:
         if len(result) >= allowance:
             raise Problem("row_limit", "镜像超过 20,000 行上限。")
-        row = [atom(value) for value in raw]
-        key = [key_atom(raw[pos]) for pos in positions]
-        if any(part[0] == "n" for part in key):
-            raise Problem("null_key", f"表 {name} 含有 NULL 主键。")
-        token = canonical(key)
-        if token in result:
-            raise Problem("duplicate_key", f"表 {name} 含有重复主键。")
-        result[token] = row
+        key = Key.of([raw[position] for position in positions])
+        if key.has_null:
+            raise Problem("null_key", f"表 {table.name} 含有 NULL 主键。")
+        if key in result:
+            raise Problem("duplicate_key", f"表 {table.name} 含有重复主键。")
+        result[key] = Row.of(raw)
     return result
 
 
-def read_image(db, catalog):
+def scan_image(db, catalog):
+    """Read every catalog table, enforcing the image-wide row allowance."""
     result = {}
     remaining = MAX_ROWS
-    for table in catalog["tables"]:
-        rows = read_table(db, table, remaining)
-        result[table["name"]] = rows
+    for table in catalog.tables:
+        rows = scan(db, table, remaining)
+        result[table.name] = rows
         remaining -= len(rows)
     return result

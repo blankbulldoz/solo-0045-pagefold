@@ -3,7 +3,7 @@ import sqlite3
 
 from .codec import canonical, digest
 from .errors import Problem
-from .images import get_image
+from .images import get_image, image_catalog
 from .plans import expect_open, expect_revision, get_plan, plan_content
 from .replay import amendments, rebuild
 
@@ -33,7 +33,7 @@ def rehearse(store, plan_id, revision):
         candidate = None
         result = {"id": plan_id, "revision": revision, "changed": sum(map(len, operations.values()))}
         try:
-            candidate = rebuild(ancestor["body"], json.loads(ancestor["catalog"]), operations)
+            candidate = rebuild(ancestor["body"], image_catalog(ancestor), operations)
             result.update(status="passed", candidate_digest=digest(candidate), size=len(candidate))
         except Problem as exc:
             result.update(status="blocked", problem=exc.as_dict())

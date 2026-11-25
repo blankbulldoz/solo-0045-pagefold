@@ -1,0 +1,7055 @@
+{
+ "catalogs": {
+  "base": {
+   "signature": "bef4a98c86b861eca6da2854d52fad571122c378fd8d567c72c91ae8190f9715",
+   "tables": [
+    {
+     "columns": [
+      "id",
+      "code",
+      "slot"
+     ],
+     "foreign_keys": [
+      [
+       0,
+       0,
+       "parent",
+       "code",
+       "code",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ],
+      [
+       0,
+       1,
+       "parent",
+       "slot",
+       "slot",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ]
+     ],
+     "key": [
+      "id"
+     ],
+     "name": "child",
+     "rows": 1,
+     "types": [
+      "INTEGER",
+      "TEXT",
+      "INTEGER"
+     ]
+    },
+    {
+     "columns": [
+      "tag",
+      "ident",
+      "note",
+      "payload",
+      "gravity"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "tag",
+      "ident"
+     ],
+     "name": "mix",
+     "rows": 5,
+     "types": [
+      "TEXT",
+      "BLOB",
+      "TEXT",
+      "BLOB",
+      "REAL"
+     ]
+    },
+    {
+     "columns": [
+      "n",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "n"
+     ],
+     "name": "ord",
+     "rows": 65,
+     "types": [
+      "INTEGER",
+      "TEXT"
+     ]
+    },
+    {
+     "columns": [
+      "code",
+      "slot",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "code",
+      "slot"
+     ],
+     "name": "parent",
+     "rows": 2,
+     "types": [
+      "TEXT",
+      "INTEGER",
+      "TEXT"
+     ]
+    }
+   ]
+  },
+  "left": {
+   "signature": "bef4a98c86b861eca6da2854d52fad571122c378fd8d567c72c91ae8190f9715",
+   "tables": [
+    {
+     "columns": [
+      "id",
+      "code",
+      "slot"
+     ],
+     "foreign_keys": [
+      [
+       0,
+       0,
+       "parent",
+       "code",
+       "code",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ],
+      [
+       0,
+       1,
+       "parent",
+       "slot",
+       "slot",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ]
+     ],
+     "key": [
+      "id"
+     ],
+     "name": "child",
+     "rows": 1,
+     "types": [
+      "INTEGER",
+      "TEXT",
+      "INTEGER"
+     ]
+    },
+    {
+     "columns": [
+      "tag",
+      "ident",
+      "note",
+      "payload",
+      "gravity"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "tag",
+      "ident"
+     ],
+     "name": "mix",
+     "rows": 5,
+     "types": [
+      "TEXT",
+      "BLOB",
+      "TEXT",
+      "BLOB",
+      "REAL"
+     ]
+    },
+    {
+     "columns": [
+      "n",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "n"
+     ],
+     "name": "ord",
+     "rows": 65,
+     "types": [
+      "INTEGER",
+      "TEXT"
+     ]
+    },
+    {
+     "columns": [
+      "code",
+      "slot",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "code",
+      "slot"
+     ],
+     "name": "parent",
+     "rows": 2,
+     "types": [
+      "TEXT",
+      "INTEGER",
+      "TEXT"
+     ]
+    }
+   ]
+  },
+  "right": {
+   "signature": "bef4a98c86b861eca6da2854d52fad571122c378fd8d567c72c91ae8190f9715",
+   "tables": [
+    {
+     "columns": [
+      "id",
+      "code",
+      "slot"
+     ],
+     "foreign_keys": [
+      [
+       0,
+       0,
+       "parent",
+       "code",
+       "code",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ],
+      [
+       0,
+       1,
+       "parent",
+       "slot",
+       "slot",
+       "NO ACTION",
+       "NO ACTION",
+       "NONE"
+      ]
+     ],
+     "key": [
+      "id"
+     ],
+     "name": "child",
+     "rows": 1,
+     "types": [
+      "INTEGER",
+      "TEXT",
+      "INTEGER"
+     ]
+    },
+    {
+     "columns": [
+      "tag",
+      "ident",
+      "note",
+      "payload",
+      "gravity"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "tag",
+      "ident"
+     ],
+     "name": "mix",
+     "rows": 5,
+     "types": [
+      "TEXT",
+      "BLOB",
+      "TEXT",
+      "BLOB",
+      "REAL"
+     ]
+    },
+    {
+     "columns": [
+      "n",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "n"
+     ],
+     "name": "ord",
+     "rows": 65,
+     "types": [
+      "INTEGER",
+      "TEXT"
+     ]
+    },
+    {
+     "columns": [
+      "code",
+      "slot",
+      "label"
+     ],
+     "foreign_keys": [],
+     "key": [
+      "code",
+      "slot"
+     ],
+     "name": "parent",
+     "rows": 2,
+     "types": [
+      "TEXT",
+      "INTEGER",
+      "TEXT"
+     ]
+    }
+   ]
+  }
+ },
+ "image_ids": {
+  "base": "c11e08ec87155289b173c361d3315094e58a3795399782ad1e72fa908fb55d06",
+  "left": "5a6e1f63d37ec3b31bf4dc1b83cb392488f8a219e130f283f4f5af51d0139dcd",
+  "right": "2234e4f26bb279b6cb018ef290eb3ec5c66694b172d631c301eea4350aafcf65"
+ },
+ "pages": {
+  "base:catalog": "0d8005302fc7b8df7ccd043caee138a657c06ebc8b25dcaf1538dea84b0e17a9",
+  "base:child": "fbfa9cdb3ab180e4c828a4dc2591653f6a9aad9ab1bd7181934fa1f15ae7f2d1",
+  "base:mix": "3b8300007e6d2aeb1431c8782a1182c0955ca35704047e0d3ad8692b76001679",
+  "base:ord": "ced3c913e7b31950e8a181deb917039112f22a462d1bdfabbac22ce2d81e409c",
+  "base:parent": "48d70fe75e88cf5c4f7a302019e34339297b8779d814162ca423ce54ca688cf2",
+  "left:catalog": "9f37c28befed0b1ad4e82862b5a047c09b6ce9570b0a64710f5cac8b25db38c1",
+  "left:child": "4dd14d96a5021bcfd31511303db58ef2b20805cd3a9d2214cf65725200a95c87",
+  "left:mix": "37867eaebadad1f7970ed895d58d8461208c7614353624248e2fc1eb60fee227",
+  "left:ord": "e7af962f3f28d525d08682b6893dec0773a866952b030b46d64a553b09cf4e5d",
+  "left:parent": "3d685a09e78608e873c9cd65c1b4c5b34c5fcb2af121b3339a98d444cc48e536",
+  "right:catalog": "b3c7caceede6e644125b9fc715a0332ab10474ab2080c583777a874ed107f0cc",
+  "right:child": "c883ad1de5d9e19a45d90446a503b573fdb3220fe8b3d2008172d33c648cc4f4",
+  "right:mix": "afefcbb94db158141bec0779194ba1eb2b779537af187350c38f87e5f524a1b6",
+  "right:ord": "fde0eb28d24678229c7e7eacc1bc78666b187461cc31b4a45e04b15b4c784566",
+  "right:parent": "9c7c4b28b0e4a02820a4636b55f84476c7917fe1f759b193878e72c7abad2f16"
+ },
+ "plan": {
+  "after": {
+   "id": "<plan>",
+   "items": [
+    {
+     "automatic": null,
+     "base": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x0.0p+0"
+      ]
+     ],
+     "choice": "right",
+     "id": "68ec7d55cac829af3f0bfaa26d44da8aa4db000a45bb9687892e9006a7a283ad",
+     "key": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x1.4000000000000p+1"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       "eA=="
+      ],
+      [
+       "n"
+      ]
+     ],
+     "choice": "right",
+     "id": "e41355a70a2dd2aed6460d2423ef3485ed5887586f006a3c3c1e144afa683b22",
+     "key": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       "eA=="
+      ],
+      [
+       "n"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "n"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": null,
+     "choice": "left",
+     "id": "59f68e152948b33090a7b0a3e846226f6db1306fa5364d9918ebba467f1e300e",
+     "key": [
+      [
+       "t",
+       "fresh"
+      ],
+      [
+       "b",
+       "gAA="
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "fresh"
+      ],
+      [
+       "b",
+       "gAA="
+      ],
+      [
+       "t",
+       "left-new"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "r",
+       "0x1.a000000000000p+1"
+      ]
+     ],
+     "right": null,
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "choice": "left",
+     "id": "a06df6ecedd7f22f0c7489817db50c8b3c237d452dac74ab257efe6140eabc91",
+     "key": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+0"
+      ],
+      [
+       "t",
+       "left-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ],
+      [
+       "t",
+       "base-text"
+      ],
+      [
+       "n"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+1"
+      ]
+     ],
+     "choice": "left",
+     "id": "2f3dabedd72d5da65650103e0a5a4dcd8cc876018f57e90096f612891221d769",
+     "key": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ]
+     ],
+     "left": null,
+     "right": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ],
+      [
+       "t",
+       "base-text"
+      ],
+      [
+       "n"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+1"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "row-03"
+      ]
+     ],
+     "choice": "left",
+     "id": "a30a3b593212f69fe2383d3dbea3d1836c52493e7c1c1aa97c95daaa76410883",
+     "key": [
+      [
+       "i",
+       "3"
+      ]
+     ],
+     "left": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "left-03"
+      ]
+     ],
+     "right": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "row-03"
+      ]
+     ],
+     "table": "ord"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "row-60"
+      ]
+     ],
+     "choice": "right",
+     "id": "e80514fd04934c2f50cd7bba7f40da9589aa604790acfe24a02a1ed665f3df15",
+     "key": [
+      [
+       "i",
+       "60"
+      ]
+     ],
+     "left": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "row-60"
+      ]
+     ],
+     "right": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "right-60"
+      ]
+     ],
+     "table": "ord"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-north"
+      ]
+     ],
+     "choice": "left",
+     "id": "4e0cd99995f2f854cb732da4d007a0b3738c34df4d4bf12755a7e37c38a4fb3a",
+     "key": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "left-north"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-north"
+      ]
+     ],
+     "table": "parent"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-south"
+      ]
+     ],
+     "choice": "right",
+     "id": "d394175979c7b590761ce00d1c0d7252a7aa3b0ed9c5788b02c1106889036dd8",
+     "key": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-south"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "right-south"
+      ]
+     ],
+     "table": "parent"
+    }
+   ],
+   "plan_digest": "e845ef81c426eb060b4ad5260f97d8cb08a244859c9e90131a75542c7f076970",
+   "revision": 1,
+   "sources": {
+    "base": "c11e08ec87155289b173c361d3315094e58a3795399782ad1e72fa908fb55d06",
+    "left": "5a6e1f63d37ec3b31bf4dc1b83cb392488f8a219e130f283f4f5af51d0139dcd",
+    "right": "2234e4f26bb279b6cb018ef290eb3ec5c66694b172d631c301eea4350aafcf65"
+   },
+   "state": "open",
+   "unresolved": 0
+  },
+  "created": {
+   "id": "<plan>",
+   "items": [
+    {
+     "automatic": null,
+     "base": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x0.0p+0"
+      ]
+     ],
+     "choice": null,
+     "id": "68ec7d55cac829af3f0bfaa26d44da8aa4db000a45bb9687892e9006a7a283ad",
+     "key": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "blobkey"
+      ],
+      [
+       "b",
+       "AP8="
+      ],
+      [
+       "t",
+       "base-blob"
+      ],
+      [
+       "b",
+       "AA=="
+      ],
+      [
+       "r",
+       "0x1.4000000000000p+1"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       "eA=="
+      ],
+      [
+       "n"
+      ]
+     ],
+     "choice": "right",
+     "id": "e41355a70a2dd2aed6460d2423ef3485ed5887586f006a3c3c1e144afa683b22",
+     "key": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       "eA=="
+      ],
+      [
+       "n"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "t",
+       "base-empty"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "n"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": null,
+     "choice": "left",
+     "id": "59f68e152948b33090a7b0a3e846226f6db1306fa5364d9918ebba467f1e300e",
+     "key": [
+      [
+       "t",
+       "fresh"
+      ],
+      [
+       "b",
+       "gAA="
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "fresh"
+      ],
+      [
+       "b",
+       "gAA="
+      ],
+      [
+       "t",
+       "left-new"
+      ],
+      [
+       "b",
+       ""
+      ],
+      [
+       "r",
+       "0x1.a000000000000p+1"
+      ]
+     ],
+     "right": null,
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "choice": "left",
+     "id": "a06df6ecedd7f22f0c7489817db50c8b3c237d452dac74ab257efe6140eabc91",
+     "key": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+0"
+      ],
+      [
+       "t",
+       "left-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "num"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-num"
+      ],
+      [
+       "b",
+       "AQ=="
+      ],
+      [
+       "r",
+       "0x1.8000000000000p+0"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ],
+      [
+       "t",
+       "base-text"
+      ],
+      [
+       "n"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+1"
+      ]
+     ],
+     "choice": "left",
+     "id": "2f3dabedd72d5da65650103e0a5a4dcd8cc876018f57e90096f612891221d769",
+     "key": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ]
+     ],
+     "left": null,
+     "right": [
+      [
+       "t",
+       "textkey"
+      ],
+      [
+       "t",
+       "same"
+      ],
+      [
+       "t",
+       "base-text"
+      ],
+      [
+       "n"
+      ],
+      [
+       "r",
+       "0x1.0000000000000p+1"
+      ]
+     ],
+     "table": "mix"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "row-03"
+      ]
+     ],
+     "choice": "left",
+     "id": "a30a3b593212f69fe2383d3dbea3d1836c52493e7c1c1aa97c95daaa76410883",
+     "key": [
+      [
+       "i",
+       "3"
+      ]
+     ],
+     "left": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "left-03"
+      ]
+     ],
+     "right": [
+      [
+       "i",
+       "3"
+      ],
+      [
+       "t",
+       "row-03"
+      ]
+     ],
+     "table": "ord"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "row-60"
+      ]
+     ],
+     "choice": "right",
+     "id": "e80514fd04934c2f50cd7bba7f40da9589aa604790acfe24a02a1ed665f3df15",
+     "key": [
+      [
+       "i",
+       "60"
+      ]
+     ],
+     "left": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "row-60"
+      ]
+     ],
+     "right": [
+      [
+       "i",
+       "60"
+      ],
+      [
+       "t",
+       "right-60"
+      ]
+     ],
+     "table": "ord"
+    },
+    {
+     "automatic": "left",
+     "base": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-north"
+      ]
+     ],
+     "choice": "left",
+     "id": "4e0cd99995f2f854cb732da4d007a0b3738c34df4d4bf12755a7e37c38a4fb3a",
+     "key": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "left-north"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "north"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-north"
+      ]
+     ],
+     "table": "parent"
+    },
+    {
+     "automatic": "right",
+     "base": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-south"
+      ]
+     ],
+     "choice": "right",
+     "id": "d394175979c7b590761ce00d1c0d7252a7aa3b0ed9c5788b02c1106889036dd8",
+     "key": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ]
+     ],
+     "left": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "base-south"
+      ]
+     ],
+     "right": [
+      [
+       "t",
+       "south"
+      ],
+      [
+       "i",
+       "1"
+      ],
+      [
+       "t",
+       "right-south"
+      ]
+     ],
+     "table": "parent"
+    }
+   ],
+   "plan_digest": "e845ef81c426eb060b4ad5260f97d8cb08a244859c9e90131a75542c7f076970",
+   "revision": 0,
+   "sources": {
+    "base": "c11e08ec87155289b173c361d3315094e58a3795399782ad1e72fa908fb55d06",
+    "left": "5a6e1f63d37ec3b31bf4dc1b83cb392488f8a219e130f283f4f5af51d0139dcd",
+    "right": "2234e4f26bb279b6cb018ef290eb3ec5c66694b172d631c301eea4350aafcf65"
+   },
+   "state": "open",
+   "unresolved": 1
+  },
+  "decisions": [
+   {
+    "choice": "right",
+    "id": "<plan>",
+    "item": "68ec7d55cac829af3f0bfaa26d44da8aa4db000a45bb9687892e9006a7a283ad",
+    "revision": 1
+   }
+  ]
+ },
+ "rows": {
+  "base": {
+   "child": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "id",
+       "code",
+       "slot"
+      ],
+      "foreign_keys": [
+       [
+        0,
+        0,
+        "parent",
+        "code",
+        "code",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ],
+       [
+        0,
+        1,
+        "parent",
+        "slot",
+        "slot",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ]
+      ],
+      "key": [
+       "id"
+      ],
+      "name": "child",
+      "rows": 1,
+      "types": [
+       "INTEGER",
+       "TEXT",
+       "INTEGER"
+      ]
+     },
+     "total": 1
+    }
+   },
+   "mix": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ],
+        [
+         "t",
+         "base-blob"
+        ],
+        [
+         "b",
+         "AA=="
+        ],
+        [
+         "r",
+         "0x0.0p+0"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "t",
+         "base-empty"
+        ],
+        [
+         "b",
+         "eA=="
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ],
+        [
+         "t",
+         "base-keep"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-num"
+        ],
+        [
+         "b",
+         "AQ=="
+        ],
+        [
+         "r",
+         "0x1.8000000000000p+0"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "textkey"
+        ],
+        [
+         "t",
+         "same"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "textkey"
+        ],
+        [
+         "t",
+         "same"
+        ],
+        [
+         "t",
+         "base-text"
+        ],
+        [
+         "n"
+        ],
+        [
+         "r",
+         "0x1.0000000000000p+1"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "tag",
+       "ident",
+       "note",
+       "payload",
+       "gravity"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "tag",
+       "ident"
+      ],
+      "name": "mix",
+      "rows": 5,
+      "types": [
+       "TEXT",
+       "BLOB",
+       "TEXT",
+       "BLOB",
+       "REAL"
+      ]
+     },
+     "total": 5
+    }
+   },
+   "ord": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "row-01"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "10"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "10"
+        ],
+        [
+         "t",
+         "row-10"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "11"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "11"
+        ],
+        [
+         "t",
+         "row-11"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "12"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "12"
+        ],
+        [
+         "t",
+         "row-12"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "13"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "13"
+        ],
+        [
+         "t",
+         "row-13"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "14"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "14"
+        ],
+        [
+         "t",
+         "row-14"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "15"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "15"
+        ],
+        [
+         "t",
+         "row-15"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "16"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "16"
+        ],
+        [
+         "t",
+         "row-16"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "17"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "17"
+        ],
+        [
+         "t",
+         "row-17"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "18"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "18"
+        ],
+        [
+         "t",
+         "row-18"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "19"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "19"
+        ],
+        [
+         "t",
+         "row-19"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "2"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "2"
+        ],
+        [
+         "t",
+         "row-02"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "20"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "20"
+        ],
+        [
+         "t",
+         "row-20"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "21"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "21"
+        ],
+        [
+         "t",
+         "row-21"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "22"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "22"
+        ],
+        [
+         "t",
+         "row-22"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "23"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "23"
+        ],
+        [
+         "t",
+         "row-23"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "24"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "24"
+        ],
+        [
+         "t",
+         "row-24"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "25"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "25"
+        ],
+        [
+         "t",
+         "row-25"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "26"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "26"
+        ],
+        [
+         "t",
+         "row-26"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "27"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "27"
+        ],
+        [
+         "t",
+         "row-27"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "28"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "28"
+        ],
+        [
+         "t",
+         "row-28"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "29"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "29"
+        ],
+        [
+         "t",
+         "row-29"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "3"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "3"
+        ],
+        [
+         "t",
+         "row-03"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "30"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "30"
+        ],
+        [
+         "t",
+         "row-30"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "31"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "31"
+        ],
+        [
+         "t",
+         "row-31"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "32"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "32"
+        ],
+        [
+         "t",
+         "row-32"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "33"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "33"
+        ],
+        [
+         "t",
+         "row-33"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "34"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "34"
+        ],
+        [
+         "t",
+         "row-34"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "35"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "35"
+        ],
+        [
+         "t",
+         "row-35"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "36"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "36"
+        ],
+        [
+         "t",
+         "row-36"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "37"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "37"
+        ],
+        [
+         "t",
+         "row-37"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "38"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "38"
+        ],
+        [
+         "t",
+         "row-38"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "39"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "39"
+        ],
+        [
+         "t",
+         "row-39"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "4"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "4"
+        ],
+        [
+         "t",
+         "row-04"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "40"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "40"
+        ],
+        [
+         "t",
+         "row-40"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "41"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "41"
+        ],
+        [
+         "t",
+         "row-41"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "42"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "42"
+        ],
+        [
+         "t",
+         "row-42"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "43"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "43"
+        ],
+        [
+         "t",
+         "row-43"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "44"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "44"
+        ],
+        [
+         "t",
+         "row-44"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "45"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "45"
+        ],
+        [
+         "t",
+         "row-45"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "46"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "46"
+        ],
+        [
+         "t",
+         "row-46"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "47"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "47"
+        ],
+        [
+         "t",
+         "row-47"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "48"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "48"
+        ],
+        [
+         "t",
+         "row-48"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "49"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "49"
+        ],
+        [
+         "t",
+         "row-49"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "5"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "5"
+        ],
+        [
+         "t",
+         "row-05"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "50"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "50"
+        ],
+        [
+         "t",
+         "row-50"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "51"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "51"
+        ],
+        [
+         "t",
+         "row-51"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "52"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "52"
+        ],
+        [
+         "t",
+         "row-52"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "53"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "53"
+        ],
+        [
+         "t",
+         "row-53"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "54"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "54"
+        ],
+        [
+         "t",
+         "row-54"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    },
+    "50": {
+     "offset": 50,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "55"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "55"
+        ],
+        [
+         "t",
+         "row-55"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "56"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "56"
+        ],
+        [
+         "t",
+         "row-56"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "57"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "57"
+        ],
+        [
+         "t",
+         "row-57"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "58"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "58"
+        ],
+        [
+         "t",
+         "row-58"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "59"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "59"
+        ],
+        [
+         "t",
+         "row-59"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "6"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "6"
+        ],
+        [
+         "t",
+         "row-06"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "60"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "60"
+        ],
+        [
+         "t",
+         "row-60"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "61"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "61"
+        ],
+        [
+         "t",
+         "row-61"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "62"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "62"
+        ],
+        [
+         "t",
+         "row-62"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "63"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "63"
+        ],
+        [
+         "t",
+         "row-63"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "64"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "64"
+        ],
+        [
+         "t",
+         "row-64"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "65"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "65"
+        ],
+        [
+         "t",
+         "row-65"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "7"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "7"
+        ],
+        [
+         "t",
+         "row-07"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "8"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "8"
+        ],
+        [
+         "t",
+         "row-08"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "9"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "9"
+        ],
+        [
+         "t",
+         "row-09"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    }
+   },
+   "parent": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-north"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-south"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "code",
+       "slot",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "code",
+       "slot"
+      ],
+      "name": "parent",
+      "rows": 2,
+      "types": [
+       "TEXT",
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 2
+    }
+   }
+  },
+  "left": {
+   "child": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "id",
+       "code",
+       "slot"
+      ],
+      "foreign_keys": [
+       [
+        0,
+        0,
+        "parent",
+        "code",
+        "code",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ],
+       [
+        0,
+        1,
+        "parent",
+        "slot",
+        "slot",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ]
+      ],
+      "key": [
+       "id"
+      ],
+      "name": "child",
+      "rows": 1,
+      "types": [
+       "INTEGER",
+       "TEXT",
+       "INTEGER"
+      ]
+     },
+     "total": 1
+    }
+   },
+   "mix": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ],
+        [
+         "t",
+         "base-blob"
+        ],
+        [
+         "b",
+         "AA=="
+        ],
+        [
+         "r",
+         "0x1.8000000000000p+0"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "t",
+         "base-empty"
+        ],
+        [
+         "b",
+         "eA=="
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "fresh"
+        ],
+        [
+         "b",
+         "gAA="
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "fresh"
+        ],
+        [
+         "b",
+         "gAA="
+        ],
+        [
+         "t",
+         "left-new"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "r",
+         "0x1.a000000000000p+1"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ],
+        [
+         "t",
+         "base-keep"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "r",
+         "0x1.0000000000000p+0"
+        ],
+        [
+         "t",
+         "left-num"
+        ],
+        [
+         "b",
+         "AQ=="
+        ],
+        [
+         "r",
+         "0x1.8000000000000p+0"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "tag",
+       "ident",
+       "note",
+       "payload",
+       "gravity"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "tag",
+       "ident"
+      ],
+      "name": "mix",
+      "rows": 5,
+      "types": [
+       "TEXT",
+       "BLOB",
+       "TEXT",
+       "BLOB",
+       "REAL"
+      ]
+     },
+     "total": 5
+    }
+   },
+   "ord": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "row-01"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "10"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "10"
+        ],
+        [
+         "t",
+         "row-10"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "11"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "11"
+        ],
+        [
+         "t",
+         "row-11"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "12"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "12"
+        ],
+        [
+         "t",
+         "row-12"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "13"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "13"
+        ],
+        [
+         "t",
+         "row-13"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "14"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "14"
+        ],
+        [
+         "t",
+         "row-14"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "15"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "15"
+        ],
+        [
+         "t",
+         "row-15"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "16"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "16"
+        ],
+        [
+         "t",
+         "row-16"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "17"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "17"
+        ],
+        [
+         "t",
+         "row-17"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "18"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "18"
+        ],
+        [
+         "t",
+         "row-18"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "19"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "19"
+        ],
+        [
+         "t",
+         "row-19"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "2"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "2"
+        ],
+        [
+         "t",
+         "row-02"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "20"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "20"
+        ],
+        [
+         "t",
+         "row-20"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "21"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "21"
+        ],
+        [
+         "t",
+         "row-21"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "22"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "22"
+        ],
+        [
+         "t",
+         "row-22"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "23"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "23"
+        ],
+        [
+         "t",
+         "row-23"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "24"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "24"
+        ],
+        [
+         "t",
+         "row-24"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "25"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "25"
+        ],
+        [
+         "t",
+         "row-25"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "26"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "26"
+        ],
+        [
+         "t",
+         "row-26"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "27"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "27"
+        ],
+        [
+         "t",
+         "row-27"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "28"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "28"
+        ],
+        [
+         "t",
+         "row-28"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "29"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "29"
+        ],
+        [
+         "t",
+         "row-29"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "3"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "3"
+        ],
+        [
+         "t",
+         "left-03"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "30"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "30"
+        ],
+        [
+         "t",
+         "row-30"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "31"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "31"
+        ],
+        [
+         "t",
+         "row-31"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "32"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "32"
+        ],
+        [
+         "t",
+         "row-32"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "33"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "33"
+        ],
+        [
+         "t",
+         "row-33"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "34"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "34"
+        ],
+        [
+         "t",
+         "row-34"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "35"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "35"
+        ],
+        [
+         "t",
+         "row-35"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "36"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "36"
+        ],
+        [
+         "t",
+         "row-36"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "37"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "37"
+        ],
+        [
+         "t",
+         "row-37"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "38"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "38"
+        ],
+        [
+         "t",
+         "row-38"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "39"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "39"
+        ],
+        [
+         "t",
+         "row-39"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "4"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "4"
+        ],
+        [
+         "t",
+         "row-04"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "40"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "40"
+        ],
+        [
+         "t",
+         "row-40"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "41"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "41"
+        ],
+        [
+         "t",
+         "row-41"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "42"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "42"
+        ],
+        [
+         "t",
+         "row-42"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "43"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "43"
+        ],
+        [
+         "t",
+         "row-43"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "44"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "44"
+        ],
+        [
+         "t",
+         "row-44"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "45"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "45"
+        ],
+        [
+         "t",
+         "row-45"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "46"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "46"
+        ],
+        [
+         "t",
+         "row-46"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "47"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "47"
+        ],
+        [
+         "t",
+         "row-47"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "48"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "48"
+        ],
+        [
+         "t",
+         "row-48"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "49"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "49"
+        ],
+        [
+         "t",
+         "row-49"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "5"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "5"
+        ],
+        [
+         "t",
+         "row-05"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "50"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "50"
+        ],
+        [
+         "t",
+         "row-50"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "51"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "51"
+        ],
+        [
+         "t",
+         "row-51"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "52"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "52"
+        ],
+        [
+         "t",
+         "row-52"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "53"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "53"
+        ],
+        [
+         "t",
+         "row-53"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "54"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "54"
+        ],
+        [
+         "t",
+         "row-54"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    },
+    "50": {
+     "offset": 50,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "55"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "55"
+        ],
+        [
+         "t",
+         "row-55"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "56"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "56"
+        ],
+        [
+         "t",
+         "row-56"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "57"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "57"
+        ],
+        [
+         "t",
+         "row-57"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "58"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "58"
+        ],
+        [
+         "t",
+         "row-58"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "59"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "59"
+        ],
+        [
+         "t",
+         "row-59"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "6"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "6"
+        ],
+        [
+         "t",
+         "row-06"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "60"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "60"
+        ],
+        [
+         "t",
+         "row-60"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "61"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "61"
+        ],
+        [
+         "t",
+         "row-61"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "62"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "62"
+        ],
+        [
+         "t",
+         "row-62"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "63"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "63"
+        ],
+        [
+         "t",
+         "row-63"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "64"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "64"
+        ],
+        [
+         "t",
+         "row-64"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "65"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "65"
+        ],
+        [
+         "t",
+         "row-65"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "7"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "7"
+        ],
+        [
+         "t",
+         "row-07"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "8"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "8"
+        ],
+        [
+         "t",
+         "row-08"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "9"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "9"
+        ],
+        [
+         "t",
+         "row-09"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    }
+   },
+   "parent": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "left-north"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-south"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "code",
+       "slot",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "code",
+       "slot"
+      ],
+      "name": "parent",
+      "rows": 2,
+      "types": [
+       "TEXT",
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 2
+    }
+   }
+  },
+  "right": {
+   "child": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "id",
+       "code",
+       "slot"
+      ],
+      "foreign_keys": [
+       [
+        0,
+        0,
+        "parent",
+        "code",
+        "code",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ],
+       [
+        0,
+        1,
+        "parent",
+        "slot",
+        "slot",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+       ]
+      ],
+      "key": [
+       "id"
+      ],
+      "name": "child",
+      "rows": 1,
+      "types": [
+       "INTEGER",
+       "TEXT",
+       "INTEGER"
+      ]
+     },
+     "total": 1
+    }
+   },
+   "mix": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "blobkey"
+        ],
+        [
+         "b",
+         "AP8="
+        ],
+        [
+         "t",
+         "base-blob"
+        ],
+        [
+         "b",
+         "AA=="
+        ],
+        [
+         "r",
+         "0x1.4000000000000p+1"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "empty"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "t",
+         "base-empty"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "keep"
+        ],
+        [
+         "t",
+         "k"
+        ],
+        [
+         "t",
+         "base-keep"
+        ],
+        [
+         "b",
+         ""
+        ],
+        [
+         "n"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "num"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-num"
+        ],
+        [
+         "b",
+         "AQ=="
+        ],
+        [
+         "r",
+         "0x1.8000000000000p+0"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "textkey"
+        ],
+        [
+         "t",
+         "same"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "textkey"
+        ],
+        [
+         "t",
+         "same"
+        ],
+        [
+         "t",
+         "base-text"
+        ],
+        [
+         "n"
+        ],
+        [
+         "r",
+         "0x1.0000000000000p+1"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "tag",
+       "ident",
+       "note",
+       "payload",
+       "gravity"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "tag",
+       "ident"
+      ],
+      "name": "mix",
+      "rows": 5,
+      "types": [
+       "TEXT",
+       "BLOB",
+       "TEXT",
+       "BLOB",
+       "REAL"
+      ]
+     },
+     "total": 5
+    }
+   },
+   "ord": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "row-01"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "10"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "10"
+        ],
+        [
+         "t",
+         "row-10"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "11"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "11"
+        ],
+        [
+         "t",
+         "row-11"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "12"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "12"
+        ],
+        [
+         "t",
+         "row-12"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "13"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "13"
+        ],
+        [
+         "t",
+         "row-13"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "14"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "14"
+        ],
+        [
+         "t",
+         "row-14"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "15"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "15"
+        ],
+        [
+         "t",
+         "row-15"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "16"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "16"
+        ],
+        [
+         "t",
+         "row-16"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "17"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "17"
+        ],
+        [
+         "t",
+         "row-17"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "18"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "18"
+        ],
+        [
+         "t",
+         "row-18"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "19"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "19"
+        ],
+        [
+         "t",
+         "row-19"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "2"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "2"
+        ],
+        [
+         "t",
+         "row-02"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "20"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "20"
+        ],
+        [
+         "t",
+         "row-20"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "21"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "21"
+        ],
+        [
+         "t",
+         "row-21"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "22"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "22"
+        ],
+        [
+         "t",
+         "row-22"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "23"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "23"
+        ],
+        [
+         "t",
+         "row-23"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "24"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "24"
+        ],
+        [
+         "t",
+         "row-24"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "25"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "25"
+        ],
+        [
+         "t",
+         "row-25"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "26"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "26"
+        ],
+        [
+         "t",
+         "row-26"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "27"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "27"
+        ],
+        [
+         "t",
+         "row-27"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "28"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "28"
+        ],
+        [
+         "t",
+         "row-28"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "29"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "29"
+        ],
+        [
+         "t",
+         "row-29"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "3"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "3"
+        ],
+        [
+         "t",
+         "row-03"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "30"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "30"
+        ],
+        [
+         "t",
+         "row-30"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "31"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "31"
+        ],
+        [
+         "t",
+         "row-31"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "32"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "32"
+        ],
+        [
+         "t",
+         "row-32"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "33"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "33"
+        ],
+        [
+         "t",
+         "row-33"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "34"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "34"
+        ],
+        [
+         "t",
+         "row-34"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "35"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "35"
+        ],
+        [
+         "t",
+         "row-35"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "36"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "36"
+        ],
+        [
+         "t",
+         "row-36"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "37"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "37"
+        ],
+        [
+         "t",
+         "row-37"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "38"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "38"
+        ],
+        [
+         "t",
+         "row-38"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "39"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "39"
+        ],
+        [
+         "t",
+         "row-39"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "4"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "4"
+        ],
+        [
+         "t",
+         "row-04"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "40"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "40"
+        ],
+        [
+         "t",
+         "row-40"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "41"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "41"
+        ],
+        [
+         "t",
+         "row-41"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "42"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "42"
+        ],
+        [
+         "t",
+         "row-42"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "43"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "43"
+        ],
+        [
+         "t",
+         "row-43"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "44"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "44"
+        ],
+        [
+         "t",
+         "row-44"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "45"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "45"
+        ],
+        [
+         "t",
+         "row-45"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "46"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "46"
+        ],
+        [
+         "t",
+         "row-46"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "47"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "47"
+        ],
+        [
+         "t",
+         "row-47"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "48"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "48"
+        ],
+        [
+         "t",
+         "row-48"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "49"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "49"
+        ],
+        [
+         "t",
+         "row-49"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "5"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "5"
+        ],
+        [
+         "t",
+         "row-05"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "50"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "50"
+        ],
+        [
+         "t",
+         "row-50"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "51"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "51"
+        ],
+        [
+         "t",
+         "row-51"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "52"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "52"
+        ],
+        [
+         "t",
+         "row-52"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "53"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "53"
+        ],
+        [
+         "t",
+         "row-53"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "54"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "54"
+        ],
+        [
+         "t",
+         "row-54"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    },
+    "50": {
+     "offset": 50,
+     "rows": [
+      {
+       "key": [
+        [
+         "i",
+         "55"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "55"
+        ],
+        [
+         "t",
+         "row-55"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "56"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "56"
+        ],
+        [
+         "t",
+         "row-56"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "57"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "57"
+        ],
+        [
+         "t",
+         "row-57"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "58"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "58"
+        ],
+        [
+         "t",
+         "row-58"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "59"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "59"
+        ],
+        [
+         "t",
+         "row-59"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "6"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "6"
+        ],
+        [
+         "t",
+         "row-06"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "60"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "60"
+        ],
+        [
+         "t",
+         "right-60"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "61"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "61"
+        ],
+        [
+         "t",
+         "row-61"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "62"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "62"
+        ],
+        [
+         "t",
+         "row-62"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "63"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "63"
+        ],
+        [
+         "t",
+         "row-63"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "64"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "64"
+        ],
+        [
+         "t",
+         "row-64"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "65"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "65"
+        ],
+        [
+         "t",
+         "row-65"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "7"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "7"
+        ],
+        [
+         "t",
+         "row-07"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "8"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "8"
+        ],
+        [
+         "t",
+         "row-08"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "i",
+         "9"
+        ]
+       ],
+       "values": [
+        [
+         "i",
+         "9"
+        ],
+        [
+         "t",
+         "row-09"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "n",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "n"
+      ],
+      "name": "ord",
+      "rows": 65,
+      "types": [
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 65
+    }
+   },
+   "parent": {
+    "0": {
+     "offset": 0,
+     "rows": [
+      {
+       "key": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "north"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "base-north"
+        ]
+       ]
+      },
+      {
+       "key": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ]
+       ],
+       "values": [
+        [
+         "t",
+         "south"
+        ],
+        [
+         "i",
+         "1"
+        ],
+        [
+         "t",
+         "right-south"
+        ]
+       ]
+      }
+     ],
+     "table": {
+      "columns": [
+       "code",
+       "slot",
+       "label"
+      ],
+      "foreign_keys": [],
+      "key": [
+       "code",
+       "slot"
+      ],
+      "name": "parent",
+      "rows": 2,
+      "types": [
+       "TEXT",
+       "INTEGER",
+       "TEXT"
+      ]
+     },
+     "total": 2
+    }
+   }
+  }
+ },
+ "sealed": {
+  "attempts": [
+   {
+    "candidate_digest": "c84da851c554f718d37efe655d177ca1ddddfcc981063ed05d35bffb0dae7c97",
+    "changed": 9,
+    "id": "<plan>",
+    "revision": 1,
+    "size": 20480,
+    "status": "passed"
+   }
+  ],
+  "candidate": {
+   "foreign_keys": [],
+   "integrity": "ok",
+   "schema": [
+    [
+     "table",
+     "child",
+     "child",
+     "CREATE TABLE child(\n    id INTEGER PRIMARY KEY,\n    code TEXT,\n    slot INTEGER,\n    FOREIGN KEY(code, slot) REFERENCES parent(code, slot)\n)"
+    ],
+    [
+     "table",
+     "mix",
+     "mix",
+     "CREATE TABLE mix(\n    tag TEXT NOT NULL,\n    ident BLOB NOT NULL,\n    note TEXT,\n    payload BLOB,\n    gravity REAL,\n    PRIMARY KEY(tag, ident)\n) WITHOUT ROWID"
+    ],
+    [
+     "table",
+     "ord",
+     "ord",
+     "CREATE TABLE ord(\n    n INTEGER PRIMARY KEY,\n    label TEXT NOT NULL\n) WITHOUT ROWID"
+    ],
+    [
+     "table",
+     "parent",
+     "parent",
+     "CREATE TABLE parent(\n    code TEXT NOT NULL,\n    slot INTEGER NOT NULL,\n    label TEXT NOT NULL,\n    PRIMARY KEY(code, slot)\n) WITHOUT ROWID"
+    ]
+   ],
+   "tables": {
+    "child": {
+     "columns": [
+      "id",
+      "code",
+      "slot"
+     ],
+     "rows": [
+      [
+       [
+        "i",
+        "1"
+       ],
+       [
+        "t",
+        "north"
+       ],
+       [
+        "i",
+        "1"
+       ]
+      ]
+     ]
+    },
+    "mix": {
+     "columns": [
+      "tag",
+      "ident",
+      "note",
+      "payload",
+      "gravity"
+     ],
+     "rows": [
+      [
+       [
+        "t",
+        "blobkey"
+       ],
+       [
+        "b",
+        "AP8="
+       ],
+       [
+        "t",
+        "base-blob"
+       ],
+       [
+        "b",
+        "AA=="
+       ],
+       [
+        "r",
+        "0x1.4000000000000p+1"
+       ]
+      ],
+      [
+       [
+        "t",
+        "empty"
+       ],
+       [
+        "b",
+        ""
+       ],
+       [
+        "t",
+        "base-empty"
+       ],
+       [
+        "b",
+        ""
+       ],
+       [
+        "n"
+       ]
+      ],
+      [
+       [
+        "t",
+        "fresh"
+       ],
+       [
+        "b",
+        "gAA="
+       ],
+       [
+        "t",
+        "left-new"
+       ],
+       [
+        "b",
+        ""
+       ],
+       [
+        "r",
+        "0x1.a000000000000p+1"
+       ]
+      ],
+      [
+       [
+        "t",
+        "keep"
+       ],
+       [
+        "t",
+        "k"
+       ],
+       [
+        "t",
+        "base-keep"
+       ],
+       [
+        "b",
+        ""
+       ],
+       [
+        "n"
+       ]
+      ],
+      [
+       [
+        "t",
+        "num"
+       ],
+       [
+        "r",
+        "0x1.0000000000000p+0"
+       ],
+       [
+        "t",
+        "left-num"
+       ],
+       [
+        "b",
+        "AQ=="
+       ],
+       [
+        "r",
+        "0x1.8000000000000p+0"
+       ]
+      ]
+     ]
+    },
+    "ord": {
+     "columns": [
+      "n",
+      "label"
+     ],
+     "rows": [
+      [
+       [
+        "i",
+        "1"
+       ],
+       [
+        "t",
+        "row-01"
+       ]
+      ],
+      [
+       [
+        "i",
+        "10"
+       ],
+       [
+        "t",
+        "row-10"
+       ]
+      ],
+      [
+       [
+        "i",
+        "11"
+       ],
+       [
+        "t",
+        "row-11"
+       ]
+      ],
+      [
+       [
+        "i",
+        "12"
+       ],
+       [
+        "t",
+        "row-12"
+       ]
+      ],
+      [
+       [
+        "i",
+        "13"
+       ],
+       [
+        "t",
+        "row-13"
+       ]
+      ],
+      [
+       [
+        "i",
+        "14"
+       ],
+       [
+        "t",
+        "row-14"
+       ]
+      ],
+      [
+       [
+        "i",
+        "15"
+       ],
+       [
+        "t",
+        "row-15"
+       ]
+      ],
+      [
+       [
+        "i",
+        "16"
+       ],
+       [
+        "t",
+        "row-16"
+       ]
+      ],
+      [
+       [
+        "i",
+        "17"
+       ],
+       [
+        "t",
+        "row-17"
+       ]
+      ],
+      [
+       [
+        "i",
+        "18"
+       ],
+       [
+        "t",
+        "row-18"
+       ]
+      ],
+      [
+       [
+        "i",
+        "19"
+       ],
+       [
+        "t",
+        "row-19"
+       ]
+      ],
+      [
+       [
+        "i",
+        "2"
+       ],
+       [
+        "t",
+        "row-02"
+       ]
+      ],
+      [
+       [
+        "i",
+        "20"
+       ],
+       [
+        "t",
+        "row-20"
+       ]
+      ],
+      [
+       [
+        "i",
+        "21"
+       ],
+       [
+        "t",
+        "row-21"
+       ]
+      ],
+      [
+       [
+        "i",
+        "22"
+       ],
+       [
+        "t",
+        "row-22"
+       ]
+      ],
+      [
+       [
+        "i",
+        "23"
+       ],
+       [
+        "t",
+        "row-23"
+       ]
+      ],
+      [
+       [
+        "i",
+        "24"
+       ],
+       [
+        "t",
+        "row-24"
+       ]
+      ],
+      [
+       [
+        "i",
+        "25"
+       ],
+       [
+        "t",
+        "row-25"
+       ]
+      ],
+      [
+       [
+        "i",
+        "26"
+       ],
+       [
+        "t",
+        "row-26"
+       ]
+      ],
+      [
+       [
+        "i",
+        "27"
+       ],
+       [
+        "t",
+        "row-27"
+       ]
+      ],
+      [
+       [
+        "i",
+        "28"
+       ],
+       [
+        "t",
+        "row-28"
+       ]
+      ],
+      [
+       [
+        "i",
+        "29"
+       ],
+       [
+        "t",
+        "row-29"
+       ]
+      ],
+      [
+       [
+        "i",
+        "3"
+       ],
+       [
+        "t",
+        "left-03"
+       ]
+      ],
+      [
+       [
+        "i",
+        "30"
+       ],
+       [
+        "t",
+        "row-30"
+       ]
+      ],
+      [
+       [
+        "i",
+        "31"
+       ],
+       [
+        "t",
+        "row-31"
+       ]
+      ],
+      [
+       [
+        "i",
+        "32"
+       ],
+       [
+        "t",
+        "row-32"
+       ]
+      ],
+      [
+       [
+        "i",
+        "33"
+       ],
+       [
+        "t",
+        "row-33"
+       ]
+      ],
+      [
+       [
+        "i",
+        "34"
+       ],
+       [
+        "t",
+        "row-34"
+       ]
+      ],
+      [
+       [
+        "i",
+        "35"
+       ],
+       [
+        "t",
+        "row-35"
+       ]
+      ],
+      [
+       [
+        "i",
+        "36"
+       ],
+       [
+        "t",
+        "row-36"
+       ]
+      ],
+      [
+       [
+        "i",
+        "37"
+       ],
+       [
+        "t",
+        "row-37"
+       ]
+      ],
+      [
+       [
+        "i",
+        "38"
+       ],
+       [
+        "t",
+        "row-38"
+       ]
+      ],
+      [
+       [
+        "i",
+        "39"
+       ],
+       [
+        "t",
+        "row-39"
+       ]
+      ],
+      [
+       [
+        "i",
+        "4"
+       ],
+       [
+        "t",
+        "row-04"
+       ]
+      ],
+      [
+       [
+        "i",
+        "40"
+       ],
+       [
+        "t",
+        "row-40"
+       ]
+      ],
+      [
+       [
+        "i",
+        "41"
+       ],
+       [
+        "t",
+        "row-41"
+       ]
+      ],
+      [
+       [
+        "i",
+        "42"
+       ],
+       [
+        "t",
+        "row-42"
+       ]
+      ],
+      [
+       [
+        "i",
+        "43"
+       ],
+       [
+        "t",
+        "row-43"
+       ]
+      ],
+      [
+       [
+        "i",
+        "44"
+       ],
+       [
+        "t",
+        "row-44"
+       ]
+      ],
+      [
+       [
+        "i",
+        "45"
+       ],
+       [
+        "t",
+        "row-45"
+       ]
+      ],
+      [
+       [
+        "i",
+        "46"
+       ],
+       [
+        "t",
+        "row-46"
+       ]
+      ],
+      [
+       [
+        "i",
+        "47"
+       ],
+       [
+        "t",
+        "row-47"
+       ]
+      ],
+      [
+       [
+        "i",
+        "48"
+       ],
+       [
+        "t",
+        "row-48"
+       ]
+      ],
+      [
+       [
+        "i",
+        "49"
+       ],
+       [
+        "t",
+        "row-49"
+       ]
+      ],
+      [
+       [
+        "i",
+        "5"
+       ],
+       [
+        "t",
+        "row-05"
+       ]
+      ],
+      [
+       [
+        "i",
+        "50"
+       ],
+       [
+        "t",
+        "row-50"
+       ]
+      ],
+      [
+       [
+        "i",
+        "51"
+       ],
+       [
+        "t",
+        "row-51"
+       ]
+      ],
+      [
+       [
+        "i",
+        "52"
+       ],
+       [
+        "t",
+        "row-52"
+       ]
+      ],
+      [
+       [
+        "i",
+        "53"
+       ],
+       [
+        "t",
+        "row-53"
+       ]
+      ],
+      [
+       [
+        "i",
+        "54"
+       ],
+       [
+        "t",
+        "row-54"
+       ]
+      ],
+      [
+       [
+        "i",
+        "55"
+       ],
+       [
+        "t",
+        "row-55"
+       ]
+      ],
+      [
+       [
+        "i",
+        "56"
+       ],
+       [
+        "t",
+        "row-56"
+       ]
+      ],
+      [
+       [
+        "i",
+        "57"
+       ],
+       [
+        "t",
+        "row-57"
+       ]
+      ],
+      [
+       [
+        "i",
+        "58"
+       ],
+       [
+        "t",
+        "row-58"
+       ]
+      ],
+      [
+       [
+        "i",
+        "59"
+       ],
+       [
+        "t",
+        "row-59"
+       ]
+      ],
+      [
+       [
+        "i",
+        "6"
+       ],
+       [
+        "t",
+        "row-06"
+       ]
+      ],
+      [
+       [
+        "i",
+        "60"
+       ],
+       [
+        "t",
+        "right-60"
+       ]
+      ],
+      [
+       [
+        "i",
+        "61"
+       ],
+       [
+        "t",
+        "row-61"
+       ]
+      ],
+      [
+       [
+        "i",
+        "62"
+       ],
+       [
+        "t",
+        "row-62"
+       ]
+      ],
+      [
+       [
+        "i",
+        "63"
+       ],
+       [
+        "t",
+        "row-63"
+       ]
+      ],
+      [
+       [
+        "i",
+        "64"
+       ],
+       [
+        "t",
+        "row-64"
+       ]
+      ],
+      [
+       [
+        "i",
+        "65"
+       ],
+       [
+        "t",
+        "row-65"
+       ]
+      ],
+      [
+       [
+        "i",
+        "7"
+       ],
+       [
+        "t",
+        "row-07"
+       ]
+      ],
+      [
+       [
+        "i",
+        "8"
+       ],
+       [
+        "t",
+        "row-08"
+       ]
+      ],
+      [
+       [
+        "i",
+        "9"
+       ],
+       [
+        "t",
+        "row-09"
+       ]
+      ]
+     ]
+    },
+    "parent": {
+     "columns": [
+      "code",
+      "slot",
+      "label"
+     ],
+     "rows": [
+      [
+       [
+        "t",
+        "north"
+       ],
+       [
+        "i",
+        "1"
+       ],
+       [
+        "t",
+        "left-north"
+       ]
+      ],
+      [
+       [
+        "t",
+        "south"
+       ],
+       [
+        "i",
+        "1"
+       ],
+       [
+        "t",
+        "right-south"
+       ]
+      ]
+     ]
+    }
+   }
+  },
+  "candidate_sha256": "c84da851c554f718d37efe655d177ca1ddddfcc981063ed05d35bffb0dae7c97",
+  "candidate_size": 20480,
+  "certificate": {
+   "candidate_digest": "c84da851c554f718d37efe655d177ca1ddddfcc981063ed05d35bffb0dae7c97",
+   "candidate_size": 20480,
+   "decision_digest": "0983d13294326de099abf7cc35c92435661731221edf504e8cd704e2d18cccd5",
+   "format": "pagefold-certificate-v1",
+   "plan": "<plan>",
+   "plan_digest": "e845ef81c426eb060b4ad5260f97d8cb08a244859c9e90131a75542c7f076970",
+   "revision": 1,
+   "schema": "bef4a98c86b861eca6da2854d52fad571122c378fd8d567c72c91ae8190f9715",
+   "sources": {
+    "base": "c11e08ec87155289b173c361d3315094e58a3795399782ad1e72fa908fb55d06",
+    "left": "5a6e1f63d37ec3b31bf4dc1b83cb392488f8a219e130f283f4f5af51d0139dcd",
+    "right": "2234e4f26bb279b6cb018ef290eb3ec5c66694b172d631c301eea4350aafcf65"
+   }
+  },
+  "rehearsal": {
+   "candidate_digest": "c84da851c554f718d37efe655d177ca1ddddfcc981063ed05d35bffb0dae7c97",
+   "changed": 9,
+   "id": "<plan>",
+   "revision": 1,
+   "size": 20480,
+   "status": "passed"
+  }
+ }
+}

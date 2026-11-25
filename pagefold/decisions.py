@@ -9,7 +9,7 @@ def resolve(store, plan_id, revision, item_id, choice):
         expect_revision(plan, revision)
         expect_open(plan)
         items, decisions = plan_content(plan)
-        if not any(item["id"] == item_id and item["automatic"] is None for item in items):
+        if not any(item.id == item_id and item.automatic is None for item in items):
             raise Problem("not_conflict", "该条目不是可裁决的冲突。", 409)
         new_choice = None if choice == "clear" else choice
         if new_choice != decisions.get(item_id):

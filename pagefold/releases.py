@@ -3,8 +3,8 @@ import json
 from .attempts import get_attempt
 from .codec import canonical, digest, fingerprint
 from .errors import Problem
-from .images import get_image
-from .plans import expect_open, expect_revision, get_plan, plan_content
+from .images import get_image, image_catalog
+from .plans import expect_open, expect_revision, get_plan, plan_content, plan_digest
 
 
 def get_release(db, plan_id, body=False):
@@ -31,8 +31,8 @@ def seal(store, plan_id, revision):
         items, decisions = plan_content(plan)
         certificate = {"format": "pagefold-certificate-v1", "plan": plan_id, "revision": revision,
                        "sources": {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]},
-                       "schema": json.loads(get_image(db, plan["base"])["catalog"])["signature"],
-                       "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
+                       "schema": image_catalog(get_image(db, plan["base"])).signature,
+                       "plan_digest": plan_digest(items), "decision_digest": fingerprint(decisions),
                        "candidate_digest": result["candidate_digest"], "candidate_size": result["size"]}
         db.execute("INSERT INTO releases VALUES(?,?,?)", (plan_id, canonical(certificate), attempt["candidate"]))
         db.execute("UPDATE plans SET state='sealed' WHERE id=?", (plan_id,))
