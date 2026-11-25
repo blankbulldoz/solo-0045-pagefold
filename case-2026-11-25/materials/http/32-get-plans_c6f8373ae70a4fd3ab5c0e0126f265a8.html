@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合流计划 · Pagefold</title>
+<link rel="stylesheet" href="/assets/workspace.css">
+<script defer src="/assets/upload.js"></script>
+</head>
+<body>
+<header class="mast"><div class="frame mast-inner"><a class="brand" href="/"><span class="fold" aria-hidden="true"></span><span>Pagefold</span></a><span class="brand-sub">数据页合流</span><a class="home-link" href="/">合流工作区</a></div></header>
+<main class="frame"><a class="back" href="/">← 工作区</a>
+<section class="heading plan-heading"><div><h1>合流计划 <code>c6f8373ae70a</code></h1><p>第 2 版 · 裁决中</p></div><span class="tag">0 项待裁决</span></section>
+<nav class="sources" aria-label="三方镜像"><a href="/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"><small>祖本</small><b>石英祖本</b><code>90438d5a76cd07</code></a><a href="/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75"><small>左支</small><b>青蓝分支</b><code>ab1bceb83ee559</code></a><a href="/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"><small>右支</small><b>赤褐分支</b><code>d6a547d0982d61</code></a></nav>
+<div class="work-grid plan-grid">
+  <section class="paper"><div class="panel-title"><h2>主键行差异</h2><span class="tag">3 项</span></div><div class="entries"><article class="entry">
+  <div class="entry-head"><h3>node <span><span class="atom" title="文本">north</span> <span class="sep">·</span> <span class="atom" title="整数">1</span></span></h3><span class="tag conflict">祖本</span></div>
+  <dl class="triptych"><div><dt>祖本</dt><dd><span class="atom" title="文本">north</span> <span class="sep">·</span> <span class="atom" title="整数">1</span> <span class="sep">·</span> <span class="atom" title="文本">祖本节点</span> <span class="sep">·</span> <span class="atom" title="二进制">ABQ=</span> <span class="sep">·</span> <span class="atom" title="实数">0x1.8000000000000p+0</span></dd></div><div><dt>左支</dt><dd><span class="atom" title="文本">north</span> <span class="sep">·</span> <span class="atom" title="整数">1</span> <span class="sep">·</span> <span class="atom" title="文本">左支覆写</span> <span class="sep">·</span> <span class="atom" title="二进制">ABQ=</span> <span class="sep">·</span> <span class="atom" title="实数">0x1.8000000000000p+0</span></dd></div><div><dt>右支</dt><dd><span class="atom" title="文本">north</span> <span class="sep">·</span> <span class="atom" title="整数">1</span> <span class="sep">·</span> <span class="atom" title="文本">祖本节点</span> <span class="sep">·</span> <span class="atom" title="二进制">/wA=</span> <span class="sep">·</span> <span class="atom" title="实数">0x1.2000000000000p+1</span></dd></div></dl>
+  <form class="decision" action="/plans/c6f8373ae70a4fd3ab5c0e0126f265a8/decisions" method="post">
+ <input type="hidden" name="revision" value="2">
+ <input type="hidden" name="item" value="3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf">
+ <label>行裁决 <select name="choice"><option value="clear">保留未决</option><option value="base" selected>祖本</option><option value="left">左支</option><option value="right">右支</option></select></label>
+ <button>保存</button>
+</form>
+
+</article>
+<article class="entry">
+  <div class="entry-head"><h3>bench <span><span class="atom" title="文本">south</span></span></h3><span class="tag auto">自动 · 右支</span></div>
+  <dl class="triptych"><div><dt>祖本</dt><dd><span class="atom" title="文本">south</span> <span class="sep">·</span> <span class="atom" title="文本">砂层</span></dd></div><div><dt>左支</dt><dd><span class="atom" title="文本">south</span> <span class="sep">·</span> <span class="atom" title="文本">砂层</span></dd></div><div><dt>右支</dt><dd><span class="atom" title="文本">south</span> <span class="sep">·</span> <span class="atom" title="文本">右支更名</span></dd></div></dl>
+  
+</article>
+<article class="entry">
+  <div class="entry-head"><h3>node <span><span class="atom" title="文本">south</span> <span class="sep">·</span> <span class="atom" title="整数">2</span></span></h3><span class="tag auto">自动 · 左支</span></div>
+  <dl class="triptych"><div><dt>祖本</dt><dd><span class="null">缺席</span></dd></div><div><dt>左支</dt><dd><span class="atom" title="文本">south</span> <span class="sep">·</span> <span class="atom" title="整数">2</span> <span class="sep">·</span> <span class="atom" title="文本">左支新增</span> <span class="sep">·</span> <span class="null">NULL</span> <span class="sep">·</span> <span class="atom" title="实数">0x1.0000000000000p+2</span></dd></div><div><dt>右支</dt><dd><span class="null">缺席</span></dd></div></dl>
+  
+</article>
+</div></section>
+  <aside><section class="paper"><div class="panel-title"><h2>重演与封存</h2></div><div class="actions"><form method="post" action="/plans/c6f8373ae70a4fd3ab5c0e0126f265a8/rehearse"><input type="hidden" name="revision" value="2"><button class="primary">重演当前版</button></form>
+<form method="post" action="/plans/c6f8373ae70a4fd3ab5c0e0126f265a8/seal"><input type="hidden" name="revision" value="2"><button class="">封存成果</button></form>
+<form method="post" action="/plans/c6f8373ae70a4fd3ab5c0e0126f265a8/archive"><input type="hidden" name="revision" value="2"><button class="quiet">归档计划</button></form>
+</div></section>
+  <section class="paper workspace-history"><div class="panel-title"><h2>重演历史</h2></div><div class="history"><article class="attempt"><b>第 2 版 · 通过 · 当前版</b><small>应用 2 行</small><code>716f1ce54f75dd24e09f70cda01582c240b10debf2763b8ea9678c393dae269f</code></article>
+<article class="attempt"><b>第 1 版 · 通过 · 历史版</b><small>应用 3 行</small><code>c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24</code></article>
+</div></section></aside>
+</div>
+</main>
+</body>
+</html>

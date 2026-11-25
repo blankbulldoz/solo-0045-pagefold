@@ -1,0 +1,161 @@
+{
+  "summary": {
+    "total": 21,
+    "pass": 21,
+    "fail": 0,
+    "by_basis": {
+      "recomputed": 14,
+      "attested": 5,
+      "gap": 2
+    }
+  },
+  "checks": [
+    {
+      "id": "sum-base",
+      "title": "留存 quartz 字节 SHA-256 与登记/凭证 id 一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "sha256=90438d5a76cd0744… role=base"
+    },
+    {
+      "id": "sum-left",
+      "title": "留存 cerulean 字节 SHA-256 与登记/凭证 id 一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "sha256=ab1bceb83ee5599d… role=left"
+    },
+    {
+      "id": "sum-right",
+      "title": "留存 umber 字节 SHA-256 与登记/凭证 id 一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "sha256=d6a547d0982d6150… role=right"
+    },
+    {
+      "id": "plan-items",
+      "title": "重算计划得到 3 项差异且冲突条目 id 与操作记录一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "items=3 conflict=3d9fecf2f8e0e841… table=node key=[['t', 'north'], ['i', '1']]"
+    },
+    {
+      "id": "plan-digest",
+      "title": "重算 plan_digest 与封存凭证一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "plan_digest=a9d19d0259fa61f4…"
+    },
+    {
+      "id": "schema-digest",
+      "title": "重算模式签名与封存凭证一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "schema=2850b20c7d73163e…"
+    },
+    {
+      "id": "rebuild-rev1",
+      "title": "离线重建 rev1 候选摘要与当时重演记录一致（选择=right）",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "sha256=c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24 changed=3"
+    },
+    {
+      "id": "rebuild-rev2",
+      "title": "离线重建 rev2 候选摘要与当时重演记录一致（选择=base）",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "sha256=716f1ce54f75dd24e09f70cda01582c240b10debf2763b8ea9678c393dae269f changed=2"
+    },
+    {
+      "id": "sealed-digest",
+      "title": "下载候选 SHA-256 与凭证 candidate_digest 一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "download=716f1ce54f75dd24e09f70cda01582c240b10debf2763b8ea9678c393dae269f"
+    },
+    {
+      "id": "sealed-standalone",
+      "title": "下载库可独立打开、完整性 ok、无外键违规",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "integrity=ok fk_violations=0"
+    },
+    {
+      "id": "sealed-row",
+      "title": "封存候选冲突行 (north,1) 确为祖本取值（payload=0014, weight=1.5）",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "row=('祖本节点', '0014', 1.5)"
+    },
+    {
+      "id": "rev1-persisted",
+      "title": "历史版 rev1（右支）候选字节仍物理留存于状态库 attempts，摘要与重演记录一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "rev1_digest=c9d6dd3673ae9157… （注意：HTTP 无下载入口，仅状态库可取）"
+    },
+    {
+      "id": "rev1-row",
+      "title": "历史版 rev1 冲突行确为右支取值（payload=ff00, weight=2.25）",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "row=('祖本节点', 'FF00', 2.25)"
+    },
+    {
+      "id": "only-rev2-released",
+      "title": "仅 rev2 进入 releases（被封存、可下载、有凭证），rev1 未封存",
+      "ok": true,
+      "basis": "attested",
+      "detail": "releases 表仅 1 行且为 rev2；rev1 仅存在于 attempts"
+    },
+    {
+      "id": "plan-terminal",
+      "title": "计划终态为 archived、终版 revision=2、裁决绑定 base",
+      "ok": true,
+      "basis": "attested",
+      "detail": "state=archived revision=2"
+    },
+    {
+      "id": "decision-digest",
+      "title": "终版裁决 decision_digest 与凭证一致",
+      "ok": true,
+      "basis": "recomputed",
+      "detail": "decision_digest=484fc47f2a4a38c8…"
+    },
+    {
+      "id": "gap-left-choice",
+      "title": "缺口：本次从未实际选择 left（左支）重演，历史中无该候选，结论不臆造",
+      "ok": true,
+      "basis": "gap",
+      "detail": "attempts 实际版序=[1, 2]；不存在 left 选择的摘要或字节，未做任何推断"
+    },
+    {
+      "id": "gap-stress-blocked",
+      "title": "缺口：stress 计划重演 blocked，candidate 为 NULL，从未产生可下载字节",
+      "ok": true,
+      "basis": "gap",
+      "detail": "blocked 尝试不生成候选，404 留档即其全部证据"
+    },
+    {
+      "id": "log-integrity",
+      "title": "操作流水 50 条且每条声明状态码均与实际相符、均有响应体留档",
+      "ok": true,
+      "basis": "attested",
+      "detail": "entries=50"
+    },
+    {
+      "id": "html-states",
+      "title": "浏览页留档出现 已封存 / 已归档 状态文案，与 HTTP 终态互证",
+      "ok": true,
+      "basis": "attested",
+      "detail": "plan_html_captures=9"
+    },
+    {
+      "id": "html-history",
+      "title": "rev2 重演后计划页历史区同时可见 第1版 与 第2版",
+      "ok": true,
+      "basis": "attested",
+      "detail": "HTML 历史区含两条 attempt"
+    }
+  ]
+}

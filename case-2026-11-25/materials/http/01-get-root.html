@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三方合流工作区 · Pagefold</title>
+<link rel="stylesheet" href="/assets/workspace.css">
+<script defer src="/assets/upload.js"></script>
+</head>
+<body>
+<header class="mast"><div class="frame mast-inner"><a class="brand" href="/"><span class="fold" aria-hidden="true"></span><span>Pagefold</span></a><span class="brand-sub">数据页合流</span><a class="home-link" href="/">合流工作区</a></div></header>
+<main class="frame"><section class="heading"><div><h1>三方合流工作区</h1><p>从祖本和两份分支创建计划，裁决主键行差异并重演 SQLite 候选。</p></div><form method="post" action="/demo"><button>载入示例</button></form></section>
+<div class="work-grid">
+  <section class="paper"><div class="panel-title"><h2>建立合流计划</h2><span class="tag">SQLite</span></div>
+  <form class="new-plan" method="post" action="/plans">
+    <label><span class="input-title">祖本</span><span class="input-desc">左右分支共同的原始镜像</span><select name="base" required><option value="">选择已登记镜像</option></select></label>
+    <label><span class="input-title">左支</span><span class="input-desc">从祖本分离的第一份镜像</span><select name="left" required><option value="">选择已登记镜像</option></select></label>
+    <label><span class="input-title">右支</span><span class="input-desc">从祖本分离的第二份镜像</span><select name="right" required><option value="">选择已登记镜像</option></select></label>
+    <button class="primary" type="submit">计算三方差异</button>
+  </form></section>
+  <aside class="paper"><div class="panel-title"><h2>镜像登记</h2></div>
+    <form class="upload" id="image-upload"><label class="pick">选择 SQLite 文件<input type="file" name="image" accept=".sqlite,.sqlite3,.db" required></label><button type="submit">登记</button><p id="upload-status" aria-live="polite">独立镜像，每份上限 4 MiB。</p></form>
+    <ul class="image-links"><li class="muted">尚未登记镜像。</li></ul>
+  </aside>
+</div>
+<section class="workspace-history paper"><div class="panel-title"><h2>合流计划</h2></div><div class="plan-links"><p class="muted">尚未创建合流计划。</p></div></section>
+</main>
+</body>
+</html>

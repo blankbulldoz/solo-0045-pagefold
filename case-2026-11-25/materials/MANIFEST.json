@@ -1,0 +1,368 @@
+{
+  "case": "Pagefold 同计划两轮不同选择重演案卷",
+  "file_count": 60,
+  "total_bytes": 522973,
+  "note": "哈希针对 materials/ 内相对路径文件；MANIFEST 自身不计入。",
+  "files": [
+    {
+      "path": "derived/verification-report.json",
+      "sha256": "75c36109467c433fe6aa03136c0bafe004951ce0bc6a9c6e0dcc87a25a26feb2",
+      "size": 5233,
+      "role": "派生报告：21 项离线核对结果（含证明力分级）"
+    },
+    {
+      "path": "downloads/candidate-plan-P-rev2.sqlite",
+      "sha256": "716f1ce54f75dd24e09f70cda01582c240b10debf2763b8ea9678c393dae269f",
+      "size": 24576,
+      "role": "封存产物：被封存、可下载的 rev2 SQLite 候选"
+    },
+    {
+      "path": "downloads/certificate-plan-P.json",
+      "sha256": "e47ec3c2e53896ad38803250f153430047f5edd3e2042bd8fd0911cea3d17df2",
+      "size": 699,
+      "role": "封存凭证：绑定三来源/模式/计划/裁决/候选摘要的 JSON 凭证"
+    },
+    {
+      "path": "http/01-get-root.html",
+      "sha256": "d8fba1f7398a9f6fcc8e8ca023fb8b34d894e1ed76fcd9c69426d299aa9a5f12",
+      "size": 2398,
+      "role": "浏览页留档：首页 HTML"
+    },
+    {
+      "path": "http/02-post-api_images.json",
+      "sha256": "baffa606424f62b8d237101a809e6fbd12e388ebfefa3c4d3bb9d02800849436",
+      "size": 886,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/03-post-api_images.json",
+      "sha256": "8eaa003f83a43f14e86734389d160cf4375ef7aff3cdba29448bb5ee566a0038",
+      "size": 886,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/04-post-api_images.json",
+      "sha256": "0b2ea520ef6b2009e3aab22e21f167962109fb435be6d7a622f7f71585448ae3",
+      "size": 886,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/05-post-api_images.json",
+      "sha256": "baffa606424f62b8d237101a809e6fbd12e388ebfefa3c4d3bb9d02800849436",
+      "size": 886,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/06-post-api_images.json",
+      "sha256": "a1ff088f461b09f890cef4b75ad360ed6b9f951ba22409c068b1ea4fc85ff993",
+      "size": 106,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/07-get-images_90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25.html",
+      "sha256": "8cd35b0869d683a2ff2bb6e6a6209a1c53ef54bf66b6f84e2e90fef28289b0af",
+      "size": 1857,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/08-get-api_images_90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25.json",
+      "sha256": "baffa606424f62b8d237101a809e6fbd12e388ebfefa3c4d3bb9d02800849436",
+      "size": 886,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/09-get-api_images_90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25_rows?table=node.json",
+      "sha256": "5e07f0814118b76cdfe7d3c936f18f371a8f742ae9298c797f2996ea478b5786",
+      "size": 614,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/10-get-images_90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25_rows?table=node.html",
+      "sha256": "e0712ac6bbcb89ac188a0977cbc75ae423a82be4db9d1608d013f63fb16fb065",
+      "size": 1703,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/11-get-api_images_ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75_rows?table=node.json",
+      "sha256": "78d66ae24f4ccd346ee01e7534b9b629d2aa3d55ceab1ab635734577b50942d6",
+      "size": 766,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/12-get-api_images_d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009_rows?table=node.json",
+      "sha256": "38ea43a1a96b2f369f420988ff6194191c4ec6c1b12cde397d6e266865b93e5f",
+      "size": 614,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/13-get-api_images_missing.json",
+      "sha256": "928d05dcbb951db4b045497e4272e0a28d0fa93aa1bb381ffa3f8236aaa0900d",
+      "size": 93,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/14-post-api_plans.json",
+      "sha256": "11a48fdc6841daee6b83c280034f2afebf86079f2bc2ebaf35526ff8231942a2",
+      "size": 1579,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/15-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "ecb7cb95760e9164810684e218a43341250f4aaba6509bfaaa776a011ebf7e1b",
+      "size": 5865,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/16-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8.json",
+      "sha256": "11a48fdc6841daee6b83c280034f2afebf86079f2bc2ebaf35526ff8231942a2",
+      "size": 1579,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/17-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_rehearse.json",
+      "sha256": "dfdd3cf189fdb8298bb88d4e4b43f6801fcea31e6a55d757ebd543416deca9dc",
+      "size": 126,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/18-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_decisions.json",
+      "sha256": "263279e536e1cba52f746a71a5f0a4cee578475e7e0e99161dd0e5e38916b836",
+      "size": 152,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/19-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_decisions.json",
+      "sha256": "983976e979ce5c8ec9ee9a418c05f9074d71e3868603a42320a36aff5676b510",
+      "size": 136,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/20-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_decisions.json",
+      "sha256": "263279e536e1cba52f746a71a5f0a4cee578475e7e0e99161dd0e5e38916b836",
+      "size": 152,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/21-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "6a3e56a3cb2dc1d056357d493e1046abff7989f2bb7a79b86de790353de454bd",
+      "size": 5853,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/22-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_rehearse.json",
+      "sha256": "e5e6148b8c009d35cd88525fcddd35c126570b5c46381ac40c121b8db0903a1d",
+      "size": 194,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/23-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_rehearse.json",
+      "sha256": "edf77c9bcf7dfaf8d8b1a8caf6debbec2bc5aab6ab6774089229eecded3bf953",
+      "size": 194,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/24-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_attempts.json",
+      "sha256": "b6feac4d7c713604c257208715f9842e88067434e26b9ca78472a30620c5715b",
+      "size": 196,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/25-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "c20d63b2cf7538a11c1f92d0adf7217a6ce65392337ad427f875a6777b726eca",
+      "size": 5981,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/26-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_decisions.json",
+      "sha256": "9d467386066495c2303e23263371d402290a6edb578111431b695d4f259f89f0",
+      "size": 151,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/27-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8.json",
+      "sha256": "a0eb2e169fa0a99ba2500ebbaa66b30cb73f98c088157336158ffbff5fdfbe1a",
+      "size": 1581,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/28-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_attempts.json",
+      "sha256": "b6feac4d7c713604c257208715f9842e88067434e26b9ca78472a30620c5715b",
+      "size": 196,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/29-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_seal.json",
+      "sha256": "5f63114c0fd47a7520e856012ab046564ed090ad252e3633e4db2175a48ec5a4",
+      "size": 110,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/30-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_rehearse.json",
+      "sha256": "ffa29981c43fca868e48b43b4e1e421084b23bd773d533aba64dd0d40d45f7a8",
+      "size": 194,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/31-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_attempts.json",
+      "sha256": "a3d905cf4716d06319ce3f04791fd781622789f6d1dbb5db9a8a8f425fa41c45",
+      "size": 392,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/32-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "7a1b9116f86a09fdfe4f5f239b9aa8d49d71a2f7a5dc3e961c96640666dcfba5",
+      "size": 6160,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/33-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_seal.json",
+      "sha256": "a212c76209d49f410094c7b4281d30d5ef332ab2335a740951582a4980ae54ea",
+      "size": 699,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/34-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_seal.json",
+      "sha256": "e47ec3c2e53896ad38803250f153430047f5edd3e2042bd8fd0911cea3d17df2",
+      "size": 699,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/35-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_decisions.json",
+      "sha256": "f327b49c049598948c4fd4d13b00f36dbd9222f63ee8fb0be25b01dc18a6713f",
+      "size": 151,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/38-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "04648a4ee38c74b26b448faed52e9347ebe678b1ac85fb54303468bf46e1ce30",
+      "size": 5549,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/39-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_archive.json",
+      "sha256": "f2277288f157abef91cd64d87dd5da37d1651648ce7bf914949edb8120ca290d",
+      "size": 78,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/40-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8.json",
+      "sha256": "9df779154f2e2865b401bd7f9db8978e630078eb52d4fed1786ed1b3e5a62d21",
+      "size": 1585,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/41-post-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_rehearse.json",
+      "sha256": "f327b49c049598948c4fd4d13b00f36dbd9222f63ee8fb0be25b01dc18a6713f",
+      "size": 151,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/42-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_download.bin",
+      "sha256": "716f1ce54f75dd24e09f70cda01582c240b10debf2763b8ea9678c393dae269f",
+      "size": 24576,
+      "role": "HTTP 留档：字节型响应（下载候选留档副本）"
+    },
+    {
+      "path": "http/43-get-api_plans_c6f8373ae70a4fd3ab5c0e0126f265a8_certificate.json",
+      "sha256": "e47ec3c2e53896ad38803250f153430047f5edd3e2042bd8fd0911cea3d17df2",
+      "size": 699,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/44-get-plans_c6f8373ae70a4fd3ab5c0e0126f265a8.html",
+      "sha256": "67cc1efbf86704813a084fcf4bf3af879fad0eaa52434b07b0e19d4758480981",
+      "size": 5374,
+      "role": "浏览页留档：服务器渲染 HTML（无截图时的页面证据）"
+    },
+    {
+      "path": "http/45-post-api_images.json",
+      "sha256": "f38e497e85dfe509220eae297220c8dd9a6ab4e4d17efbe4db3d8314c2ec6fdd",
+      "size": 873,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/46-post-api_images.json",
+      "sha256": "70bd487e9ab7909e772b20b3c4f6abeb8c2d3b9fe374a91ac8d73de267f4cc82",
+      "size": 874,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/47-post-api_plans.json",
+      "sha256": "e133c9c3b199d8cb91571f75be77182d1a6718b6af2a2bb1eb04f193aac6032b",
+      "size": 951,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/48-post-api_plans_4075bd7d3e3f4afa870d95c43be56fc2_rehearse.json",
+      "sha256": "0ad788a788960f9a35f188e0e3fa8fd4c108225e045617baf8412d1f5fc4b3b1",
+      "size": 216,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/49-get-api_plans_4075bd7d3e3f4afa870d95c43be56fc2_download.json",
+      "sha256": "bbf65ef2c8c4051b587115a86e8eb41af5a035d327acfc438b23fbb2fb9f6352",
+      "size": 103,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "http/50-get-api_plans_4075bd7d3e3f4afa870d95c43be56fc2_certificate.json",
+      "sha256": "bbf65ef2c8c4051b587115a86e8eb41af5a035d327acfc438b23fbb2fb9f6352",
+      "size": 103,
+      "role": "HTTP 留档：API JSON 响应体"
+    },
+    {
+      "path": "run-log.jsonl",
+      "sha256": "a38b8454c367c3bd494f9fe364cac80b7d9030cb2951efcfab32cdc48d3e3d63",
+      "size": 42671,
+      "role": "其他"
+    },
+    {
+      "path": "state/pagefold-state.sqlite",
+      "sha256": "cad00640daee88a3f9d2cb83c2810bc0a9b77412d5b125ccb0d513083e9a31cd",
+      "size": 233472,
+      "role": "状态留档：服务持久化库（plans/attempts/releases/images 全量历史）"
+    },
+    {
+      "path": "state/run-ids.json",
+      "sha256": "7c2d23f0d32b4fe7c10fb1c7f9abc2bf9bf39dd7e0f5cb7770228a02b050649e",
+      "size": 2061,
+      "role": "派生标识：本次运行的计划/冲突/各版候选摘要与凭证"
+    },
+    {
+      "path": "state/server.log",
+      "sha256": "7e17a165922d773252140fa14a5ab2a7c01fb7488ad02d8c70102929a2a0a5ae",
+      "size": 5328,
+      "role": "运行日志：服务启动记录"
+    },
+    {
+      "path": "state/uploaded-cerulean.sqlite",
+      "sha256": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "size": 24576,
+      "role": "输入留档：当时实际上传的 SQLite 镜像字节（复算输入）"
+    },
+    {
+      "path": "state/uploaded-quartz.sqlite",
+      "sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "size": 24576,
+      "role": "输入留档：当时实际上传的 SQLite 镜像字节（复算输入）"
+    },
+    {
+      "path": "state/uploaded-stress-left.sqlite",
+      "sha256": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+      "size": 24576,
+      "role": "输入留档：当时实际上传的 SQLite 镜像字节（复算输入）"
+    },
+    {
+      "path": "state/uploaded-stress-right.sqlite",
+      "sha256": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814",
+      "size": 24576,
+      "role": "输入留档：当时实际上传的 SQLite 镜像字节（复算输入）"
+    },
+    {
+      "path": "state/uploaded-umber.sqlite",
+      "sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+      "size": 24576,
+      "role": "输入留档：当时实际上传的 SQLite 镜像字节（复算输入）"
+    }
+  ]
+}
