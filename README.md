@@ -13,6 +13,8 @@ python3 -m examples.make_images ./demo-images
 
 可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
+值班演练使用 `drills/` 下三张独立卡（唯一键碰撞、删除致孤立、复合外键部分为空），各自带镜像、`card.json`、`RUNBOOK.md` 和一键核验；见 `drills/README.md`。
+
 ## 操作和接口
 
 网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
@@ -30,8 +32,9 @@ python3 -m examples.make_images ./demo-images
 ## 验证
 
 ```sh
-python3 -m compileall -q pagefold examples
+python3 -m compileall -q pagefold examples drills
 python3 -m examples.walkthrough all
+python3 -m drills.verify
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。

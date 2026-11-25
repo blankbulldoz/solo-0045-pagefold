@@ -1,0 +1,130 @@
+{
+  "format": "pagefold-drill-card-v1",
+  "card": "D3",
+  "code": "D3",
+  "slug": "03-partial-null",
+  "title": "对照卡：复合外键部分为空不产生孤立，本来就应通过",
+  "expectation": "passed",
+  "lesson": [
+    "lease(site,slot) 参照 rack(site,slot)：任一列为 NULL 时 SQLite 按 MATCH SIMPLE 跳过检查。",
+    "三行部分为空（7、8、9）都合法保留，候选外键检查为空——它们不是孤立。",
+    "本卡不裁决、不修数据，rev 0 直接重演通过；若它被阻断，问题在环境而非数据。"
+  ],
+  "marker": {
+    "code": "drill-d3",
+    "name": "D3 部分为空沙盘"
+  },
+  "files": {
+    "base": {
+      "bytes": 24576,
+      "sha256": "9362a4c46e82685f0db2f11061ab5ba952b269b589185613187656ef14f98abb",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 2,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "quartz.sqlite",
+      "label": "石英祖本"
+    },
+    "left": {
+      "bytes": 24576,
+      "sha256": "88f3fcc818e09f92d1adc8b67300389b1f5069531e9bdecc849b504ee550f3cc",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 4,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "cerulean.sqlite",
+      "label": "青蓝分支"
+    },
+    "right": {
+      "bytes": 24576,
+      "sha256": "920fb759aa86981545728f7cdf9eca75afb2a71ac97e4bb7332e3e7634ab919b",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 4,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "umber.sqlite",
+      "label": "赤褐分支"
+    }
+  },
+  "items": [
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "7"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "8"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "9"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "site",
+      "key": [
+        [
+          "t",
+          "west"
+        ]
+      ],
+      "automatic": "right"
+    }
+  ],
+  "expect": {
+    "rehearsal": "passed",
+    "items": 5,
+    "unresolved": 0,
+    "changed": 5,
+    "problem": null,
+    "rows": {
+      "lease": 5,
+      "rack": 3,
+      "site": 4
+    },
+    "rows_digest": "2bf2de7050b10d84e5b5983226809d231784af824642268380c5bd046c33c4b8"
+  }
+}

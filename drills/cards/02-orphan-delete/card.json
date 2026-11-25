@@ -1,0 +1,130 @@
+{
+  "format": "pagefold-drill-card-v1",
+  "card": "D2",
+  "code": "D2",
+  "slug": "02-orphan-delete",
+  "title": "删除致新增引用孤立：合法删除 × 合法新增 = 外键违规",
+  "expectation": "blocked",
+  "lesson": [
+    "祖本有 rack('north',2)；左支删除它，右支新增引用它的 lease 5，两边在各自镜像里都合法。",
+    "计划按主键把删除和新增当成两条互不相干的自动项，合流后 lease 5 的父行不存在。",
+    "外键检查在候选上发现孤立引用并阻断；这不是导入错误。"
+  ],
+  "marker": {
+    "code": "drill-d2",
+    "name": "D2 孤立引用沙盘"
+  },
+  "files": {
+    "base": {
+      "bytes": 24576,
+      "sha256": "0dfc9893ba0d100e9d93e38aa5b39960cd4542e3448d5ff9a3aee099cde731ea",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 2,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "quartz.sqlite",
+      "label": "石英祖本"
+    },
+    "left": {
+      "bytes": 24576,
+      "sha256": "8d247a48f20a747eebdb25f5e9779fbbe72289b54b8e151353aefef4086b32ad",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 2,
+        "rack": 2,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "cerulean.sqlite",
+      "label": "青蓝分支"
+    },
+    "right": {
+      "bytes": 24576,
+      "sha256": "88a97225c72860daf09027fb2663befed92c7fd6484793710169a05b3f0873a7",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 3,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "umber.sqlite",
+      "label": "赤褐分支"
+    }
+  },
+  "items": [
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "5"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "2"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "site",
+      "key": [
+        [
+          "t",
+          "west"
+        ]
+      ],
+      "automatic": "left"
+    }
+  ],
+  "expect": {
+    "rehearsal": "blocked",
+    "items": 4,
+    "unresolved": 0,
+    "changed": 4,
+    "problem": {
+      "code": "foreign_key",
+      "detail_contains": [
+        "lease",
+        "rack"
+      ]
+    },
+    "rows": {
+      "lease": 3,
+      "rack": 2,
+      "site": 4
+    },
+    "rows_digest": "06aca9f9389d4f55df514398f13c211403a7a64ab15e5ba5af73ec59eb24cd2b"
+  }
+}

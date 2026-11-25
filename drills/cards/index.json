@@ -1,0 +1,53 @@
+{
+  "format": "pagefold-drill-index-v1",
+  "cards": [
+    {
+      "card": "D1",
+      "slug": "01-unique-collision",
+      "title": "唯一键碰撞：两份合法分支在合流处撞上 UNIQUE",
+      "marker": {
+        "code": "drill-d1",
+        "name": "D1 唯一键沙盘"
+      },
+      "expectation": "blocked",
+      "files": {
+        "base": "quartz.sqlite",
+        "left": "cerulean.sqlite",
+        "right": "umber.sqlite"
+      },
+      "rows_digest": "4b3c71a99d670e8a5ddc926448aa8c3e09cd6f6dd4e4695bf1f3540f3f32ef64"
+    },
+    {
+      "card": "D2",
+      "slug": "02-orphan-delete",
+      "title": "删除致新增引用孤立：合法删除 × 合法新增 = 外键违规",
+      "marker": {
+        "code": "drill-d2",
+        "name": "D2 孤立引用沙盘"
+      },
+      "expectation": "blocked",
+      "files": {
+        "base": "quartz.sqlite",
+        "left": "cerulean.sqlite",
+        "right": "umber.sqlite"
+      },
+      "rows_digest": "06aca9f9389d4f55df514398f13c211403a7a64ab15e5ba5af73ec59eb24cd2b"
+    },
+    {
+      "card": "D3",
+      "slug": "03-partial-null",
+      "title": "对照卡：复合外键部分为空不产生孤立，本来就应通过",
+      "marker": {
+        "code": "drill-d3",
+        "name": "D3 部分为空沙盘"
+      },
+      "expectation": "passed",
+      "files": {
+        "base": "quartz.sqlite",
+        "left": "cerulean.sqlite",
+        "right": "umber.sqlite"
+      },
+      "rows_digest": "2bf2de7050b10d84e5b5983226809d231784af824642268380c5bd046c33c4b8"
+    }
+  ]
+}

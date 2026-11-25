@@ -1,0 +1,164 @@
+{
+  "format": "pagefold-drill-card-v1",
+  "card": "D1",
+  "code": "D1",
+  "slug": "01-unique-collision",
+  "title": "唯一键碰撞：两份合法分支在合流处撞上 UNIQUE",
+  "expectation": "blocked",
+  "lesson": [
+    "左支新增 site('ridge','脊线')，右支新增 site('mesa','脊线')；两份输入各自合法。",
+    "两行主键不同，计划不会把它们列为冲突，合流后却同时满足不了 site.name 的 UNIQUE。",
+    "阻断发生在候选重演，不是导入；不得改输入去凑一个能通过的结果。"
+  ],
+  "marker": {
+    "code": "drill-d1",
+    "name": "D1 唯一键沙盘"
+  },
+  "files": {
+    "base": {
+      "bytes": 24576,
+      "sha256": "0863ef67e98168189da19e96c79386ed370f042c2147cd330cbb4069f21e1e4c",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 2,
+        "rack": 3,
+        "site": 4
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "quartz.sqlite",
+      "label": "石英祖本"
+    },
+    "left": {
+      "bytes": 24576,
+      "sha256": "39c5ccaef30ba3624eefc2c25c8c5b4a286a38d31b64022619d7b97c169e0327",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 3,
+        "rack": 4,
+        "site": 5
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "cerulean.sqlite",
+      "label": "青蓝分支"
+    },
+    "right": {
+      "bytes": 24576,
+      "sha256": "fceb94b1bd7b4e3c358c011c42c9d59425a46a6a91ea70cc36123e6798c687b8",
+      "schema_signature": "3c00d67633f15f5a9d1f635d5b41d45f79d4d8ed13dd37c3814bff1c3c35887a",
+      "tables": {
+        "lease": 3,
+        "rack": 4,
+        "site": 5
+      },
+      "integrity_check": "ok",
+      "foreign_key_check": [],
+      "name": "umber.sqlite",
+      "label": "赤褐分支"
+    }
+  },
+  "items": [
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "3"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "lease",
+      "key": [
+        [
+          "i",
+          "4"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "mesa"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "ridge"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "rack",
+      "key": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "site",
+      "key": [
+        [
+          "t",
+          "mesa"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "site",
+      "key": [
+        [
+          "t",
+          "ridge"
+        ]
+      ],
+      "automatic": "left"
+    }
+  ],
+  "expect": {
+    "rehearsal": "blocked",
+    "items": 7,
+    "unresolved": 0,
+    "changed": 7,
+    "problem": {
+      "code": "constraint",
+      "detail_contains": [
+        "site",
+        "UNIQUE"
+      ]
+    },
+    "rows": {
+      "lease": 4,
+      "rack": 5,
+      "site": 6
+    },
+    "rows_digest": "4b3c71a99d670e8a5ddc926448aa8c3e09cd6f6dd4e4695bf1f3540f3f32ef64"
+  }
+}

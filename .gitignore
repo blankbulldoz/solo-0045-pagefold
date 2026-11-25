@@ -3,5 +3,6 @@ __pycache__/
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+!drills/cards/**/*.sqlite
 demo-images/
 .DS_Store
