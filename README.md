@@ -32,6 +32,26 @@ python3 -m examples.make_images ./demo-images
 ```sh
 python3 -m compileall -q pagefold examples
 python3 -m examples.walkthrough all
+python3 -m examples.handover_check
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+## 交接与离线核对
+
+成果接收方请看 [HANDOVER.md](HANDOVER.md)：何时能领取 SQLite 文件、怎样离线核对并回查
+三份来源、候选摘要/裁决摘要/完整性检查分别证明什么、归档后哪些证据仍可用，以及
+文件混放、来源角色错误的处置步骤。
+
+配套工具（均只读输入，可离线执行）：
+
+```sh
+python3 -m examples.handover_sample ./handover-sample   # 生成真实封存、只重演、归档对照样例
+python3 -I examples/verify_release.py --certificate 凭证.json --candidate 候选.sqlite \
+    --base 祖本.sqlite --left 左支.sqlite --right 右支.sqlite [--state 状态库副本] [--directory 交接目录]
+python3 -m examples.copy_state ./pagefold-state.sqlite ./handover/state.sqlite
+python3 -m examples.handover_check                      # 自动演练通过与拒绝场景
+```
+
+`verify_release.py` 由三份来源独立重算计划摘要、由候选反推裁决摘要，并逐行重建目标库，
+因此无需信任签发方状态库即可判断候选是否为这三份来源在给定裁决下的合流结果。
