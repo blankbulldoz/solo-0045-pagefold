@@ -1,4 +1,17 @@
-from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
+import json
+
+from .diff_views import action_for, render_entry, table_meta
+from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe
+
+
+def decision_options(item):
+    html = option("clear", "保留未决", chosen=item["choice"] is None)
+    for role, label in ROLE_LABELS.items():
+        chosen = " selected" if role == item["choice"] else ""
+        action = action_for(item, role)
+        html += (f'<option value="{role}" data-action="{action}" '
+                 f'data-action-label="{safe(action)}"{chosen}>{safe(label)}</option>')
+    return html
 
 
 def plan_links(plans):
@@ -7,21 +20,17 @@ def plan_links(plans):
                    f'<small>{STATE_LABELS[p["state"]]} · 第 {p["revision"]} 版</small></a>' for p in plans)
 
 
-def entries(plan):
+def entries(plan, catalog=None):
     blocks = []
     for item in sorted(plan["items"], key=lambda item: bool(item["automatic"])):
         form = ""
         auto = item["automatic"]
         if plan["state"] == "open" and auto is None:
-            options = option("clear", "保留未决", chosen=item["choice"] is None)
-            options += "".join(option(role, label, chosen=role == item["choice"])
-                               for role, label in ROLE_LABELS.items())
-            form = fragment("decision", plan=plan["id"], revision=plan["revision"], item=item["id"], options=options)
-        choice = ROLE_LABELS.get(item["choice"], "待裁决")
-        chosen = ("自动 · " if auto else "") + choice
-        blocks.append(fragment("entry", table=safe(item["table"]), key=values(item["key"]),
-                               choice=chosen, badge="auto" if auto else "conflict", form=form,
-                               **{role: values(item[role]) for role in ROLE_LABELS}))
+            options = decision_options(item)
+            form = fragment("decision", plan=plan["id"], revision=plan["revision"],
+                            item=item["id"], options=options)
+        table = table_meta(item, catalog or {})
+        blocks.append(render_entry(item, table, plan["state"], form))
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
 
@@ -48,9 +57,19 @@ def plan_page(plan, images, attempts, published):
         actions.append(action_form(plan, "archive", "归档计划", "quiet"))
     if published:
         actions.append(fragment("release", plan=plan["id"]))
+    raw_catalog = images[0]["catalog"] if images else {}
+    if isinstance(raw_catalog, str):
+        try:
+            catalog = json.loads(raw_catalog)
+        except ValueError:
+            catalog = {}
+    elif isinstance(raw_catalog, dict):
+        catalog = raw_catalog
+    else:
+        catalog = {}
     roles = "".join(f'<a href="/images/{i["id"]}"><small>{label}</small><b>{safe(i["label"])}</b>'
                     f'<code>{i["id"][:14]}</code></a>' for label, i in zip(ROLE_LABELS.values(), images))
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
-                count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
-                actions="".join(actions))
+                count=len(plan["items"]), items=entries(plan, catalog),
+                history=attempts_list(attempts, plan["revision"]), actions="".join(actions))

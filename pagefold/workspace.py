@@ -19,7 +19,7 @@ def workspace(store, parts, query):
                         plans=plan_links(list_plans(db)) or '<p class="muted">尚未创建合流计划。</p>')
         if len(parts) == 2 and parts[0] == "plans":
             plan = read_plan(db, parts[1])
-            images = [get_image(db, plan["sources"][role]) for role in ROLES]
+            images = [image_record(get_image(db, plan["sources"][role])) for role in ROLES]
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
@@ -45,7 +45,8 @@ def error(problem, path):
 
 
 def asset(path):
-    files = {"/assets/workspace.css": "text/css", "/assets/upload.js": "text/javascript"}
+    files = {"/assets/workspace.css": "text/css", "/assets/upload.js": "text/javascript",
+             "/assets/review.js": "text/javascript"}
     if path not in files:
         raise Problem("route", "找不到该资源。", 404)
     return (HERE / path.lstrip("/")).read_bytes(), files[path]
