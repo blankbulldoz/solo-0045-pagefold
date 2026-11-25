@@ -43,6 +43,10 @@
       "command": "python3 -m examples.walkthrough attempts"
     },
     {
+      "workflow_id": "audit",
+      "command": "python3 -m examples.walkthrough audit"
+    },
+    {
       "workflow_id": "seal",
       "command": "python3 -m examples.walkthrough seal"
     },

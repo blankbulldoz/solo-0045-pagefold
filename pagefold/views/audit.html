@@ -1,0 +1,11 @@
+<a class="back" href="/plans/$plan">← 计划详情</a>
+<section class="heading"><div><h1>案卷索引 <code>$short</code></h1><p>$state · 当前第 $revision 版 · 其中 $legacy 条升级前旧记录</p></div><span class="tag">计划摘要 <code>$plan_digest</code></span></section>
+<div class="work-grid">
+  <section class="paper"><div class="panel-title"><h2>裁决事件流</h2><span class="tag">含同版无变化重试</span></div>
+    <div class="scroll"><table><thead><tr><th>#</th><th>版本</th><th>计划项</th><th>选择</th><th>效果</th><th>记录时间（UTC）</th></tr></thead><tbody>$events</tbody></table></div>
+  </section>
+  <aside>
+    <section class="paper"><div class="panel-title"><h2>重演记录</h2><span class="tag">当前版：第 $current 版</span></div><div class="history">$attempts</div></section>
+    <section class="paper workspace-history"><div class="panel-title"><h2>封存与归档</h2></div><div class="history">$release</div></section>
+  </aside>
+</div>

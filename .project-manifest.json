@@ -80,6 +80,11 @@
       "id": "archive",
       "path": "pagefold/archive.py",
       "responsibility": "实现 archive"
+    },
+    {
+      "id": "audit",
+      "path": "pagefold/audit.py",
+      "responsibility": "实现 dossier、attempt_detail、list_events"
     }
   ],
   "workflows": [
@@ -221,6 +226,26 @@
         "attempts",
         "plans",
         "replay"
+      ]
+    },
+    {
+      "id": "audit",
+      "name": "回查历史裁决案卷",
+      "entry": "GET /api/plans/{id}/audit",
+      "success": "旧记录与新记录分别可回查，重演记录绑定真实选项和版本，归档后仍可查",
+      "failure": "升级前旧记录没有选择细节时标记 legacy 而不是倒推",
+      "verification": "python3 -m examples.walkthrough audit",
+      "steps": [
+        "从公开入口取得请求 GET /api/plans/{id}/audit",
+        "裁决事件流、各版重演选择快照和封存凭证按版本固定",
+        "归档计划继续只读提供案卷、重演详情、凭证和下载"
+      ],
+      "module_ids": [
+        "audit",
+        "attempts",
+        "decisions",
+        "releases",
+        "archive"
       ]
     },
     {

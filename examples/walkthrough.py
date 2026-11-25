@@ -9,12 +9,13 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from pagefold.codec import canonical
 from pagefold.demo import image
 from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "archive", "audit")
 
 
 def expect(condition, description):
@@ -54,6 +55,115 @@ def mismatched_schema():
         return db.serialize()
     finally:
         db.close()
+
+
+def seed_legacy_attempt(store_path, plan_id):
+    """直接向状态库写入一条升级前格式的重演记录。
+
+    旧格式 attempts 行只有 result/candidate，新增的 choices 等列保持 NULL，
+    模拟升级前没有保存选择细节的真实旧记录。
+    """
+    db = sqlite3.connect(store_path)
+    try:
+        legacy = {"id": plan_id, "revision": 0, "changed": 3, "status": "passed",
+                  "candidate_digest": "0" * 64, "size": 0}
+        db.execute("INSERT INTO attempts(plan_id,revision,result,candidate) VALUES(?,?,?,?)",
+                   (plan_id, 0, canonical(legacy), None))
+        db.commit()
+    finally:
+        db.close()
+
+
+def run_audit(client, store_path):
+    # 独立计划，避免与既有 12 个工作流的状态断言互相干扰。
+    base = client.upload("quartz")
+    left, right = client.upload("cerulean"), client.upload("umber")
+    sources = {"base": base["id"], "left": left["id"], "right": right["id"]}
+    plan = client.call("/api/plans", sources, 201)
+    route = f"/api/plans/{plan['id']}"
+    conflict = next(item for item in plan["items"] if not item["automatic"])
+    item = conflict["id"]
+
+    # 1) 升级前旧记录：直接按旧表结构写入，选择细节缺失。
+    seed_legacy_attempt(store_path, plan["id"])
+    history = client.call(route + "/attempts")
+    legacy = next(a for a in history if a["revision"] == 0)
+    expect(legacy["record"] == "legacy" and legacy["choices"] is None, "旧记录未被识别为 legacy")
+    old_detail = client.call(f"{route}/attempts/0")
+    expect(old_detail["record"] == "legacy", "旧记录详情入口不可回查")
+    page = client.call(f"/plans/{plan['id']}/attempts/0")
+    expect("升级前旧记录".encode() in page, "旧记录页面没有明示缺少选择快照")
+
+    # 2) 第 1 版：显式选择右支，重演通过，证据绑定真实裁决。
+    first = client.call(route + "/decisions",
+                        {"item": item, "choice": "right", "revision": 0})
+    expect(first["revision"] == 1 and first["advanced"] is True, "首次裁决未推进版序")
+    passed = client.call(route + "/rehearse", {"revision": 1})
+    expect(passed["status"] == "passed" and passed["record"] == "current", "新版重演未带上选择快照")
+    detail1 = client.call(f"{route}/attempts/1")
+    conflict_choice = next(c for c in detail1["choices"] if c["item"] == item)
+    expect(conflict_choice["choice"] == "right" and conflict_choice["decided"] is True,
+           "重演记录没有绑定真实的右支裁决")
+    expect(detail1["decision_digest"] == passed["decision_digest"], "裁决摘要未随记录固定")
+
+    # 3) 同版重演重试：复用同一证据，不产生矛盾的新记录。
+    again = client.call(route + "/rehearse", {"revision": 1})
+    expect(again == passed and again["sequence"] == passed["sequence"], "同版重演没有复用固定证据")
+
+    # 4) 同版无变化裁决（幂等重试）：版序不变但事件流有独立记录。
+    noop = client.call(route + "/decisions",
+                       {"item": item, "choice": "right", "revision": 1})
+    expect(noop["revision"] == 1 and noop["advanced"] is False, "同值裁决被当成变更")
+    dossier = client.call(route + "/audit")
+    expect(len(dossier["events"]) == 2 and dossier["events"][1]["advanced"] == 0,
+           "同版无变化裁决没有进入事件流")
+
+    # 5) 改选祖本并重演：最终行与“清空”容易混淆，必须能区分。
+    client.call(route + "/decisions", {"item": item, "choice": "base", "revision": 1})
+    based = client.call(route + "/rehearse", {"revision": 2})
+    expect(based["status"] == "passed", "祖本选择未能重演")
+    detail2 = client.call(f"{route}/attempts/2")
+    base_choice = next(c for c in detail2["choices"] if c["item"] == item)
+    expect(base_choice["choice"] == "base" and base_choice["decided"] is True,
+           "祖本选择没有被记录为显式裁决")
+
+    # 6) 清空选择：同一计划项回到未决，记录里 choice=null 且 decided=false，与 base 区分。
+    client.call(route + "/decisions", {"item": item, "choice": "clear", "revision": 2})
+    blocked = client.call(route + "/rehearse", {"revision": 3}, 409)
+    expect(blocked["code"] == "unresolved", "清空后未裁决的重演没有被拦住")
+    # 重新裁决回右支并重演，得到一条新的当前版通过记录。
+    client.call(route + "/decisions", {"item": item, "choice": "right", "revision": 3})
+    current = client.call(route + "/rehearse", {"revision": 4})
+    expect(current["status"] == "passed", "重新裁决后的重演未通过")
+    detail4 = client.call(f"{route}/attempts/4")
+    right_again = next(c for c in detail4["choices"] if c["item"] == item)
+    expect(right_again["choice"] == "right", "重新裁决的选择未绑定到重演记录")
+
+    # 历史入口同时给出旧记录和多条新记录，旧版通过记录不能用于新版封存。
+    history = client.call(route + "/attempts")
+    expect({a["revision"] for a in history} == {0, 1, 2, 4}, "重演历史缺少旧版或新版记录")
+    expect(sum(a["record"] == "legacy" for a in history) == 1, "旧记录数量不符")
+    certificate = client.call(route + "/seal", {"revision": 4})
+    expect(certificate["decision_digest"] == current["decision_digest"], "封存凭证未绑定当前裁决摘要")
+
+    # 7) 归档后只读：写入被拒绝，但案卷、旧记录、凭证和下载仍然可查。
+    client.call(route + "/archive", {"revision": 4})
+    expect(client.call(route + "/rehearse", {"revision": 4}, 409)["code"] == "closed_plan",
+           "归档后仍可重演")
+    archived_dossier = client.call(route + "/audit")
+    expect(archived_dossier["archived"] is True and archived_dossier["legacy_count"] == 1
+           and len(archived_dossier["attempts"]) == 4, "归档后案卷证据不完整")
+    expect(archived_dossier["release"]["candidate_digest"] == current["candidate_digest"],
+           "归档案卷没有保留封存凭证")
+    expect(client.call(f"{route}/attempts/0")["record"] == "legacy", "归档后旧记录不可查")
+    expect(client.call(f"{route}/attempts/2")["choices"] is not None, "归档后新记录选择快照丢失")
+    page = client.call(f"/plans/{plan['id']}/audit")
+    expect("案卷索引".encode() in page and "升级前旧记录".encode() in page
+           and "同版无变化".encode() in page, "案卷页面缺少关键证据区块")
+    candidate = client.call(route + "/download")
+    expect(hashlib.sha256(candidate).hexdigest() == current["candidate_digest"],
+           "归档后下载的候选与重演摘要不一致")
+    print("audit ✓ 旧记录与多条新记录可回查，选择/版本/重试/清空可区分，归档后证据仍完整")
 
 
 def run(client, goal):
@@ -163,11 +273,17 @@ def main():
     parser = argparse.ArgumentParser(description="验证 Pagefold 生产工作流")
     parser.add_argument("workflow", choices=("all", *WORKFLOWS))
     with tempfile.TemporaryDirectory(prefix="pagefold-walkthrough-") as root:
-        with make_server(Store(Path(root) / "state.sqlite"), 0) as server:
+        state_path = Path(root) / "state.sqlite"
+        with make_server(Store(state_path), 0) as server:
             thread = Thread(target=server.serve_forever)
             thread.start()
             try:
-                run(Client(server.server_port), parser.parse_args().workflow)
+                goal = parser.parse_args().workflow
+                if goal in ("audit", "all"):
+                    run_audit(Client(server.server_port), state_path)
+                    if goal == "audit":
+                        return
+                run(Client(server.server_port), goal)
             finally:
                 server.shutdown()
                 thread.join()

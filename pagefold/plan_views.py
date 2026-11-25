@@ -1,3 +1,4 @@
+from .audit import CHOICE_LABELS, STATUS_LABELS
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
 
@@ -26,11 +27,21 @@ def entries(plan):
 
 
 def attempts_list(attempts, revision):
-    return "".join(fragment("attempt", revision=a["revision"],
-                            status="通过" if a["status"] == "passed" else "受阻",
-                            marker=" · 当前版" if revision == a["revision"] else " · 历史版",
-                            evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
-                            changes=a["changed"]) for a in attempts) or '<p class="muted">暂无重演记录。</p>'
+    blocks = []
+    for a in attempts:
+        marker = " · 当前版" if revision == a["revision"] else " · 历史版"
+        if a["record"] == "legacy":
+            marker += " · 升级前旧记录"
+            detail = f"/plans/{a['id']}/attempts/{a['revision']}"
+        else:
+            detail = f"/plans/{a['id']}/attempts/{a['revision']}"
+        blocks.append(fragment(
+            "attempt", revision=a["revision"],
+            status=STATUS_LABELS.get(a["status"], a["status"]), marker=marker,
+            evidence=safe(a.get("candidate_digest") or a["problem"]["detail"]),
+            changes=a["changed"], detail=detail,
+            digest=a.get("decision_digest") or "无（旧记录未保存裁决细节）"))
+    return "".join(blocks) or '<p class="muted">暂无重演记录。</p>'
 
 
 def action_form(plan, action, label, style="", disabled=False):
@@ -53,4 +64,82 @@ def plan_page(plan, images, attempts, published):
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
-                actions="".join(actions))
+                actions="".join(actions), audit=f'/plans/{plan["id"]}/audit')
+
+
+def choice_rows(attempt):
+    if attempt["choices"] is None:
+        return ('<p class="muted">该记录写于升级之前，只固定了重演事实（版本、状态、候选摘要），'
+                '没有保存逐项裁决细节，因此无法从这里倒推当时的选项。</p>')
+    rows = []
+    for entry in attempt["choices"]:
+        origin = "自动" if entry["automatic"] else "人工"
+        if not entry["automatic"] and not entry["decided"]:
+            origin = "人工 · 已清空"
+        rows.append(fragment(
+            "choice-row", table=safe(entry["table"]), key=safe(" / ".join(map(str, entry["key"]))),
+            origin=origin, choice=safe(CHOICE_LABELS.get(entry["choice"], str(entry["choice"])))))
+    return "".join(rows)
+
+
+def attempt_page(attempt):
+    if attempt["record"] == "legacy":
+        banner = '<p class="tag conflict">升级前旧记录：无选择快照</p>'
+        digest = "无（旧记录未保存裁决细节）"
+        requested = "未知（旧记录）"
+        sequence = "—"
+    else:
+        banner = '<p class="tag auto">新格式记录：选项与版本已固定</p>'
+        digest = attempt["decision_digest"]
+        requested = attempt["requested_at"]
+        sequence = attempt["sequence"]
+    evidence = attempt.get("candidate_digest") or attempt["problem"]["detail"]
+    return page(
+        "attempt_detail", "重演记录", plan=attempt["id"], revision=attempt["revision"],
+        status=STATUS_LABELS.get(attempt["status"], attempt["status"]), changes=attempt["changed"],
+        evidence=safe(evidence), banner=banner, digest=safe(digest), requested=safe(requested),
+        sequence=sequence, choices=choice_rows(attempt),
+        audit=f'/plans/{attempt["id"]}/audit')
+
+
+def event_rows(events):
+    if not events:
+        return '<p class="muted">没有裁决写入事件。</p>'
+    blocks = []
+    for event in events:
+        effect = "推进版序" if event["advanced"] else "同版无变化（幂等重试）"
+        blocks.append(fragment(
+            "event-row", seq=event["seq"], revision=event["revision"], item=safe(event["item"]),
+            choice=safe(CHOICE_LABELS.get(event["choice"], str(event["choice"]))),
+            effect=effect, recorded=safe(event["recorded_at"])))
+    return "".join(blocks)
+
+
+def attempt_index(attempts):
+    blocks = []
+    for a in attempts:
+        kind = "旧记录" if a["record"] == "legacy" else "新记录"
+        digest = a.get("decision_digest") or "未保存裁决细节"
+        blocks.append(fragment(
+            "dossier-attempt", plan=a["id"], revision=a["revision"],
+            status=STATUS_LABELS.get(a["status"], a["status"]), kind=kind,
+            changes=a["changed"], digest=safe(digest)))
+    return "".join(blocks) or '<p class="muted">暂无重演记录。</p>'
+
+
+def audit_page(data):
+    release = data["release"]
+    if release:
+        release_block = fragment(
+            "dossier-release", plan=data["id"], revision=release["revision"],
+            digest=safe(release["candidate_digest"]), decision=safe(release["decision_digest"]))
+    else:
+        release_block = '<p class="muted">计划尚未封存，没有凭证。</p>'
+    archived = "已归档（只读，下列证据仍可回查）" if data["archived"] else STATE_LABELS[data["state"]]
+    return page(
+        "audit", "案卷索引", plan=data["id"], short=data["id"][:12], state=archived,
+        revision=data["revision"], legacy=data["legacy_count"],
+        plan_digest=safe(data["plan_digest"]),
+        current=data["current_attempt"]["revision"] if data["current_attempt"] else "无",
+        attempts=attempt_index(data["attempts"]), events=event_rows(data["events"]),
+        release=release_block)
