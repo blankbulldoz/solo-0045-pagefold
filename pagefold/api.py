@@ -9,7 +9,7 @@ from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
 from .merge import ROLES
 from .plans import create_plan, list_plans, read_plan
-from .releases import get_release, seal
+from .releases import get_download, get_release, seal
 from .sqlite_image import MAX_BYTES
 
 
@@ -31,8 +31,10 @@ def read(store, parts, query):
             if len(tail) == 2 and tail[1] == "attempts":
                 return list_attempts(db, tail[0])
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
-                release = get_release(db, tail[0], body=tail[1] == "download")
-                return release["candidate"] if tail[1] == "download" else json.loads(release["certificate"])
+                if tail[1] == "download":
+                    return get_download(db, tail[0])
+                release = get_release(db, tail[0])
+                return json.loads(release["certificate"])
     raise Problem("route", "找不到该入口。", 404)
 
 

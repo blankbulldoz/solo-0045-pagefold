@@ -1,4 +1,5 @@
 import json
+from collections import namedtuple
 
 from .attempts import get_attempt
 from .codec import canonical, digest, fingerprint
@@ -7,12 +8,23 @@ from .images import get_image
 from .plans import expect_open, expect_revision, get_plan, plan_content
 
 
+# 固定候选的可恢复下载载体：body 是封存字节，etag 绑定凭证中的候选摘要。
+Download = namedtuple("Download", ("body", "etag", "size", "filename"))
+
+
 def get_release(db, plan_id, body=False):
     columns = "certificate,candidate" if body else "certificate"
     row = db.execute(f"SELECT {columns} FROM releases WHERE plan_id=?", (plan_id,)).fetchone()
     if row is None:
         raise Problem("unpublished", "该计划还没有封存成果。", 404)
     return row
+
+
+def get_download(db, plan_id):
+    row = get_release(db, plan_id, body=True)
+    certificate = json.loads(row["certificate"])
+    return Download(row["candidate"], f'"{certificate["candidate_digest"]}"',
+                    certificate["candidate_size"], f"pagefold-{plan_id}.sqlite")
 
 
 def seal(store, plan_id, revision):
