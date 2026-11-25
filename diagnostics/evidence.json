@@ -1,0 +1,721 @@
+{
+  "order_independence": {
+    "scene_A": {
+      "catalog_order": {
+        "code": "constraint",
+        "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label",
+        "status": "blocked"
+      },
+      "reversed_order": {
+        "code": "constraint",
+        "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label",
+        "status": "blocked"
+      },
+      "same_first_error": true
+    },
+    "scene_C": {
+      "catalog_order": {
+        "code": "foreign_key",
+        "detail": "外键检查失败：binding → node（约束 0）",
+        "status": "blocked"
+      },
+      "reversed_order": {
+        "code": "foreign_key",
+        "detail": "外键检查失败：binding → node（约束 0）",
+        "status": "blocked"
+      },
+      "same_first_error": true
+    }
+  },
+  "scenes": {
+    "A_full_unique": {
+      "attempt_is_reused": true,
+      "download_gate": {
+        "code": "unpublished",
+        "detail": "该计划还没有封存成果。"
+      },
+      "items": [
+        {
+          "automatic": "left",
+          "choice": "left",
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "table": "bench"
+        },
+        {
+          "automatic": "right",
+          "choice": "right",
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "table": "bench"
+        }
+      ],
+      "rehearsal": {
+        "changed": 2,
+        "id": "9b1df8962823406b86b5b6c670ed22f0",
+        "problem": {
+          "code": "constraint",
+          "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "repeat_rehearsal": {
+        "changed": 2,
+        "id": "9b1df8962823406b86b5b6c670ed22f0",
+        "problem": {
+          "code": "constraint",
+          "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "revision": 0,
+      "seal_gate": {
+        "code": "rehearsal_required",
+        "detail": "当前版本须先通过重演。"
+      },
+      "source_image_ids": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "right": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814"
+      },
+      "state": "open",
+      "unresolved": 0
+    },
+    "B1_partial_inside": {
+      "attempt_is_reused": true,
+      "download_gate": {
+        "code": "unpublished",
+        "detail": "该计划还没有封存成果。"
+      },
+      "items": [
+        {
+          "automatic": "left",
+          "choice": "left",
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "table": "bench"
+        },
+        {
+          "automatic": "right",
+          "choice": "right",
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "table": "bench"
+        }
+      ],
+      "rehearsal": {
+        "changed": 2,
+        "id": "fa4e9c3f16f340a59c7cc6c698b2b613",
+        "problem": {
+          "code": "constraint",
+          "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "repeat_rehearsal": {
+        "changed": 2,
+        "id": "fa4e9c3f16f340a59c7cc6c698b2b613",
+        "problem": {
+          "code": "constraint",
+          "detail": "bench [[\"t\",\"stress-right\"]]：UNIQUE constraint failed: bench.label"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "revision": 0,
+      "seal_gate": {
+        "code": "rehearsal_required",
+        "detail": "当前版本须先通过重演。"
+      },
+      "source_image_ids": {
+        "base": "a98e674d60db8f1d213c667f43ca370852fd030ae2021a744d5da7a072b84017",
+        "left": "46b7f2a1d22c2163d4e815778116f913a78252bfd1ce52cc93463b2c5036aa47",
+        "right": "4f6346a8aa6cc0df1d650f5d02d4d797e0224b64de662bdc595d27c33e2bc6d1"
+      },
+      "state": "open",
+      "unresolved": 0
+    },
+    "B2_partial_outside": {
+      "candidate_sha256_matches_certificate": true,
+      "items": [
+        {
+          "automatic": "left",
+          "choice": "left",
+          "id": "91a3c8f61faa4485d7f30836422268fb861d8316ea46c046f16889cc468cbd48",
+          "key": [
+            [
+              "t",
+              "stress-left"
+            ]
+          ],
+          "table": "bench"
+        },
+        {
+          "automatic": "right",
+          "choice": "right",
+          "id": "d8476d7d6cafab543ef109e2041a40806110d6389914304a450825d52a554312",
+          "key": [
+            [
+              "t",
+              "stress-right"
+            ]
+          ],
+          "table": "bench"
+        }
+      ],
+      "persisted_bench_rows": [
+        [
+          "north",
+          "玄石",
+          0
+        ],
+        [
+          "south",
+          "砂层",
+          0
+        ],
+        [
+          "stress-left",
+          "共享键值",
+          1
+        ],
+        [
+          "stress-right",
+          "共享键值",
+          0
+        ]
+      ],
+      "persisted_foreign_key_check": [],
+      "rehearsal": {
+        "candidate_digest": "e4f43b8ec76de911588349eba252f4540eb578a4b97bc31451294b925e1ea97a",
+        "changed": 2,
+        "id": "2134375ea86b4ff3a289758cfbf54a6a",
+        "revision": 0,
+        "size": 24576,
+        "status": "passed"
+      },
+      "revision": 0,
+      "source_image_ids": {
+        "base": "a98e674d60db8f1d213c667f43ca370852fd030ae2021a744d5da7a072b84017",
+        "left": "46b7f2a1d22c2163d4e815778116f913a78252bfd1ce52cc93463b2c5036aa47",
+        "right": "0d342c8736796f2d8e24a36ea7dcd5f8ed6212239a1bccb6afe3a37947a8b11a"
+      },
+      "stale_revision_probe": {
+        "code": "stale_revision",
+        "detail": "计划版本已改变，请刷新后再操作。"
+      },
+      "state": "open",
+      "unresolved": 0
+    },
+    "C_foreign_key": {
+      "attempt_is_reused": true,
+      "download_gate": {
+        "code": "unpublished",
+        "detail": "该计划还没有封存成果。"
+      },
+      "items": [
+        {
+          "automatic": "left",
+          "choice": "left",
+          "id": "86c39177e092c2ddcfbdd2254056a08d47324dd8659da508555e2b1f9dbfe4f3",
+          "key": [
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "table": "binding"
+        },
+        {
+          "automatic": "right",
+          "choice": "right",
+          "id": "192d0db4a444f650b93e6ed257674012742ebdce52621879bbc149d3d575f601",
+          "key": [
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "table": "binding"
+        },
+        {
+          "automatic": "left",
+          "choice": "left",
+          "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "table": "node"
+        }
+      ],
+      "rehearsal": {
+        "changed": 3,
+        "id": "ceba5245148249e2adc381d2e48d8aa5",
+        "problem": {
+          "code": "foreign_key",
+          "detail": "外键检查失败：binding → node（约束 0）"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "repeat_rehearsal": {
+        "changed": 3,
+        "id": "ceba5245148249e2adc381d2e48d8aa5",
+        "problem": {
+          "code": "foreign_key",
+          "detail": "外键检查失败：binding → node（约束 0）"
+        },
+        "revision": 0,
+        "status": "blocked"
+      },
+      "revision": 0,
+      "seal_gate": {
+        "code": "rehearsal_required",
+        "detail": "当前版本须先通过重演。"
+      },
+      "source_image_ids": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "6b88e50f2498ad7c379d02799cd7d885a365c076e919a0cae581dbd1bd0b04f8",
+        "right": "f1403a15e3088ee9feb88c2788de0e6747219ae5fee95330daee0e148ba1ef44"
+      },
+      "state": "open",
+      "unresolved": 0
+    }
+  },
+  "source_health": {
+    "scene_A": [
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      }
+    ],
+    "scene_B1": [
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      }
+    ],
+    "scene_B2": [
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "bench_shared_label",
+            "bench",
+            "CREATE UNIQUE INDEX bench_shared_label ON bench(label) WHERE shared=1"
+          ],
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(\n    code TEXT PRIMARY KEY, label TEXT NOT NULL, shared INTEGER NOT NULL DEFAULT 0\n) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      }
+    ],
+    "scene_C": [
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      },
+      {
+        "foreign_key_check": [],
+        "integrity_check": "ok",
+        "schema": [
+          [
+            "index",
+            "node_weight",
+            "node",
+            "CREATE INDEX node_weight ON node(weight)"
+          ],
+          [
+            "table",
+            "bench",
+            "bench",
+            "CREATE TABLE bench(code TEXT PRIMARY KEY, label TEXT NOT NULL UNIQUE) WITHOUT ROWID"
+          ],
+          [
+            "table",
+            "binding",
+            "binding",
+            "CREATE TABLE binding(id INTEGER PRIMARY KEY, bench TEXT, slot INTEGER,\n    FOREIGN KEY(bench,slot) REFERENCES node(bench,slot))"
+          ],
+          [
+            "table",
+            "node",
+            "node",
+            "CREATE TABLE node(\n    bench TEXT NOT NULL REFERENCES bench(code), slot INTEGER NOT NULL,\n    note TEXT, payload BLOB, weight REAL CHECK(weight >= 0),\n    PRIMARY KEY(bench,slot)\n) WITHOUT ROWID"
+          ]
+        ]
+      }
+    ]
+  }
+}

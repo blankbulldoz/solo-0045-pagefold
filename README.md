@@ -35,3 +35,15 @@ python3 -m examples.walkthrough all
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+## 故障诊断素材
+
+`diagnostics/` 提供 stress-left / stress-right 重演受阻的可复核材料：通过真实 HTTP
+入口复现“整表 UNIQUE 相撞、部分唯一索引谓词内外对照、真正的外键失败”三个现场，
+固化无候选重演、封存与下载闸门、源库健康和处理顺序无关性证据。
+
+```sh
+python3 -I diagnostics/stress_triage.py --out /tmp/evidence.json
+```
+
+详见 [`diagnostics/README.md`](diagnostics/README.md)。
