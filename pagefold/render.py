@@ -2,6 +2,9 @@ from functools import cache
 from html import escape
 from pathlib import Path
 from string import Template
+from urllib.parse import urlencode
+
+from .codec import canonical
 
 
 HERE = Path(__file__).parent
@@ -38,6 +41,11 @@ def values(row):
     if row is None:
         return '<span class="null">缺席</span>'
     return ' <span class="sep">·</span> '.join(map(typed, row))
+
+
+def row_url(image_id, table, key):
+    params = {"table": table, "key": canonical(key)}
+    return f"/images/{image_id}/rows?" + urlencode(params)
 
 
 def option(value, label, chosen=False):

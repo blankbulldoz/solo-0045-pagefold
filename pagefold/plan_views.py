@@ -1,4 +1,4 @@
-from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
+from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, row_url, safe, values
 
 
 def plan_links(plans):
@@ -7,7 +7,19 @@ def plan_links(plans):
                    f'<small>{STATE_LABELS[p["state"]]} · 第 {p["revision"]} 版</small></a>' for p in plans)
 
 
-def entries(plan):
+def locate_links(item, images):
+    """按结构化键打开来源镜像的行窗口；缺席的角色也给出可查的邻近位置。"""
+    links = []
+    for role, label in ROLE_LABELS.items():
+        url = row_url(images[role]["id"], item["table"], item["key"])
+        if item.get(role) is None:
+            links.append(f'<a class="locate absent" href="{safe(url)}">{label}缺席 · 看邻近</a>')
+        else:
+            links.append(f'<a class="locate" href="{safe(url)}">{label}行</a>')
+    return "".join(links)
+
+
+def entries(plan, images):
     blocks = []
     for item in sorted(plan["items"], key=lambda item: bool(item["automatic"])):
         form = ""
@@ -21,6 +33,7 @@ def entries(plan):
         chosen = ("自动 · " if auto else "") + choice
         blocks.append(fragment("entry", table=safe(item["table"]), key=values(item["key"]),
                                choice=chosen, badge="auto" if auto else "conflict", form=form,
+                               locate=locate_links(item, images),
                                **{role: values(item[role]) for role in ROLE_LABELS}))
     return "".join(blocks) or '<div class="empty">三份镜像没有行差异。</div>'
 
@@ -52,5 +65,6 @@ def plan_page(plan, images, attempts, published):
                     f'<code>{i["id"][:14]}</code></a>' for label, i in zip(ROLE_LABELS.values(), images))
     return page("plan", "合流计划", plan=plan["id"], short=plan["id"][:12], roles=roles,
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
-                count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
+                count=len(plan["items"]), items=entries(plan, dict(zip(ROLE_LABELS, images))),
+                history=attempts_list(attempts, plan["revision"]),
                 actions="".join(actions))

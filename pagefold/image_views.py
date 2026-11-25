@@ -1,6 +1,8 @@
 from urllib.parse import urlencode
 
-from .render import option, page, safe, typed
+from .codec import canonical
+from .render import fragment, option, page, row_url, safe, typed, values
+from .rows import PAGE_ROWS
 
 
 def image_options(images):
@@ -25,18 +27,45 @@ def image_page(image):
                 signature=image["catalog"]["signature"], tables="".join(tables), size=f'{image["size"]:,}')
 
 
+def placement_note(placement, table, image_id):
+    if placement is None:
+        return ""
+    key_html = values(placement["key"])
+    if placement["found"]:
+        title = f"已定位到第 {placement['position'] + 1} 行"
+    else:
+        title = f"该键不在本表；当前浏览位置是它在排序中的插入位（第 {placement['position'] + 1} 行之前）"
+    links = []
+    for label, neighbor in (("接近的前一行", placement["previous"]), ("接近的后一行", placement["next"])):
+        if neighbor is not None:
+            url = row_url(image_id, table["name"], neighbor["key"])
+            links.append(f'<a href="{safe(url)}">{label} · 第 {neighbor["position"] + 1} 行</a>')
+    kind = "found" if placement["found"] else "absent"
+    return fragment("placement", kind=kind, title=safe(title), key=key_html,
+                    links="".join(links) or '<span class="muted">表中没有相邻行。</span>')
+
+
 def rows_page(image, result):
     table = result["table"]
     offset, total = result["offset"], result["total"]
+    placement = result["placement"]
+    located_token = placement["token"] if placement and placement["found"] else None
     columns = "".join(f'<th scope="col">{safe(col)}</th>' for col in table["columns"])
-    rows = "".join('<tr>' + "".join(f'<td>{typed(v)}</td>' for v in row["values"]) + '</tr>'
-                   for row in result["rows"])
+    rows = []
+    for row in result["rows"]:
+        marker = ' class="located"' if canonical(row["key"]) == located_token else ""
+        cells = "".join(f'<td>{typed(v)}</td>' for v in row["values"])
+        rows.append(f'<tr id="p{row["position"]}"{marker}><th scope="row" class="pos">'
+                    f'{row["position"] + 1}</th>{cells}</tr>')
     nav = []
-    for label, target, exists in [("上一页", max(0, offset - 50), offset > 0),
-                                  ("下一页", offset + 50, offset + 50 < total)]:
+    for label, target, exists in [("上一页", max(0, offset - PAGE_ROWS), offset > 0),
+                                  ("下一页", offset + PAGE_ROWS, offset + PAGE_ROWS < total)]:
         if exists:
             params = urlencode({"table": table["name"], "offset": target})
             nav.append(f'<a href="?{safe(params)}">{label}</a>')
     return page("rows", table["name"], name=safe(table["name"]), label=safe(image["label"]),
-                image_id=image["id"], columns=columns, rows=rows, nav="".join(nav), total=total,
-                window=f"{offset + 1}–{min(offset + 50, total)}" if rows else "当前页无行")
+                image_id=image["id"], columns=columns, rows="".join(rows), nav="".join(nav), total=total,
+                window=f"{offset + 1}–{min(offset + PAGE_ROWS, total)}" if result["rows"] else "当前页无行",
+                placement=placement_note(placement, table, image["id"]),
+                located=("" if located_token is None else
+                         f'<p class="located-note">已高亮第 {placement["position"] + 1} 行。</p>'))

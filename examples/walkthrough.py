@@ -85,7 +85,34 @@ def run(client, goal):
     expect(client.call(image_route + "/rows?table=none", status=404)["code"] == "unknown_table", "未知表未拒绝")
     page = client.call(f"/images/{base['id']}/rows?" + urlencode({"table": "node"}))
     expect(b"ABQ=" in page, "行详情未渲染")
-    if done("rows", "HTML 与 JSON 保留复合键和 BLOB"):
+    ledger = image_route + "/rows?" + urlencode({"table": "ledger"})
+    first = client.call(ledger)
+    expect(first["total"] > 100 and len(first["rows"]) == 50, "示例表不足以跨页")
+    expect(first["rows"][0]["key"] == [["t", "Alpha"], ["b", ""]], "空 BLOB 键次序不正确")
+    expect(first["rows"][1]["key"] == [["t", "Alpha"], ["i", "2"]], "整数与等值实数未共用行身份")
+    expect(first["rows"][3]["key"] == [["t", "Alpha"], ["t", ""]], "空文本键次序不正确")
+    expect(first["rows"][5]["key"] == [["t", "alpha"], ["b", ""]], "大小写文本键未按 BINARY 次序")
+    located = client.call(ledger + "&" + urlencode({"key": '{"site":["t","north"],"marker":["i","8"]}'}))
+    expect(located["offset"] == 100 and located["placement"]["found"], "类型化键未跳到目标页")
+    expect(any(row["key"] == [["t", "north"], ["i", "8"]] for row in located["rows"]), "目标行不在窗口内")
+    absent_key = '{"site":["t","north"],"marker":["i","7"]}'
+    absent = client.call(ledger + "&" + urlencode({"key": absent_key}))
+    expect(not absent["placement"]["found"] and absent["placement"]["position"] > 0, "缺席键未给出插入位")
+    expect(absent["placement"]["previous"]["key"] == [["t", "north"], ["i", "69"]], "缺席键的前邻不稳")
+    expect(absent["placement"]["next"]["key"] == [["t", "north"], ["i", "70"]], "缺席键的后邻不稳")
+    expect(absent["offset"] == (absent["placement"]["next"]["position"] // 50) * 50, "缺席键没有稳定页")
+    banner = client.call(f"/images/{base['id']}/rows?" + urlencode({"table": "ledger", "key": absent_key}))
+    expect("不在本表".encode() in banner and "接近的前一行".encode() in banner, "缺席位置未渲染")
+    legacy = client.call(ledger + "&offset=50")
+    expect(legacy["offset"] == 50 and legacy["placement"] is None and
+           legacy["rows"][0]["position"] == 50, "旧 offset 链接含义改变")
+    expect(client.call(ledger + "&" + urlencode({"key": "north"}), status=400)["code"] == "key_json",
+           "裸标签被当作键")
+    expect(client.call(ledger + "&" + urlencode({"key": '{"site":["t","north"]}'}), status=400)["code"] == "key_shape",
+           "残缺复合键未拒绝")
+    expect(client.call(ledger + "&" + urlencode({"key": '{"site":["t","north"],"marker":["n"]}'}),
+                       status=400)["code"] == "key_atom", "NULL 键原子未拒绝")
+    if done("rows", "类型化复合键定位、缺席邻位、旧 offset 保留"):
         return
     alternate = client.upload("quartz extra index", mismatched_schema())
     sources = {"base": base["id"], "left": left["id"], "right": right["id"]}
@@ -98,6 +125,8 @@ def run(client, goal):
     route = f"/api/plans/{plan['id']}"
     page = client.call(f"/plans/{plan['id']}")
     expect("主键行差异".encode() in page and "1 项待裁决".encode() in page, "计划页未展示冲突")
+    expect(b'class="locate-links"' in page, "计划项没有来源定位入口")
+    expect(b"absent" in page, "缺席角色未标注")
     expect(client.call(route)["unresolved"] == 1, "未决数不符")
     expect(client.call(route + "/rehearse", {"revision": 0}, 409)["code"] == "unresolved", "未决重演未拦住")
     if done("review", "待决数与可重演条件一致"):

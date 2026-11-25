@@ -22,7 +22,8 @@ def read(store, parts, query):
             if len(tail) == 1:
                 return image_record(get_image(db, tail[0]))
             if len(tail) == 2 and tail[1] == "rows":
-                return table_page(db, tail[0], query.get("table"), unsigned(query.get("offset", "0"), "offset"))
+                offset = unsigned(query["offset"], "offset") if "offset" in query else None
+                return table_page(db, tail[0], query.get("table"), offset, query.get("key"))
         if resource == "plans":
             if not tail:
                 return list_plans(db)

@@ -1,3 +1,4 @@
 <a class="back" href="/images/$image_id">← $label</a>
 <section class="heading"><div><h1>$name</h1><p>镜像内容 · 共 $total 行 · $window</p></div></section>
-<section class="paper"><div class="scroll"><table><thead><tr>$columns</tr></thead><tbody>$rows</tbody></table></div><nav class="pager" aria-label="行分页">$nav</nav></section>
+$placement
+<section class="paper"><div class="scroll"><table><thead><tr><th scope="col" class="pos">#</th>$columns</tr></thead><tbody>$rows</tbody></table></div><div class="pager"><nav aria-label="行分页">$nav</nav>$located</div></section>

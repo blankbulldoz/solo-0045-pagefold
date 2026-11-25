@@ -11,7 +11,7 @@ python3 -m pagefold --state ./pagefold-state.sqlite
 python3 -m examples.make_images ./demo-images
 ```
 
-可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
+可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。`ledger` 表有 146 行、跨三页，用于演练类型化键定位：`('Alpha', x'')` 是空 BLOB 键、`('Alpha', 2.0)` 与 `('Alpha', 2.5)` 展示整数与等值实数的分别表示、`('alpha', b'')` 与 `('Alpha', ...)` 展示 BINARY 大小写次序；`('north', 7)` 故意缺席，可查看插入位与相邻行。计划项的每个角色都带同键定位链接，缺席侧也指向邻近位置。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
 ## 操作和接口
 
@@ -19,6 +19,10 @@ python3 -m examples.make_images ./demo-images
 
 - `POST /api/images` 接收 `application/octet-stream`，`X-Image-Name` 是可选的 URL 编码标签。
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
+- 追加 `&key=<类型化复合键>` 可直接跳到该键所在页；键缺省时返回插入位及相邻行，页定位保持稳定。
+  键须为 URL 编码的 JSON，按主键列命名（`{"site":["t","north"],"marker":["i","1"]}`）或按声明次序
+  给出类型化原子数组（`[["t","north"],["i","1"]]`）。整数与精确等值实数共用行身份，文本与 BLOB
+  各自区分；不接受页面展示标签、裸字符串或 NULL 原子。旧 `offset` 链接的含义不变。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。

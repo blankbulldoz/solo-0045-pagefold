@@ -5,7 +5,7 @@ from .catalog import describe
 from .codec import canonical, digest
 from .constraints import check_database
 from .errors import Problem
-from .rows import read_image, read_table
+from .rows import PAGE_ROWS, locate, read_image, read_table, typed_key
 from .sqlite_image import mounted
 
 
@@ -43,7 +43,7 @@ def list_images(db):
     return [dict(row) for row in db.execute("SELECT id,label,length(body) AS size FROM images ORDER BY rowid DESC")]
 
 
-def table_page(db, image_id, name, offset):
+def table_page(db, image_id, name, offset=None, key=None):
     image = get_image(db, image_id, body=True)
     table = next((t for t in json.loads(image["catalog"])["tables"] if t["name"] == name), None)
     if table is None:
@@ -51,5 +51,13 @@ def table_page(db, image_id, name, offset):
     with mounted(image["body"]) as snapshot:
         rows = read_table(snapshot, table)
     keys = sorted(rows)
-    return {"table": table, "offset": offset, "total": len(keys),
-            "rows": [{"key": json.loads(key), "values": rows[key]} for key in keys[offset:offset + 50]]}
+    placement = None
+    if key is not None:
+        placement = locate(keys, typed_key(key, table))
+        offset = placement["page"]
+    elif offset is None:
+        offset = 0
+    window = keys[offset:offset + PAGE_ROWS]
+    return {"table": table, "offset": offset, "total": len(keys), "placement": placement,
+            "rows": [{"key": json.loads(token), "values": rows[token], "position": offset + index}
+                     for index, token in enumerate(window)]}
