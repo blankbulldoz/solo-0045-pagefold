@@ -35,3 +35,5 @@ python3 -m examples.walkthrough all
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+评审样本（四组三方镜像、文件清单与真实操作观察）见 `review/README.md`。

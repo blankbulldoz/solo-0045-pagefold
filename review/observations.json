@@ -1,0 +1,411 @@
+{
+  "generator": "review/run_review.py",
+  "environment": {
+    "date": "2026-11-25 05:04:55 UTC",
+    "python": "3.11.2",
+    "sqlite": "3.40.1",
+    "commit": "baec633"
+  },
+  "groups": [
+    {
+      "group": "a-small-conflict",
+      "title": "小冲突",
+      "purpose": "少量行分歧：核对逐行裁决、版本拦截、封存与归档流程。",
+      "checks": [
+        "✓ base 镜像登记，摘要与清单一致",
+        "✓ left 镜像登记，摘要与清单一致",
+        "✓ right 镜像登记，摘要与清单一致",
+        "✓ 计划条目 5 ＝ 独立差异表 5",
+        "✓ 自动采纳 4 ＝ 独立差异表 4",
+        "✓ 待裁决 1 ＝ 独立差异表 1",
+        "✓ 存在未决项时重演被拦截（409 unresolved）",
+        "✓ 过期版本裁决被拒绝（409 stale_revision）",
+        "✓ 同值重复裁决不推进版本（幂等）",
+        "✓ 重演通过（status=passed）",
+        "✓ 重演变更 5 ＝ 预期 5",
+        "✓ 同版本重演复用首次证据",
+        "✓ 重复封存结果稳定",
+        "✓ 凭证绑定三个来源",
+        "✓ 下载摘要与封存凭证一致",
+        "✓ 候选 integrity_check 通过",
+        "✓ 候选无外键违规",
+        "✓ 候选 entry 行数 9 ＝ 预期 9",
+        "✓ 候选 tag 行数 10 ＝ 预期 10",
+        "✓ 候选内容 SELECT qty FROM entry WHERE id=1 → 999",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=1 → '祖本记录-1'",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=3 → '右支改写-3'",
+        "✓ 候选内容 SELECT COUNT(*) FROM tag WHERE entry_id=2 AND label='t2' → 0",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=9 → '左支新增-9'",
+        "✓ 归档后状态为 archived",
+        "✓ 归档后凭证保持可提取且不变"
+      ],
+      "notes": [
+        "未裁决直接重演被 409（unresolved）拦截；过期版本裁决被 409（stale_revision）拒绝；同值重复裁决不推进版本。",
+        "重演变更 5 行 ＝ 计划条目 5：本组无空转项；封存后归档，凭证与候选摘要保持不变。",
+        "候选 16,384 字节：摘要与凭证一致，integrity_check 通过、无外键违规、行数与内容抽样全部符合预期。"
+      ],
+      "uploads": {
+        "base": {
+          "id": "028971b6f6acd5fb8f2c2b09c7cdbaf0f5402725885316adc34080ee6ac81ced",
+          "ms": 6.2
+        },
+        "left": {
+          "id": "4d42fda02715eb734374909e2f552cfae799d8937ba451c8d393cf2da119c553",
+          "ms": 5.9
+        },
+        "right": {
+          "id": "ad87ef70e1550457adce7fb6ca92c5f9b0099a321ace0dfe355b65f49f93ad47",
+          "ms": 6.7
+        }
+      },
+      "plan": {
+        "id": "a41eb44b027f42259c5f18b097e6f5c0",
+        "ms": 6.3,
+        "items": 5,
+        "automatic": 4,
+        "unresolved": 1,
+        "digest": "749a52957aa9983626415a40168be38dc84fbb5a7e3452c5e32f53185d70ae45",
+        "payload_bytes": 2263
+      },
+      "blocked_rehearsal": "unresolved",
+      "decisions": [
+        {
+          "table": "entry",
+          "key": [
+            1
+          ],
+          "choice": "right",
+          "revision": 1
+        }
+      ],
+      "rehearse": {
+        "ms": 6.1,
+        "reuse_ms": 0.7,
+        "changed": 5,
+        "candidate_bytes": 16384,
+        "digest": "25566dc567b4fbe52922e5854866fb7aaf67f112c2f144ca67f0624a5b71b810"
+      },
+      "certificate": {
+        "format": "pagefold-certificate-v1",
+        "plan": "a41eb44b027f42259c5f18b097e6f5c0",
+        "revision": 1,
+        "sources": {
+          "base": "028971b6f6acd5fb8f2c2b09c7cdbaf0f5402725885316adc34080ee6ac81ced",
+          "left": "4d42fda02715eb734374909e2f552cfae799d8937ba451c8d393cf2da119c553",
+          "right": "ad87ef70e1550457adce7fb6ca92c5f9b0099a321ace0dfe355b65f49f93ad47"
+        },
+        "schema": "d8a1039b637757925d77cda56cc00622d597d7dcbec15a9ad5506d888f820880",
+        "plan_digest": "749a52957aa9983626415a40168be38dc84fbb5a7e3452c5e32f53185d70ae45",
+        "decision_digest": "0058d50a1d04ace4b9dc05dea57a77c9f17645c15f5ce066cb55c6bdd2c73b78",
+        "candidate_digest": "25566dc567b4fbe52922e5854866fb7aaf67f112c2f144ca67f0624a5b71b810",
+        "candidate_size": 16384
+      }
+    },
+    {
+      "group": "b-dense-auto",
+      "title": "密集自动更新",
+      "purpose": "单侧高密度更新：计划条目多，但全部自动采纳、零冲突。",
+      "checks": [
+        "✓ base 镜像登记，摘要与清单一致",
+        "✓ left 镜像登记，摘要与清单一致",
+        "✓ right 镜像登记，摘要与清单一致",
+        "✓ 计划条目 1500 ＝ 独立差异表 1500",
+        "✓ 自动采纳 1500 ＝ 独立差异表 1500",
+        "✓ 待裁决 0 ＝ 独立差异表 0",
+        "✓ 重演通过（status=passed）",
+        "✓ 重演变更 1500 ＝ 预期 1500",
+        "✓ 同版本重演复用首次证据",
+        "✓ 重复封存结果稳定",
+        "✓ 凭证绑定三个来源",
+        "✓ 下载摘要与封存凭证一致",
+        "✓ 候选 integrity_check 通过",
+        "✓ 候选无外键违规",
+        "✓ 候选 entry 行数 2200 ＝ 预期 2200",
+        "✓ 候选 tag 行数 2200 ＝ 预期 2200",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE note='左支密集更新' → 1000",
+        "✓ 候选内容 SELECT qty FROM entry WHERE id=2 → 9",
+        "✓ 候选内容 SELECT weight FROM entry WHERE id=1 → 0.75",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE id BETWEEN 2001 AND 2200 → 200"
+      ],
+      "notes": [
+        "1,500 条计划全部自动采纳、零冲突：左支 1,400 项（1,000 改 ＋ 200 增及其标签），右支 100 项。",
+        "同版本重复重演复用首次证据：首次 68.4 ms，复用 1.3 ms。",
+        "计划响应 640,868 字节 / 1,500 条，条目数随变更行数线性增长。",
+        "候选 155,648 字节：摘要与凭证一致，integrity_check 通过、无外键违规、行数与内容抽样全部符合预期。"
+      ],
+      "uploads": {
+        "base": {
+          "id": "02914d055ce0db6fcbde9c23d4c9682187d53f04fbea6208a7ccfc760fdf4989",
+          "ms": 23.0
+        },
+        "left": {
+          "id": "205dbeb8cfc2dd20e10824c30faf5994267b746e2a40a02bc2ca71389ed5ab76",
+          "ms": 25.3
+        },
+        "right": {
+          "id": "4d1ca83e957650b17dc68ae7db4998d669746a31e6389959450d1f492305789e",
+          "ms": 23.4
+        }
+      },
+      "plan": {
+        "id": "475fe23c151a490a8e31ed4d87e045d4",
+        "ms": 99.1,
+        "items": 1500,
+        "automatic": 1500,
+        "unresolved": 0,
+        "digest": "9a9529dc743dc7be22d803bd46847c5eb74153e54777203f906b16b631cb8400",
+        "payload_bytes": 640868
+      },
+      "decisions": [],
+      "rehearse": {
+        "ms": 68.4,
+        "reuse_ms": 1.3,
+        "changed": 1500,
+        "candidate_bytes": 155648,
+        "digest": "84d87c3cccd27b6ee6a7546f52a48fa840615de7e2abb5c203e0fbbbd35d9291"
+      },
+      "certificate": {
+        "format": "pagefold-certificate-v1",
+        "plan": "475fe23c151a490a8e31ed4d87e045d4",
+        "revision": 0,
+        "sources": {
+          "base": "02914d055ce0db6fcbde9c23d4c9682187d53f04fbea6208a7ccfc760fdf4989",
+          "left": "205dbeb8cfc2dd20e10824c30faf5994267b746e2a40a02bc2ca71389ed5ab76",
+          "right": "4d1ca83e957650b17dc68ae7db4998d669746a31e6389959450d1f492305789e"
+        },
+        "schema": "d8a1039b637757925d77cda56cc00622d597d7dcbec15a9ad5506d888f820880",
+        "plan_digest": "9a9529dc743dc7be22d803bd46847c5eb74153e54777203f906b16b631cb8400",
+        "decision_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "candidate_digest": "84d87c3cccd27b6ee6a7546f52a48fa840615de7e2abb5c203e0fbbbd35d9291",
+        "candidate_size": 155648
+      }
+    },
+    {
+      "group": "c-bulk-identical",
+      "title": "大量相同行",
+      "purpose": "三份镜像 99.96% 行相同：验证大量相同键不会被误计为大量变更。",
+      "checks": [
+        "✓ base 镜像登记，摘要与清单一致",
+        "✓ left 镜像登记，摘要与清单一致",
+        "✓ right 镜像登记，摘要与清单一致",
+        "✓ 计划条目 7 ＝ 独立差异表 7",
+        "✓ 自动采纳 6 ＝ 独立差异表 6",
+        "✓ 待裁决 1 ＝ 独立差异表 1",
+        "✓ 存在未决项时重演被拦截（409 unresolved）",
+        "✓ 过期版本裁决被拒绝（409 stale_revision）",
+        "✓ 同值重复裁决不推进版本（幂等）",
+        "✓ 重演通过（status=passed）",
+        "✓ 重演变更 7 ＝ 预期 7",
+        "✓ 同版本重演复用首次证据",
+        "✓ 重复封存结果稳定",
+        "✓ 凭证绑定三个来源",
+        "✓ 下载摘要与封存凭证一致",
+        "✓ 候选 integrity_check 通过",
+        "✓ 候选无外键违规",
+        "✓ 候选 entry 行数 8000 ＝ 预期 8000",
+        "✓ 候选 tag 行数 8000 ＝ 预期 8000",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=200 → '左支冲突-200'",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=100 → '左支微调-100'",
+        "✓ 候选内容 SELECT qty FROM entry WHERE id=300 → 5",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE id=7000 → 0",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE id=8001 → 1"
+      ],
+      "notes": [
+        "三份输入合计 48,000 行 / 1,249,280 字节，计划仅 7 条：15,995 行三方相同被跳过，未计入变更。",
+        "计划响应仅 3,027 字节，与输入体积无比例关系；计划创建 247.0 ms、重演 148.5 ms（全量扫描与校验的成本随输入行数走，不随条目数走）。",
+        "候选 417,792 字节：摘要与凭证一致，integrity_check 通过、无外键违规、行数与内容抽样全部符合预期。"
+      ],
+      "uploads": {
+        "base": {
+          "id": "e9cab38587dee4e0dc794296b53697e0daff2db7d2ea9184fe3b4a2e53898453",
+          "ms": 84.6
+        },
+        "left": {
+          "id": "40793cca587a9efd607eb8039b33745487ef4b172a701b4dbb722500f2332d64",
+          "ms": 83.8
+        },
+        "right": {
+          "id": "eca71ecb458decd73f41d1657ed6b21c1e1b88b1012eb5a29bbaf83d23eb02c2",
+          "ms": 85.0
+        }
+      },
+      "plan": {
+        "id": "131413ddb0484148af81f248ca758d6f",
+        "ms": 247.0,
+        "items": 7,
+        "automatic": 6,
+        "unresolved": 1,
+        "digest": "938f04c3c2fd2757be92be7afe25747b6c36a25dbbbbc72cee7d81653db3131d",
+        "payload_bytes": 3027
+      },
+      "blocked_rehearsal": "unresolved",
+      "decisions": [
+        {
+          "table": "entry",
+          "key": [
+            200
+          ],
+          "choice": "left",
+          "revision": 1
+        }
+      ],
+      "rehearse": {
+        "ms": 148.5,
+        "reuse_ms": 1.0,
+        "changed": 7,
+        "candidate_bytes": 417792,
+        "digest": "ea84fba60bd75de7b0f73cca1ccf9f71355922ee11849dfb02c2dc99488d4ca9"
+      },
+      "certificate": {
+        "format": "pagefold-certificate-v1",
+        "plan": "131413ddb0484148af81f248ca758d6f",
+        "revision": 1,
+        "sources": {
+          "base": "e9cab38587dee4e0dc794296b53697e0daff2db7d2ea9184fe3b4a2e53898453",
+          "left": "40793cca587a9efd607eb8039b33745487ef4b172a701b4dbb722500f2332d64",
+          "right": "eca71ecb458decd73f41d1657ed6b21c1e1b88b1012eb5a29bbaf83d23eb02c2"
+        },
+        "schema": "d8a1039b637757925d77cda56cc00622d597d7dcbec15a9ad5506d888f820880",
+        "plan_digest": "938f04c3c2fd2757be92be7afe25747b6c36a25dbbbbc72cee7d81653db3131d",
+        "decision_digest": "b5ae4288ee8656b26e3e245afbcbc0e6d9b2f576ca0dc31b93ede31e227b25f3",
+        "candidate_digest": "ea84fba60bd75de7b0f73cca1ccf9f71355922ee11849dfb02c2dc99488d4ca9",
+        "candidate_size": 417792
+      }
+    },
+    {
+      "group": "d-noop-decisions",
+      "title": "空转裁决（有效成果刻意少于计划项）",
+      "purpose": "6 项冲突中 4 项刻意裁决为祖本：计划 10 条，实际变更只有 6 行。",
+      "checks": [
+        "✓ base 镜像登记，摘要与清单一致",
+        "✓ left 镜像登记，摘要与清单一致",
+        "✓ right 镜像登记，摘要与清单一致",
+        "✓ 计划条目 10 ＝ 独立差异表 10",
+        "✓ 自动采纳 4 ＝ 独立差异表 4",
+        "✓ 待裁决 6 ＝ 独立差异表 6",
+        "✓ 存在未决项时重演被拦截（409 unresolved）",
+        "✓ 过期版本裁决被拒绝（409 stale_revision）",
+        "✓ 同值重复裁决不推进版本（幂等）",
+        "✓ 重演通过（status=passed）",
+        "✓ 重演变更 6 ＝ 预期 6",
+        "✓ 同版本重演复用首次证据",
+        "✓ 重复封存结果稳定",
+        "✓ 凭证绑定三个来源",
+        "✓ 下载摘要与封存凭证一致",
+        "✓ 候选 integrity_check 通过",
+        "✓ 候选无外键违规",
+        "✓ 候选 entry 行数 24 ＝ 预期 24",
+        "✓ 候选 tag 行数 24 ＝ 预期 24",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=1 → '祖本-1'",
+        "✓ 候选内容 SELECT qty FROM entry WHERE id=1 → 1",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=4 → '祖本-4'",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=5 → '左支-5'",
+        "✓ 候选内容 SELECT qty FROM entry WHERE id=6 → 1006",
+        "✓ 候选内容 SELECT note FROM entry WHERE id=6 → '祖本-6'",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE id=24 → 0",
+        "✓ 候选内容 SELECT COUNT(*) FROM entry WHERE id=100 → 1"
+      ],
+      "notes": [
+        "10 条计划（6 冲突 ＋ 4 自动），6 项裁决中 4 项选祖本：重演变更 6 行 ＜ 计划条目 10，祖本裁决不产生实际变更。",
+        "下载候选中 entry 1–4 保持祖本值，entry 5 为左支值、entry 6 为右支值；凭证 decision_digest 绑定全部 6 项裁决。",
+        "候选 16,384 字节：摘要与凭证一致，integrity_check 通过、无外键违规、行数与内容抽样全部符合预期。"
+      ],
+      "uploads": {
+        "base": {
+          "id": "14fa4b1ca381c47459e8706ab8f5ea73ce293378df8299d517a5a0eb6ea82842",
+          "ms": 10.6
+        },
+        "left": {
+          "id": "9499bdc5d381b2514fbd392e07395052294aad64c8bd7f3f15d77d421ecb5903",
+          "ms": 10.2
+        },
+        "right": {
+          "id": "d849c2df18279f096c4f114392b09cd5004fcd10e7ce407c99fa1a090fae1839",
+          "ms": 8.0
+        }
+      },
+      "plan": {
+        "id": "7ece74c81c3c46cb82bda3b6aa4cd080",
+        "ms": 5.9,
+        "items": 10,
+        "automatic": 4,
+        "unresolved": 6,
+        "digest": "f16594a13cd6b052114e5a45d088afa90d91a210ca62bdbe6cbda3ff0ec998b2",
+        "payload_bytes": 4549
+      },
+      "blocked_rehearsal": "unresolved",
+      "decisions": [
+        {
+          "table": "entry",
+          "key": [
+            1
+          ],
+          "choice": "base",
+          "revision": 1
+        },
+        {
+          "table": "entry",
+          "key": [
+            2
+          ],
+          "choice": "base",
+          "revision": 2
+        },
+        {
+          "table": "entry",
+          "key": [
+            3
+          ],
+          "choice": "base",
+          "revision": 3
+        },
+        {
+          "table": "entry",
+          "key": [
+            4
+          ],
+          "choice": "base",
+          "revision": 4
+        },
+        {
+          "table": "entry",
+          "key": [
+            5
+          ],
+          "choice": "left",
+          "revision": 5
+        },
+        {
+          "table": "entry",
+          "key": [
+            6
+          ],
+          "choice": "right",
+          "revision": 6
+        }
+      ],
+      "rehearse": {
+        "ms": 6.4,
+        "reuse_ms": 0.7,
+        "changed": 6,
+        "candidate_bytes": 16384,
+        "digest": "afd38b18257e94ed29e1aa261fee9ba6e268471ce3ad006b7f7d595958b277a9"
+      },
+      "certificate": {
+        "format": "pagefold-certificate-v1",
+        "plan": "7ece74c81c3c46cb82bda3b6aa4cd080",
+        "revision": 6,
+        "sources": {
+          "base": "14fa4b1ca381c47459e8706ab8f5ea73ce293378df8299d517a5a0eb6ea82842",
+          "left": "9499bdc5d381b2514fbd392e07395052294aad64c8bd7f3f15d77d421ecb5903",
+          "right": "d849c2df18279f096c4f114392b09cd5004fcd10e7ce407c99fa1a090fae1839"
+        },
+        "schema": "d8a1039b637757925d77cda56cc00622d597d7dcbec15a9ad5506d888f820880",
+        "plan_digest": "f16594a13cd6b052114e5a45d088afa90d91a210ca62bdbe6cbda3ff0ec998b2",
+        "decision_digest": "2409ed0b76af610ba6d73a2907a1941771917a0d0e3ab7731b728eae92b1b599",
+        "candidate_digest": "afd38b18257e94ed29e1aa261fee9ba6e268471ce3ad006b7f7d595958b277a9",
+        "candidate_size": 16384
+      }
+    }
+  ]
+}

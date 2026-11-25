@@ -1,0 +1,410 @@
+{
+  "generator": "review/make_samples.py",
+  "generated_at": "2026-11-25T05:07:51Z",
+  "groups": {
+    "a-small-conflict": {
+      "title": "小冲突",
+      "purpose": "少量行分歧：核对逐行裁决、版本拦截、封存与归档流程。",
+      "provenance": {
+        "base": "entry 1–8（qty=id%50，note=祖本记录-i）；每个 entry 一条 tag 't1'，entry 2、3 各多一条 't2'（共 8 + 10 行）。",
+        "left": "改写 entry 1 的 note；新增 entry 9 及其 't1' 标签。",
+        "right": "改写 entry 1 的 qty；改写 entry 3 的 note；删除 tag (2,'t2')。",
+        "decisions": "entry 1 的冲突选右支（qty=999，note 保持祖本值）。"
+      },
+      "files": {
+        "base": {
+          "path": "review/images/a-small-conflict/base.sqlite",
+          "bytes": 16384,
+          "sha256": "028971b6f6acd5fb8f2c2b09c7cdbaf0f5402725885316adc34080ee6ac81ced",
+          "rows": {
+            "entry": 8,
+            "tag": 10
+          }
+        },
+        "left": {
+          "path": "review/images/a-small-conflict/left.sqlite",
+          "bytes": 16384,
+          "sha256": "4d42fda02715eb734374909e2f552cfae799d8937ba451c8d393cf2da119c553",
+          "rows": {
+            "entry": 9,
+            "tag": 11
+          }
+        },
+        "right": {
+          "path": "review/images/a-small-conflict/right.sqlite",
+          "bytes": 16384,
+          "sha256": "ad87ef70e1550457adce7fb6ca92c5f9b0099a321ace0dfe355b65f49f93ad47",
+          "rows": {
+            "entry": 8,
+            "tag": 9
+          }
+        }
+      },
+      "diff": {
+        "tables": {
+          "entry": {
+            "base_rows": 8,
+            "identical": 6,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 0,
+              "change": 1
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 1,
+            "items": 3
+          },
+          "tag": {
+            "base_rows": 10,
+            "identical": 9,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 1,
+              "change": 0
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 0,
+            "items": 2
+          }
+        },
+        "totals": {
+          "identical": 15,
+          "items": 5,
+          "automatic": 4,
+          "conflict": 1
+        }
+      },
+      "expect": {
+        "items": 5,
+        "automatic": 4,
+        "conflicts": 1,
+        "changed": 5,
+        "rows": {
+          "entry": 9,
+          "tag": 10
+        }
+      }
+    },
+    "b-dense-auto": {
+      "title": "密集自动更新",
+      "purpose": "单侧高密度更新：计划条目多，但全部自动采纳、零冲突。",
+      "provenance": {
+        "base": "entry 1–2000（note 为 NULL）；每个 entry 一条 tag 't1'（共 4,000 行）。",
+        "left": "改写全部偶数 id（1,000 行）的 qty 与 note；新增 entry 2001–2200 及其标签（400 行）。",
+        "right": "改写 id%20=1 的 100 行 weight（与左支改动不重叠）。",
+        "decisions": "无冲突，不裁决，直接重演。"
+      },
+      "files": {
+        "base": {
+          "path": "review/images/b-dense-auto/base.sqlite",
+          "bytes": 122880,
+          "sha256": "02914d055ce0db6fcbde9c23d4c9682187d53f04fbea6208a7ccfc760fdf4989",
+          "rows": {
+            "entry": 2000,
+            "tag": 2000
+          }
+        },
+        "left": {
+          "path": "review/images/b-dense-auto/left.sqlite",
+          "bytes": 159744,
+          "sha256": "205dbeb8cfc2dd20e10824c30faf5994267b746e2a40a02bc2ca71389ed5ab76",
+          "rows": {
+            "entry": 2200,
+            "tag": 2200
+          }
+        },
+        "right": {
+          "path": "review/images/b-dense-auto/right.sqlite",
+          "bytes": 122880,
+          "sha256": "4d1ca83e957650b17dc68ae7db4998d669746a31e6389959450d1f492305789e",
+          "rows": {
+            "entry": 2000,
+            "tag": 2000
+          }
+        }
+      },
+      "diff": {
+        "tables": {
+          "entry": {
+            "base_rows": 2000,
+            "identical": 900,
+            "left": {
+              "add": 200,
+              "del": 0,
+              "change": 1000
+            },
+            "right": {
+              "add": 0,
+              "del": 0,
+              "change": 100
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 0,
+            "items": 1300
+          },
+          "tag": {
+            "base_rows": 2000,
+            "identical": 2000,
+            "left": {
+              "add": 200,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 0,
+            "items": 200
+          }
+        },
+        "totals": {
+          "identical": 2900,
+          "items": 1500,
+          "automatic": 1500,
+          "conflict": 0
+        }
+      },
+      "expect": {
+        "items": 1500,
+        "automatic": 1500,
+        "conflicts": 0,
+        "changed": 1500,
+        "rows": {
+          "entry": 2200,
+          "tag": 2200
+        }
+      }
+    },
+    "c-bulk-identical": {
+      "title": "大量相同行",
+      "purpose": "三份镜像 99.96% 行相同：验证大量相同键不会被误计为大量变更。",
+      "provenance": {
+        "base": "entry 1–8000（note 为 NULL）；每个 entry 一条 tag 't1'（共 16,000 行，接近 20,000 行上限）。",
+        "left": "改写 entry 100、200 的 note；新增 entry 8001 及其标签。",
+        "right": "改写 entry 200（与左支不同值）与 entry 300；删除 entry 7000 及其标签。",
+        "decisions": "entry 200 的冲突选左支（note=左支冲突-200）。"
+      },
+      "files": {
+        "base": {
+          "path": "review/images/c-bulk-identical/base.sqlite",
+          "bytes": 413696,
+          "sha256": "e9cab38587dee4e0dc794296b53697e0daff2db7d2ea9184fe3b4a2e53898453",
+          "rows": {
+            "entry": 8000,
+            "tag": 8000
+          }
+        },
+        "left": {
+          "path": "review/images/c-bulk-identical/left.sqlite",
+          "bytes": 417792,
+          "sha256": "40793cca587a9efd607eb8039b33745487ef4b172a701b4dbb722500f2332d64",
+          "rows": {
+            "entry": 8001,
+            "tag": 8001
+          }
+        },
+        "right": {
+          "path": "review/images/c-bulk-identical/right.sqlite",
+          "bytes": 417792,
+          "sha256": "eca71ecb458decd73f41d1657ed6b21c1e1b88b1012eb5a29bbaf83d23eb02c2",
+          "rows": {
+            "entry": 7999,
+            "tag": 7999
+          }
+        }
+      },
+      "diff": {
+        "tables": {
+          "entry": {
+            "base_rows": 8000,
+            "identical": 7996,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 1
+            },
+            "right": {
+              "add": 0,
+              "del": 1,
+              "change": 1
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 1,
+            "items": 5
+          },
+          "tag": {
+            "base_rows": 8000,
+            "identical": 7999,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 1,
+              "change": 0
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 0,
+            "items": 2
+          }
+        },
+        "totals": {
+          "identical": 15995,
+          "items": 7,
+          "automatic": 6,
+          "conflict": 1
+        }
+      },
+      "expect": {
+        "items": 7,
+        "automatic": 6,
+        "conflicts": 1,
+        "changed": 7,
+        "rows": {
+          "entry": 8000,
+          "tag": 8000
+        }
+      }
+    },
+    "d-noop-decisions": {
+      "title": "空转裁决（有效成果刻意少于计划项）",
+      "purpose": "6 项冲突中 4 项刻意裁决为祖本：计划 10 条，实际变更只有 6 行。",
+      "provenance": {
+        "base": "entry 1–24（note=祖本-i）；每个 entry 一条 tag 't1'（共 48 行）。",
+        "left": "改写 entry 1–6 的 note；新增 entry 100 及其标签。",
+        "right": "改写 entry 1–6 的 qty（与左支冲突）；删除 entry 24 及其标签。",
+        "decisions": "entry 1–4 选祖本（空转，不产生变更），entry 5 选左支，entry 6 选右支。"
+      },
+      "files": {
+        "base": {
+          "path": "review/images/d-noop-decisions/base.sqlite",
+          "bytes": 16384,
+          "sha256": "14fa4b1ca381c47459e8706ab8f5ea73ce293378df8299d517a5a0eb6ea82842",
+          "rows": {
+            "entry": 24,
+            "tag": 24
+          }
+        },
+        "left": {
+          "path": "review/images/d-noop-decisions/left.sqlite",
+          "bytes": 16384,
+          "sha256": "9499bdc5d381b2514fbd392e07395052294aad64c8bd7f3f15d77d421ecb5903",
+          "rows": {
+            "entry": 25,
+            "tag": 25
+          }
+        },
+        "right": {
+          "path": "review/images/d-noop-decisions/right.sqlite",
+          "bytes": 16384,
+          "sha256": "d849c2df18279f096c4f114392b09cd5004fcd10e7ce407c99fa1a090fae1839",
+          "rows": {
+            "entry": 23,
+            "tag": 23
+          }
+        }
+      },
+      "diff": {
+        "tables": {
+          "entry": {
+            "base_rows": 24,
+            "identical": 17,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 1,
+              "change": 0
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 6,
+            "items": 8
+          },
+          "tag": {
+            "base_rows": 24,
+            "identical": 23,
+            "left": {
+              "add": 1,
+              "del": 0,
+              "change": 0
+            },
+            "right": {
+              "add": 0,
+              "del": 1,
+              "change": 0
+            },
+            "both_same": {
+              "add": 0,
+              "del": 0,
+              "change": 0
+            },
+            "conflict": 0,
+            "items": 2
+          }
+        },
+        "totals": {
+          "identical": 40,
+          "items": 10,
+          "automatic": 4,
+          "conflict": 6
+        }
+      },
+      "expect": {
+        "items": 10,
+        "automatic": 4,
+        "conflicts": 6,
+        "changed": 6,
+        "rows": {
+          "entry": 24,
+          "tag": 24
+        }
+      }
+    }
+  }
+}
