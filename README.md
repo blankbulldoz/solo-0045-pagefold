@@ -30,8 +30,24 @@ python3 -m examples.make_images ./demo-images
 ## 验证
 
 ```sh
-python3 -m compileall -q pagefold examples
+python3 -m compileall -q pagefold examples recovery
 python3 -m examples.walkthrough all
+python3 -m recovery.drill
 ```
 
 工作流检查使用临时状态库和本机 HTTP 服务。正式自动化测试套件延期。
+
+## 按计划隔离恢复（恢复演练）
+
+生产库含多个团队计划时，`recovery/` 包把获准的一份计划连同其引用镜像、重演历史和封存
+成果复制到另一端口的独立演练实例；生产库以只读方式打开并保持运行。恢复在单个读事务内
+完成（WAL 快照隔离，整体来自同一已提交时点），输出经 `.part` 暂存后原子改名，中断重跑
+不会把半成品当成可交接实例。详见 [`recovery/README.md`](recovery/README.md)。
+
+```sh
+python3 -m recovery.recover --source ./pagefold-state.sqlite --list
+python3 -m recovery.recover --source ./pagefold-state.sqlite --output ./drill/drill.sqlite --plan <计划ID>
+python3 -m recovery.verify ./drill/drill.sqlite --source ./pagefold-state.sqlite \
+    --manifest ./drill/drill.manifest.json --http-base http://127.0.0.1:8791
+python3 -m pagefold --state ./drill/drill.sqlite --port 8791
+```
