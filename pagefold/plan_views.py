@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from .render import ROLE_LABELS, STATE_LABELS, fragment, option, page, safe, values
 
 
@@ -17,6 +19,10 @@ def entries(plan):
             options += "".join(option(role, label, chosen=role == item["choice"])
                                for role, label in ROLE_LABELS.items())
             form = fragment("decision", plan=plan["id"], revision=plan["revision"], item=item["id"], options=options)
+            if item["choice"] is not None:
+                query = urlencode({"revision": plan["revision"], "item": item["id"]})
+                form += (f'<a class="clear-link" href="/plans/{plan["id"]}/clear?{query}">'
+                         "清空这条裁决的影响 →</a>")
         choice = ROLE_LABELS.get(item["choice"], "待裁决")
         chosen = ("自动 · " if auto else "") + choice
         blocks.append(fragment("entry", table=safe(item["table"]), key=values(item["key"]),
@@ -54,3 +60,38 @@ def plan_page(plan, images, attempts, published):
                 state=STATE_LABELS[plan["state"]], revision=plan["revision"], unresolved=plan["unresolved"],
                 count=len(plan["items"]), items=entries(plan), history=attempts_list(attempts, plan["revision"]),
                 actions="".join(actions))
+
+
+def clear_page(preview):
+    item = preview["item"]
+    rows = "".join(fragment("clear-row", role=safe(label), value=values(item[role]),
+                            current=" current" if role == preview["current_choice"] else "")
+                   for role, label in ROLE_LABELS.items())
+    candidate = preview["current_candidate"]
+    if candidate["present"]:
+        candidate_block = fragment(
+            "clear-fact", tone="warn",
+            title="当前版本已有通过重演的候选",
+            detail=safe(f'候选摘要 {candidate["candidate_digest"]}；清空使版序推进至第 '
+                        f'{preview["next_revision"]} 版，该候选不再属于当前版本，也不能用于封存。'))
+    else:
+        candidate_block = fragment(
+            "clear-fact", tone="quiet",
+            title="当前版本没有有效候选",
+            detail=safe("当前版尚未通过重演；清空不会产生可下载候选，新版本仍须重新裁决并重演。"))
+    evidence = preview["evidence"]
+    if evidence["history_count"]:
+        detail = (f'重演历史保留 {evidence["history_count"]} 条记录'
+                  f'（其中 {evidence["passed_count"]} 条带通过候选，版序 '
+                  f'{"、".join(map(str, evidence["revisions"]))}），清空不会删除任何历史证据。')
+    else:
+        detail = "该计划目前没有任何重演历史，清空不涉及证据删除。"
+    evidence_block = fragment("clear-fact", tone="keep", title="既有重演证据全部保留", detail=safe(detail))
+    return page("clear", "清空裁决预览", plan=preview["id"], short=preview["id"][:12],
+                revision=preview["revision"], next_revision=preview["next_revision"],
+                table=safe(item["table"]), key=values(item["key"]),
+                choice=safe(preview["current_choice_label"]),
+                unresolved=preview["after"]["unresolved"], rows=rows,
+                reason=safe(preview["rehearsal"]["reason"]),
+                candidate=candidate_block, evidence=evidence_block,
+                item=item["id"])

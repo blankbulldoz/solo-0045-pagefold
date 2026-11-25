@@ -1,0 +1,26 @@
+<a class="back" href="/plans/$plan">← 返回合流计划</a>
+<section class="heading plan-heading"><div><h1>清空裁决预览 <code>$short</code></h1>
+<p>第 $revision 版 → 清空后推进至第 $next_revision 版 · 操作前请核对下列影响</p></div></section>
+<div class="work-grid plan-grid">
+  <section class="paper">
+    <div class="panel-title"><h2>冲突条目</h2><span class="tag conflict">$table · $key</span></div>
+    <div class="clear-head"><p>当前裁决：<b>$choice</b>。清空后该行回到<b>待裁决</b>，计划待决项变为 <b>$unresolved</b> 项。</p></div>
+    <dl class="triptych clear-rows">$rows</dl>
+    <div class="clear-note"><h3>重演可用性</h3><p>$reason</p></div>
+  </section>
+  <aside>
+    <section class="paper clear-impact"><div class="panel-title"><h2>影响与证据</h2></div><div class="clear-facts">$candidate$evidence</div></section>
+    <section class="paper clear-confirm"><div class="panel-title"><h2>确认清空</h2></div>
+      <div class="clear-actions">
+        <form method="post" action="/plans/$plan/decisions">
+          <input type="hidden" name="revision" value="$revision">
+          <input type="hidden" name="item" value="$item">
+          <input type="hidden" name="choice" value="clear">
+          <button class="danger" type="submit">确认清空这条裁决</button>
+        </form>
+        <a class="cancel" href="/plans/$plan">取消，保留裁决</a>
+      </div>
+      <p class="muted">确认携带第 $revision 版版本号；若期间他人改过该计划，提交将被拒绝并提示刷新，不会覆盖新选择。</p>
+    </section>
+  </aside>
+</div>

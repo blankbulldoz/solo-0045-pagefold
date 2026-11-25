@@ -15,13 +15,14 @@ python3 -m examples.make_images ./demo-images
 
 ## 操作和接口
 
-网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
+网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。已裁决的冲突条目提供「清空影响」入口，先在预览页核对该操作对当前候选与既有重演证据的影响，再确认清空：清空只移除该条选择并推进版序，历史重演记录与封存成果不会被删除，清空后的未决版本无法重演或封存。
 
 - `POST /api/images` 接收 `application/octet-stream`，`X-Image-Name` 是可选的 URL 编码标签。
 - `GET /api/images/{id}` 查看镜像目录，追加 `/rows?table=名称&offset=0` 查阅 50 行。
 - `POST /api/plans` 接收含 `base`、`left`、`right` 镜像摘要的 JSON。
 - `GET /api/plans/{id}` 查看计划与版本，追加 `/attempts` 读取重演历史。
 - `POST /api/plans/{id}/decisions` 接收 `revision`、`item` 和 `choice`。可选 `base`、`left`、`right`、`clear`。
+- `GET /api/plans/{id}/decisions/clear?revision=&item=` 只读预览清空一条冲突裁决的影响：当前候选摘要、清空后待决状态、历史重演证据的数量与版序；不改动计划。
 - `POST /api/plans/{id}/rehearse`、`/seal`、`/archive` 接收 `revision`。
 - `GET /api/plans/{id}/certificate` 下载封存凭证，`/download` 下载 SQLite 镜像。
 

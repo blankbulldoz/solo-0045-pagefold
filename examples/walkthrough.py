@@ -14,7 +14,7 @@ from pagefold.server import make_server
 from pagefold.store import Store
 
 WORKFLOWS = ("import", "catalog", "rows", "plan", "review", "decide", "rehearse", "attempts", "seal",
-             "certificate", "download", "archive")
+             "certificate", "download", "archive", "clear")
 
 
 def expect(condition, description):
@@ -150,6 +150,58 @@ def run(client, goal):
     finally:
         db.close()
     if done("download", "下载摘要校验一致，SQLite 可独立打开和查询"):
+        return
+    clear_plan = client.call("/api/plans", sources, 201)
+    clear_route = f"/api/plans/{clear_plan['id']}"
+    clear_item = next(item["id"] for item in clear_plan["items"] if not item["automatic"])
+    query = urlencode({"revision": 0, "item": clear_item})
+    expect(client.call(clear_route + "/decisions/clear?" + query, status=409)["code"] == "decision_absent",
+           "未裁决条目的清空预览被拦住")
+    client.call(clear_route + "/decisions", {"item": clear_item, "choice": "right", "revision": 0})
+    first = client.call(clear_route + "/rehearse", {"revision": 1})
+    expect(first["status"] == "passed", "清空演示的当前版候选未通过")
+    preview = client.call(clear_route + "/decisions/clear?"
+                          + urlencode({"revision": 1, "item": clear_item}))
+    expect(preview["current_candidate"]["present"]
+           and preview["current_candidate"]["candidate_digest"] == first["candidate_digest"],
+           "预览识别当前版有效候选及其摘要")
+    expect(preview["after"]["unresolved"] == 1 and preview["next_revision"] == 2,
+           "预览正确预告清空后的待决数与版序")
+    preview_page = client.call(f"/plans/{clear_plan['id']}/clear?"
+                               + urlencode({"revision": 1, "item": clear_item}))
+    expect("清空裁决预览".encode() in preview_page
+           and first["candidate_digest"].encode() in preview_page
+           and "既有重演证据全部保留".encode() in preview_page, "清空影响页未说明候选与证据影响")
+    expect(client.call(clear_route + "/decisions/clear?" + query, status=409)["code"] == "stale_revision",
+           "过期版本号的清空预览被拒绝")
+    client.call(clear_route + "/decisions",
+                {"item": clear_item, "choice": "clear", "revision": 1})
+    refreshed = client.call(clear_route)
+    expect(refreshed["revision"] == 2 and refreshed["unresolved"] == 1, "清空未持久化或版序未推进")
+    history = client.call(clear_route + "/attempts")
+    expect(history == [first], "清空误删了历史重演证据")
+    expect(client.call(clear_route + "/rehearse", {"revision": 2}, 409)["code"] == "unresolved",
+           "清空后当前版仍可重演")
+    client.call(clear_route + "/decisions", {"item": clear_item, "choice": "base", "revision": 2})
+    old_only = client.call(clear_route + "/decisions/clear?"
+                           + urlencode({"revision": 3, "item": clear_item}))
+    expect(old_only["current_candidate"]["present"] is False
+           and old_only["evidence"] == {"history_count": 1, "passed_count": 1,
+                                        "retained": True, "revisions": [1]},
+           "仅旧版候选时预览未区分当前与历史证据")
+    old_page = client.call(f"/plans/{clear_plan['id']}/clear?"
+                           + urlencode({"revision": 3, "item": clear_item}))
+    expect("当前版本没有有效候选".encode() in old_page, "页面未区分无当前候选情形")
+    expect(client.call(clear_route + "/decisions",
+                       {"item": clear_item, "choice": "left", "revision": 3})["revision"] == 4,
+           "并发前置裁决未保存")
+    expect(client.call(clear_route + "/decisions",
+                       {"item": clear_item, "choice": "clear", "revision": 3},
+                       409)["code"] == "stale_revision", "并发修改后的清空未被版本号拦截")
+    current = client.call(clear_route)
+    expect(next(i for i in current["items"] if i["id"] == clear_item)["choice"] == "left",
+           "被拒清空覆盖了他人的新选择")
+    if done("clear", "先预览影响再确认清空，历史证据保留、重演按待决拦截、并发冲突可恢复"):
         return
     client.call(route + "/archive", {"revision": 2})
     expect(client.call(route)["state"] == "archived", "归档状态丢失")

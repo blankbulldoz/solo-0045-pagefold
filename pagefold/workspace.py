@@ -1,12 +1,13 @@
 from .attempts import list_attempts
+from .decisions import preview_clear
 from .demo import image
 from .errors import Problem
 from .image_views import image_links, image_options, image_page, rows_page
 from .images import get_image, image_record, list_images, register, table_page
-from .inputs import unsigned
+from .inputs import token, unsigned
 from .merge import ROLES
-from .plan_views import plan_links, plan_page
-from .plans import create_plan, list_plans, read_plan
+from .plan_views import clear_page, plan_links, plan_page
+from .plans import create_plan, get_plan, list_plans, read_plan
 from .render import HERE, page, safe
 
 
@@ -23,14 +24,23 @@ def workspace(store, parts, query):
             attempts = list_attempts(db, parts[1])
             published = db.execute("SELECT 1 FROM releases WHERE plan_id=?", (parts[1],)).fetchone()
             return plan_page(plan, images, attempts, bool(published))
-        if len(parts) in {2, 3} and parts[0] == "images":
+        if len(parts) == 3 and parts[0] == "plans" and parts[2] == "clear":
+            get_plan(db, parts[1])  # 未知计划在此以 404 结束
+            plan_id, revision, item_id = (
+                parts[1], unsigned(query.get("revision"), "revision"),
+                token(query.get("item"), "item"))
+        elif len(parts) in {2, 3} and parts[0] == "images":
             entry = image_record(get_image(db, parts[1]))
             if len(parts) == 2:
                 return image_page(entry)
             if parts[2] == "rows":
                 return rows_page(entry, table_page(db, parts[1], query.get("table"),
                                                    unsigned(query.get("offset", "0"), "offset")))
-    raise Problem("route", "找不到该入口。", 404)
+        else:
+            raise Problem("route", "找不到该入口。", 404)
+    # 读事务已结束，预览在独立连接中完成全部版本/状态/证据校验
+    preview = preview_clear(store, plan_id, revision, item_id)
+    return clear_page(preview)
 
 
 def sample(store):
