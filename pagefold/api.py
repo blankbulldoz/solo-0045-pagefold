@@ -3,7 +3,7 @@ from urllib.parse import unquote
 
 from .archive import archive
 from .attempts import list_attempts, rehearse
-from .decisions import resolve
+from .decisions import resolve_decision
 from .errors import Problem
 from .images import get_image, image_record, list_images, register, table_page
 from .inputs import fields, payload, token, unsigned
@@ -27,7 +27,20 @@ def read(store, parts, query):
             if not tail:
                 return list_plans(db)
             if len(tail) == 1:
-                return read_plan(db, tail[0])
+                plan = read_plan(db, tail[0])
+                return plan
+            if len(tail) == 2 and tail[1] in {"entities", "entity", "entity-keys", "renames", "rename", "groups"}:
+                plan = read_plan(db, tail[0])
+                if tail[1] in {"entity-keys", "entity-key"}:
+                    return plan["entity_keys"]
+                return {"entities": plan["entities"], "renames": plan["renames"]}
+            if len(tail) == 3 and tail[1] in {"entities", "entity", "entity-decisions",
+                                               "renames", "rename", "groups"}:
+                plan = read_plan(db, tail[0])
+                entity = next((item for item in plan["entities"] if item["id"] == tail[2]), None)
+                if entity is None:
+                    raise Problem("unknown_entity", "找不到指定的实体改名组。", 404)
+                return entity
             if len(tail) == 2 and tail[1] == "attempts":
                 return list_attempts(db, tail[0])
             if len(tail) == 2 and tail[1] in {"download", "certificate"}:
@@ -46,17 +59,33 @@ def upload(store, handler):
 def write_plan(store, handler, tail):
     if not tail:
         data = fields(handler, 32_768)
-        return create_plan(store, {role: token(data.get(role), role) for role in ROLES})
+        sources = {role: token(data.get(role), role) for role in ROLES}
+        return create_plan(store, sources, data)
+    plan_id = tail[0]
+    data = fields(handler, 32_768)
+    if len(tail) >= 3 and tail[1] in {"entities", "entity", "entity-decisions",
+                                      "renames", "rename", "groups"}:
+        entity_id = tail[2]
+        if len(tail) == 4 and tail[3] in {"accept", "accepted", "reject", "rejected",
+                                          "left", "right", "base", "clear"}:
+            data = dict(data)
+            data.setdefault("choice", tail[3])
+        elif len(tail) > 4 or (len(tail) == 4 and tail[3] not in {"decision", "decisions"}):
+            raise Problem("route", "找不到该实体裁决入口。", 404)
+        data = dict(data)
+        data["entity"] = entity_id
+        revision = unsigned(data.get("revision"), "revision")
+        return resolve_decision(store, plan_id, revision, data)
     if len(tail) != 2:
         raise Problem("route", "找不到该入口。", 404)
-    plan_id, action = tail
-    data = fields(handler, 32_768)
+    action = tail[1]
     revision = unsigned(data.get("revision"), "revision")
-    if action == "decisions":
-        choice = data.get("choice")
-        if choice not in (*ROLES, "clear"):
-            raise Problem("choice", "请选择祖本、左支、右支或清除裁决。", 400)
-        return resolve(store, plan_id, revision, token(data.get("item"), "item"), choice)
+    if action in {"decisions", "entities", "entity", "entity-decisions",
+                  "entity-decision", "renames", "rename"}:
+        if action != "decisions":
+            data = dict(data)
+            data.setdefault("entity", data.get("entity") or data.get("item") or data.get("rename"))
+        return resolve_decision(store, plan_id, revision, data)
     writes = {"rehearse": rehearse, "seal": seal, "archive": archive}
     if action in writes:
         return writes[action](store, plan_id, revision)

@@ -24,3 +24,6 @@ select,button,input::file-selector-button{font:inherit;border:1px solid #b8bfb2;
 :focus-visible{outline:3px solid #317858;outline-offset:3px}
 @media(max-width:760px){.frame{width:calc(100% - 28px)}main{padding-top:22px}.work-grid{grid-template-columns:1fr}.heading{align-items:start}.heading>form{flex-shrink:0}.panel-title,.new-plan,.upload,.actions,.history,.plan-links{padding-left:14px;padding-right:14px}}
 @media(max-width:420px){.brand-sub{display:none}.triptych{grid-template-columns:1fr}.sources a{padding:7px}.sources code{display:none}}
+.entity-entry{border-left:3px solid var(--green,#477a57);padding-left:12px;margin-bottom:14px}
+.entity-entry .warning{color:#9a4b2f;background:#f6e3d8;border:1px solid #e2b39c;border-radius:6px;padding:8px 10px;margin:8px 0}
+.entity-groups{margin-bottom:22px}

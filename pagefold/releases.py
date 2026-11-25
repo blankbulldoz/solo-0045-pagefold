@@ -4,7 +4,7 @@ from .attempts import get_attempt
 from .codec import canonical, digest, fingerprint
 from .errors import Problem
 from .images import get_image
-from .plans import expect_open, expect_revision, get_plan, plan_content
+from .plans import expect_open, expect_revision, get_plan, plan_content, plan_entities
 
 
 def get_release(db, plan_id, body=False):
@@ -29,11 +29,17 @@ def seal(store, plan_id, revision):
         if digest(attempt["candidate"]) != result.get("candidate_digest"):
             raise Problem("candidate_digest", "候选摘要不一致，无法封存。", 409)
         items, decisions = plan_content(plan)
+        entity_specs, entity_groups = plan_entities(plan)
         certificate = {"format": "pagefold-certificate-v1", "plan": plan_id, "revision": revision,
                        "sources": {"base": plan["base"], "left": plan["left_id"], "right": plan["right_id"]},
                        "schema": json.loads(get_image(db, plan["base"])["catalog"])["signature"],
                        "plan_digest": fingerprint(items), "decision_digest": fingerprint(decisions),
                        "candidate_digest": result["candidate_digest"], "candidate_size": result["size"]}
+        if entity_specs:
+            certificate.update({
+                "entity_digest": fingerprint({"keys": entity_specs, "groups": entity_groups}),
+                "entity_mode": True,
+            })
         db.execute("INSERT INTO releases VALUES(?,?,?)", (plan_id, canonical(certificate), attempt["candidate"]))
         db.execute("UPDATE plans SET state='sealed' WHERE id=?", (plan_id,))
         return certificate

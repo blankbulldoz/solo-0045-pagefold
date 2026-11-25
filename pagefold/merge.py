@@ -22,6 +22,19 @@ def calculate(base, left, right):
     return result
 
 
+def decision_role(value):
+    """Return the source role from either a legacy string or a rich decision."""
+    if isinstance(value, dict):
+        value = value.get("choice")
+    return value if value in ROLES or value is None else None
+
+
 def selected(item, decisions):
-    role = item["automatic"] or decisions.get(item["id"])
+    role = item["automatic"] or decision_role(decisions.get(item["id"]))
     return (role, item[role] if role else None)
+
+
+def identify_renames(base, left, right, catalog, entity_keys):
+    """Lazy wrapper kept near :func:`calculate` for plan-entry callers."""
+    from .renames import detect_renames
+    return detect_renames(base, left, right, catalog, entity_keys)
