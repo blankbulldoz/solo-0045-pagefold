@@ -1,0 +1,88 @@
+{
+  "case": "strategy-b-keep-rewrite",
+  "conflict_choice": "right",
+  "plan_id": "91cc687bff844afba6350dfd8344af8e",
+  "blocked_before_decision": {
+    "code": "unresolved",
+    "detail": "存在未裁决的行，请先完成裁决。"
+  },
+  "decision": {
+    "id": "91cc687bff844afba6350dfd8344af8e",
+    "revision": 1,
+    "item": "365d2137735229fa08d4630eb368760cf29610e4aac20aaf55af9eca3b52be91",
+    "choice": "right"
+  },
+  "stale_revision": {
+    "code": "stale_revision",
+    "detail": "计划版本已改变，请刷新后再操作。"
+  },
+  "rehearsal": {
+    "id": "91cc687bff844afba6350dfd8344af8e",
+    "revision": 1,
+    "changed": 4,
+    "status": "passed",
+    "candidate_digest": "9ad4d802b9ef2eb1c286caffbf07fd603a846f920cb95142aece0287f31ecc90",
+    "size": 20480
+  },
+  "attempts": [
+    {
+      "candidate_digest": "9ad4d802b9ef2eb1c286caffbf07fd603a846f920cb95142aece0287f31ecc90",
+      "changed": 4,
+      "id": "91cc687bff844afba6350dfd8344af8e",
+      "revision": 1,
+      "size": 20480,
+      "status": "passed"
+    }
+  ],
+  "sealed": true,
+  "candidate_digest_verified": true,
+  "candidate_checks": {
+    "integrity": "ok",
+    "fk_violations": [],
+    "ledger_rows": [
+      [
+        "L-100",
+        "共享总账",
+        "祖本现场备注",
+        "基准备注"
+      ],
+      [
+        "L-101",
+        "旧版标题",
+        "共建现场备注",
+        "共建标记"
+      ],
+      [
+        "L-102",
+        "双方共建账",
+        "右支改写备注",
+        "右支标记"
+      ]
+    ],
+    "citation_rows": [
+      [
+        "C-200",
+        "L-100"
+      ],
+      [
+        "C-210",
+        "L-100"
+      ],
+      [
+        "C-300",
+        "L-100"
+      ]
+    ],
+    "l102_present": true,
+    "l102_note_and_flag": [
+      [
+        "右支改写备注",
+        "右支标记"
+      ]
+    ]
+  },
+  "edit_after_seal": {
+    "code": "closed_plan",
+    "detail": "封存或归档后的计划不可继续编辑或重演。"
+  }
+}

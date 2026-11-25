@@ -1,0 +1,160 @@
+{
+  "id": "4940fc11f64d476a9b94b181cdf1de94",
+  "sources": {
+    "base": "298702f3f67186a0197c7296f08ce3912c057fb3d0ed230c8ce468d0c5824ea6",
+    "left": "ec05f645106a785c70193f0f0248e9f2dc33f5e8446e9c41d458e0b192b55557",
+    "right": "29d9f95972d30940be7bcf5f13ec2daf5de4e03da9ca7b60755eb4fec1b63151"
+  },
+  "revision": 0,
+  "state": "open",
+  "plan_digest": "6215b9cac122cf09bb8a2cb8a91cb9f9c543f6da2aa1ea8e2effa8772fc31481",
+  "unresolved": 1,
+  "items": [
+    {
+      "automatic": "left",
+      "base": null,
+      "id": "e9891f504de98c64291fe7f5484fa3e9966abd84afc7c9a5314c060b8764a84d",
+      "key": [
+        [
+          "t",
+          "C-210"
+        ]
+      ],
+      "left": [
+        [
+          "t",
+          "C-210"
+        ],
+        [
+          "t",
+          "L-100"
+        ]
+      ],
+      "right": null,
+      "table": "citation",
+      "choice": "left"
+    },
+    {
+      "automatic": "right",
+      "base": null,
+      "id": "0fc7cee5d56bf91d144fc77d6ce4cfba179a4596652ac1063050486ced0f5c63",
+      "key": [
+        [
+          "t",
+          "C-300"
+        ]
+      ],
+      "left": null,
+      "right": [
+        [
+          "t",
+          "C-300"
+        ],
+        [
+          "t",
+          "L-100"
+        ]
+      ],
+      "table": "citation",
+      "choice": "right"
+    },
+    {
+      "automatic": "left",
+      "base": null,
+      "id": "64165fa05a0c403395c8e44ba3e1ed2101d3a4c7da556dd366c79fbc114bbc44",
+      "key": [
+        [
+          "t",
+          "L-101"
+        ]
+      ],
+      "left": [
+        [
+          "t",
+          "L-101"
+        ],
+        [
+          "t",
+          "旧版标题"
+        ],
+        [
+          "t",
+          "共建现场备注"
+        ],
+        [
+          "t",
+          "共建标记"
+        ]
+      ],
+      "right": [
+        [
+          "t",
+          "L-101"
+        ],
+        [
+          "t",
+          "旧版标题"
+        ],
+        [
+          "t",
+          "共建现场备注"
+        ],
+        [
+          "t",
+          "共建标记"
+        ]
+      ],
+      "table": "ledger",
+      "choice": "left"
+    },
+    {
+      "automatic": null,
+      "base": [
+        [
+          "t",
+          "L-102"
+        ],
+        [
+          "t",
+          "旧版标题"
+        ],
+        [
+          "t",
+          "待处理现场备注"
+        ],
+        [
+          "t",
+          "旧标记"
+        ]
+      ],
+      "id": "365d2137735229fa08d4630eb368760cf29610e4aac20aaf55af9eca3b52be91",
+      "key": [
+        [
+          "t",
+          "L-102"
+        ]
+      ],
+      "left": null,
+      "right": [
+        [
+          "t",
+          "L-102"
+        ],
+        [
+          "t",
+          "双方共建账"
+        ],
+        [
+          "t",
+          "右支改写备注"
+        ],
+        [
+          "t",
+          "右支标记"
+        ]
+      ],
+      "table": "ledger",
+      "choice": null
+    }
+  ]
+}

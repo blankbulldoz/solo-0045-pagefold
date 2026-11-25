@@ -1,0 +1,85 @@
+{
+  "generated_at": "2026-11-25T03:42:52.626397+00:00",
+  "image_sources": {
+    "base": {
+      "image_id": "298702f3f67186a0197c7296f08ce3912c057fb3d0ed230c8ce468d0c5824ea6",
+      "file": "base-ledger.sqlite",
+      "sha256": "298702f3f67186a0197c7296f08ce3912c057fb3d0ed230c8ce468d0c5824ea6"
+    },
+    "left": {
+      "image_id": "ec05f645106a785c70193f0f0248e9f2dc33f5e8446e9c41d458e0b192b55557",
+      "file": "left-branch.sqlite",
+      "sha256": "ec05f645106a785c70193f0f0248e9f2dc33f5e8446e9c41d458e0b192b55557"
+    },
+    "right": {
+      "image_id": "29d9f95972d30940be7bcf5f13ec2daf5de4e03da9ca7b60755eb4fec1b63151",
+      "file": "right-branch.sqlite",
+      "sha256": "29d9f95972d30940be7bcf5f13ec2daf5de4e03da9ca7b60755eb4fec1b63151"
+    }
+  },
+  "conflict_item": {
+    "id": "365d2137735229fa08d4630eb368760cf29610e4aac20aaf55af9eca3b52be91",
+    "table": "ledger",
+    "key": [
+      [
+        "t",
+        "L-102"
+      ]
+    ]
+  },
+  "automatic_items": [
+    {
+      "table": "citation",
+      "key": [
+        [
+          "t",
+          "C-210"
+        ]
+      ],
+      "automatic": "left"
+    },
+    {
+      "table": "citation",
+      "key": [
+        [
+          "t",
+          "C-300"
+        ]
+      ],
+      "automatic": "right"
+    },
+    {
+      "table": "ledger",
+      "key": [
+        [
+          "t",
+          "L-101"
+        ]
+      ],
+      "automatic": "left"
+    }
+  ],
+  "cases": [
+    {
+      "case": "strategy-a-respect-delete",
+      "choice": "left",
+      "status": "passed",
+      "sealed": true,
+      "plan_id": "4940fc11f64d476a9b94b181cdf1de94"
+    },
+    {
+      "case": "strategy-b-keep-rewrite",
+      "choice": "right",
+      "status": "passed",
+      "sealed": true,
+      "plan_id": "91cc687bff844afba6350dfd8344af8e"
+    },
+    {
+      "case": "rejected-base-rollback",
+      "choice": "base",
+      "status": "blocked",
+      "sealed": false,
+      "plan_id": "0cd771eddbc143879a5cfc94d045740a"
+    }
+  ]
+}

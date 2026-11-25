@@ -1,0 +1,50 @@
+{
+  "case": "rejected-base-rollback",
+  "conflict_choice": "base",
+  "plan_id": "0cd771eddbc143879a5cfc94d045740a",
+  "blocked_before_decision": {
+    "code": "unresolved",
+    "detail": "存在未裁决的行，请先完成裁决。"
+  },
+  "decision": {
+    "id": "0cd771eddbc143879a5cfc94d045740a",
+    "revision": 1,
+    "item": "365d2137735229fa08d4630eb368760cf29610e4aac20aaf55af9eca3b52be91",
+    "choice": "base"
+  },
+  "stale_revision": {
+    "code": "stale_revision",
+    "detail": "计划版本已改变，请刷新后再操作。"
+  },
+  "rehearsal": {
+    "id": "0cd771eddbc143879a5cfc94d045740a",
+    "revision": 1,
+    "changed": 3,
+    "status": "blocked",
+    "problem": {
+      "code": "constraint",
+      "detail": "ledger [[\"t\",\"L-101\"]]：UNIQUE constraint failed: ledger.title"
+    }
+  },
+  "attempts": [
+    {
+      "changed": 3,
+      "id": "0cd771eddbc143879a5cfc94d045740a",
+      "problem": {
+        "code": "constraint",
+        "detail": "ledger [[\"t\",\"L-101\"]]：UNIQUE constraint failed: ledger.title"
+      },
+      "revision": 1,
+      "status": "blocked"
+    }
+  ],
+  "sealed": false,
+  "seal_rejected": {
+    "code": "rehearsal_required",
+    "detail": "当前版本须先通过重演。"
+  },
+  "download_rejected": {
+    "code": "unpublished",
+    "detail": "该计划还没有封存成果。"
+  }
+}
