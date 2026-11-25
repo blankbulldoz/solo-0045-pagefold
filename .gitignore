@@ -4,4 +4,6 @@ __pycache__/
 *.sqlite-shm
 *.sqlite-wal
 demo-images/
+.runtime/
+.demo-runs/
 .DS_Store

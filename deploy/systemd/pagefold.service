@@ -1,0 +1,51 @@
+[Unit]
+Description=Pagefold local SQLite merge service
+Documentation=file:///opt/pagefold/current/deploy/README.md
+After=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=simple
+User=pagefold
+Group=pagefold
+WorkingDirectory=/opt/pagefold/current
+Environment=PYTHONUNBUFFERED=1
+Environment=PAGEFOLD_DRAIN_TIMEOUT=45
+Environment=PAGEFOLD_SQLITE_TIMEOUT=30
+ExecStart=/usr/bin/python3 -m pagefold \
+  --state /var/lib/pagefold/state.sqlite \
+  --port 8745 \
+  --drain-timeout 45 \
+  --sqlite-timeout 30
+
+# Upgrade gate: SIGUSR1 flips Lifecycle to writes_draining. Already admitted
+# rehearsals/seals keep their SQLite write transaction; reads and downloads
+# continue. Poll http://127.0.0.1:8745/-/status for active_writes=0.
+ExecReload=/bin/kill -USR1 $MAINPID
+
+# SIGTERM closes the listen socket and waits for admitted writes/downloads.
+# Keep systemd's stop ceiling larger than PAGEFOLD_DRAIN_TIMEOUT.
+KillSignal=SIGTERM
+SendSIGKILL=yes
+TimeoutStopSec=60
+Restart=always
+RestartSec=1
+UMask=0077
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pagefold
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

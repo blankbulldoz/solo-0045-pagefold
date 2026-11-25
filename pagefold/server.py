@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlsplit
 from . import api, workspace
 from .errors import Problem
 from .inputs import payload
+from .lifecycle import Lifecycle
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -38,10 +39,22 @@ class Handler(BaseHTTPRequestHandler):
 
     def report(self, problem, path):
         if path.startswith("/api/"):
-            self.json(problem.as_dict(), problem.status)
+            self.json(problem.as_dict(), problem.status, problem.headers)
         else:
             back = "/".join(path.split("/")[:3])
-            self.send_bytes(workspace.error(problem, back), "text/html; charset=utf-8", problem.status)
+            self.send_bytes(workspace.error(problem, back), "text/html; charset=utf-8",
+                            problem.status, problem.headers)
+
+    def lifecycle_endpoint(self, path):
+        status = self.server.lifecycle.status()
+        if path == "/healthz":
+            self.json({"ok": True, **status})
+            return
+        if path == "/-/status":
+            self.json(status)
+            return
+        code = 200 if status["mode"] == "running" else 503
+        self.json(status, code, [("Retry-After", "30")] if code == 503 else ())
 
     def route_get(self, store, path, parts, query):
         if path.startswith("/assets/"):
@@ -81,12 +94,21 @@ class Handler(BaseHTTPRequestHandler):
 
     def handle_route(self, write):
         path = self.path
+        admitted = False
+        download = False
         try:
             if self.headers.get("Host") not in self.server.hosts:
                 raise Problem("host", "请通过本机工作区的地址访问。", 403)
             target = urlsplit(path)
             path = target.path
             parts = [part for part in path.split("/") if part]
+            if path in {"/healthz", "/readyz", "/-/status"}:
+                self.lifecycle_endpoint(path)
+                return
+            download = (not write and len(parts) == 4 and parts[:2] == ["api", "plans"]
+                        and parts[3] == "download")
+            self.server.lifecycle.admit(write=write, download=download)
+            admitted = True
             if write:
                 self.route_post(self.server.store, path, parts)
             else:
@@ -108,6 +130,9 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             logging.exception("Request failed")
             self.report(Problem("internal", "服务暂时无法完成请求。", 500), path)
+        finally:
+            if admitted:
+                self.server.lifecycle.finish(write=write, download=download)
 
     def do_GET(self):
         self.handle_route(False)
@@ -116,9 +141,10 @@ class Handler(BaseHTTPRequestHandler):
         self.handle_route(True)
 
 
-def make_server(store, port):
+def make_server(store, port, drain_timeout=30.0):
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     server.store = store
+    server.lifecycle = Lifecycle(drain_timeout)
     address = server.server_port
     server.hosts = {f"127.0.0.1:{address}", f"localhost:{address}"}
     server.origins = {f"http://{host}" for host in server.hosts}

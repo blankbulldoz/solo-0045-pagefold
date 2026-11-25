@@ -24,15 +24,16 @@ CREATE TABLE IF NOT EXISTS releases (
 
 
 class Store:
-    def __init__(self, path):
+    def __init__(self, path, timeout=30.0):
         self.path = path
+        self.timeout = timeout
         with self.connect(snapshot=False) as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript(SCHEMA)
 
     @contextmanager
     def connect(self, write=False, snapshot=True):
-        db = sqlite3.connect(self.path, timeout=8, isolation_level=None)
+        db = sqlite3.connect(self.path, timeout=self.timeout, isolation_level=None)
         db.row_factory = sqlite3.Row
         try:
             db.execute("PRAGMA foreign_keys=ON")

@@ -13,6 +13,16 @@ python3 -m examples.make_images ./demo-images
 
 可分别上传 `quartz.sqlite`（祖本）、`cerulean.sqlite`（左支）和 `umber.sqlite`（右支），或在首页直接载入示例并创建计划。初始冲突出现在 `node` 的复合主键 `('north', 1)`，选择右支可成功重演，也可选择祖本或左支。额外示例 `stress-left.sqlite` 和 `stress-right.sqlite` 各自有效，合成后与 `bench` 的唯一约束冲突。
 
+## 本机常驻与升级排空
+
+干净本机上可一键复现“优雅排空”和“直接强杀后恢复”两个时序，包括持 SQLite 写锁的已接受重演、慢下载、重启后的历史读取与下载摘要校验：
+
+```sh
+python3 deploy/demo_upgrade.py
+```
+
+无根机常驻使用 `python3 deploy/pagefold_ctl.py start|status|drain|upgrade|stop`；Linux/systemd 主机可运行 `sudo deploy/install_systemd.sh`。服务提供 `/healthz`、`/readyz` 和 `/-/status`，并支持 `SIGUSR1` 先停止新写入、`SIGTERM` 等待已接受重演/封存和下载完成。完整部署语义见 [`deploy/README.md`](deploy/README.md)。
+
 ## 操作和接口
 
 网页中的镜像链接可以检查表和主键行，计划详情显示自动项与未裁决项。保存裁决后重演当前版本，确认通过后封存，最后下载 SQLite 镜像和 JSON 凭证。
