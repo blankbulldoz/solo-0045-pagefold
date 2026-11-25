@@ -1,0 +1,54 @@
+{
+  "format": "pagefold-offline-handoff-build-v1",
+  "generated_at_utc": "2026-11-25T03:54:13+00:00",
+  "repository_commit": "baec633d240a688561f84830ec52cff0f74cd4d2",
+  "repository_branch": "task/r059-run-h33xpfbf",
+  "entry": "Real HTTP via pagefold.server.make_server on 127.0.0.1 ephemeral port",
+  "example_command": "PYTHONPATH=/workspace python3 /workspace/handoff-builder/build_handoff.py /workspace/handoff-pagefold-r059",
+  "plan_id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+  "conflict_item_id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+  "decision": {
+    "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+    "choice": "right",
+    "revision_before": 0,
+    "revision_after": 1
+  },
+  "source_roles": {
+    "base": {
+      "flavor": "quartz",
+      "role_cn": "共同祖本",
+      "file": "sources/base-quartz.sqlite",
+      "sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "size": 24576,
+      "image_id": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"
+    },
+    "left": {
+      "flavor": "cerulean",
+      "role_cn": "左支：蓝釉分支，含新增行",
+      "file": "sources/left-cerulean.sqlite",
+      "sha256": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "size": 24576,
+      "image_id": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75"
+    },
+    "right": {
+      "flavor": "umber",
+      "role_cn": "右支：赭石分支，含 BLOB/重量与更名",
+      "file": "sources/right-umber.sqlite",
+      "sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+      "size": 24576,
+      "image_id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+    }
+  },
+  "impostor_fixtures": {
+    "stress-left": {
+      "file": "negative-tests/stress-left-same-schema.sqlite",
+      "sha256": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+      "size": 24576
+    },
+    "stress-right": {
+      "file": "negative-tests/stress-right-same-schema.sqlite",
+      "sha256": "c11f0aad7784ca4efed0f00d7245a5f28b7a55dd23c7a3438f8ea30b350fa814",
+      "size": 24576
+    }
+  }
+}

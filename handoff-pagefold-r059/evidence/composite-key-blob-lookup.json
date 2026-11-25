@@ -1,0 +1,42 @@
+{
+  "query": {
+    "table": "node",
+    "composite_key_columns": [
+      "bench",
+      "slot"
+    ],
+    "composite_key": [
+      "north",
+      1
+    ],
+    "sql": "SELECT bench, slot, note, payload, weight FROM node WHERE bench=? AND slot=?",
+    "parameters": [
+      "north",
+      1
+    ]
+  },
+  "row": {
+    "bench": "north",
+    "slot": 1,
+    "note": "祖本节点",
+    "payload": {
+      "__type__": "blob",
+      "length": 2,
+      "hex": "ff00",
+      "base64": "/wA=",
+      "sha256": "ea5dbf9596d187e9500f23e9a680109475341cf4e81f7e043f7d97152c10772f",
+      "python_repr": "b'\\xff\\x00'"
+    },
+    "weight": 2.25
+  },
+  "blob_columns": {
+    "payload": {
+      "__type__": "blob",
+      "length": 2,
+      "hex": "ff00",
+      "base64": "/wA=",
+      "sha256": "ea5dbf9596d187e9500f23e9a680109475341cf4e81f7e043f7d97152c10772f",
+      "python_repr": "b'\\xff\\x00'"
+    }
+  }
+}

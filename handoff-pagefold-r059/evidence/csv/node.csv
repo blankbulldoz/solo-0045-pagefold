@@ -1,0 +1,4 @@
+bench,slot,note,payload,weight
+north,1,祖本节点,BLOB(2):hex:ff00,2.25
+south,1,稳定节点,BLOB(0):hex:,3.0
+south,2,左支新增,NULL,4.0

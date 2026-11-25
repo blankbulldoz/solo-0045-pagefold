@@ -1,0 +1,1996 @@
+{
+  "generated_at_utc": "2026-11-25T03:54:13+00:00",
+  "note": "请求/响应实录；上传与下载正文以 SHA-256 和大小代替，二进制全文已在 sources/ 与 result/。",
+  "exchanges": [
+    {
+      "method": "POST",
+      "route": "/api/images",
+      "request": {
+        "binary_sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "binary_size": 24576
+      },
+      "status": 201,
+      "content_type": "application/json",
+      "response": {
+        "id": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "label": "quartz-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "label": "quartz-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25/rows?table=bench&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "code",
+            "label"
+          ],
+          "foreign_keys": [],
+          "key": [
+            "code"
+          ],
+          "name": "bench",
+          "rows": 2,
+          "types": [
+            "TEXT",
+            "TEXT"
+          ]
+        },
+        "offset": 0,
+        "total": 2,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "t",
+                "玄石"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25/rows?table=binding&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "id",
+            "bench",
+            "slot"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "node",
+              "bench",
+              "bench",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ],
+            [
+              0,
+              1,
+              "node",
+              "slot",
+              "slot",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "id"
+          ],
+          "name": "binding",
+          "rows": 1,
+          "types": [
+            "INTEGER",
+            "TEXT",
+            "INTEGER"
+          ]
+        },
+        "offset": 0,
+        "total": 1,
+        "rows": [
+          {
+            "key": [
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25/rows?table=node&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "bench",
+              "bench",
+              "code",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "bench",
+            "slot"
+          ],
+          "name": "node",
+          "rows": 2,
+          "types": [
+            "TEXT",
+            "INTEGER",
+            "TEXT",
+            "BLOB",
+            "REAL"
+          ]
+        },
+        "offset": 0,
+        "total": 2,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "稳定节点"
+              ],
+              [
+                "b",
+                ""
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/images",
+      "request": {
+        "binary_sha256": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "binary_size": 24576
+      },
+      "status": 201,
+      "content_type": "application/json",
+      "response": {
+        "id": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "label": "cerulean-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 3,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "label": "cerulean-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 3,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75/rows?table=bench&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "code",
+            "label"
+          ],
+          "foreign_keys": [],
+          "key": [
+            "code"
+          ],
+          "name": "bench",
+          "rows": 2,
+          "types": [
+            "TEXT",
+            "TEXT"
+          ]
+        },
+        "offset": 0,
+        "total": 2,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "t",
+                "玄石"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75/rows?table=binding&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "id",
+            "bench",
+            "slot"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "node",
+              "bench",
+              "bench",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ],
+            [
+              0,
+              1,
+              "node",
+              "slot",
+              "slot",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "id"
+          ],
+          "name": "binding",
+          "rows": 1,
+          "types": [
+            "INTEGER",
+            "TEXT",
+            "INTEGER"
+          ]
+        },
+        "offset": 0,
+        "total": 1,
+        "rows": [
+          {
+            "key": [
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75/rows?table=node&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "bench",
+              "bench",
+              "code",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "bench",
+            "slot"
+          ],
+          "name": "node",
+          "rows": 3,
+          "types": [
+            "TEXT",
+            "INTEGER",
+            "TEXT",
+            "BLOB",
+            "REAL"
+          ]
+        },
+        "offset": 0,
+        "total": 3,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "左支覆写"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "稳定节点"
+              ],
+              [
+                "b",
+                ""
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+1"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ],
+              [
+                "t",
+                "左支新增"
+              ],
+              [
+                "n"
+              ],
+              [
+                "r",
+                "0x1.0000000000000p+2"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/images",
+      "request": {
+        "binary_sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+        "binary_size": 24576
+      },
+      "status": 201,
+      "content_type": "application/json",
+      "response": {
+        "id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+        "label": "umber-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+        "label": "umber-handoff",
+        "size": 24576,
+        "catalog": {
+          "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+          "tables": [
+            {
+              "columns": [
+                "code",
+                "label"
+              ],
+              "foreign_keys": [],
+              "key": [
+                "code"
+              ],
+              "name": "bench",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "TEXT"
+              ]
+            },
+            {
+              "columns": [
+                "id",
+                "bench",
+                "slot"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "node",
+                  "bench",
+                  "bench",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ],
+                [
+                  0,
+                  1,
+                  "node",
+                  "slot",
+                  "slot",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "id"
+              ],
+              "name": "binding",
+              "rows": 1,
+              "types": [
+                "INTEGER",
+                "TEXT",
+                "INTEGER"
+              ]
+            },
+            {
+              "columns": [
+                "bench",
+                "slot",
+                "note",
+                "payload",
+                "weight"
+              ],
+              "foreign_keys": [
+                [
+                  0,
+                  0,
+                  "bench",
+                  "bench",
+                  "code",
+                  "NO ACTION",
+                  "NO ACTION",
+                  "NONE"
+                ]
+              ],
+              "key": [
+                "bench",
+                "slot"
+              ],
+              "name": "node",
+              "rows": 2,
+              "types": [
+                "TEXT",
+                "INTEGER",
+                "TEXT",
+                "BLOB",
+                "REAL"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009/rows?table=bench&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "code",
+            "label"
+          ],
+          "foreign_keys": [],
+          "key": [
+            "code"
+          ],
+          "name": "bench",
+          "rows": 2,
+          "types": [
+            "TEXT",
+            "TEXT"
+          ]
+        },
+        "offset": 0,
+        "total": 2,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "t",
+                "玄石"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "右支更名"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009/rows?table=binding&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "id",
+            "bench",
+            "slot"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "node",
+              "bench",
+              "bench",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ],
+            [
+              0,
+              1,
+              "node",
+              "slot",
+              "slot",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "id"
+          ],
+          "name": "binding",
+          "rows": 1,
+          "types": [
+            "INTEGER",
+            "TEXT",
+            "INTEGER"
+          ]
+        },
+        "offset": 0,
+        "total": 1,
+        "rows": [
+          {
+            "key": [
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/images/d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009/rows?table=node&offset=0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "table": {
+          "columns": [
+            "bench",
+            "slot",
+            "note",
+            "payload",
+            "weight"
+          ],
+          "foreign_keys": [
+            [
+              0,
+              0,
+              "bench",
+              "bench",
+              "code",
+              "NO ACTION",
+              "NO ACTION",
+              "NONE"
+            ]
+          ],
+          "key": [
+            "bench",
+            "slot"
+          ],
+          "name": "node",
+          "rows": 2,
+          "types": [
+            "TEXT",
+            "INTEGER",
+            "TEXT",
+            "BLOB",
+            "REAL"
+          ]
+        },
+        "offset": 0,
+        "total": 2,
+        "rows": [
+          {
+            "key": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "/wA="
+              ],
+              [
+                "r",
+                "0x1.2000000000000p+1"
+              ]
+            ]
+          },
+          {
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "values": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "稳定节点"
+              ],
+              [
+                "b",
+                ""
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans",
+      "request": {
+        "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+        "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+        "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      },
+      "status": 201,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "sources": {
+          "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+          "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+          "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+        },
+        "revision": 0,
+        "state": "open",
+        "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+        "unresolved": 1,
+        "items": [
+          {
+            "automatic": "right",
+            "base": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ],
+            "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+            "key": [
+              [
+                "t",
+                "south"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ],
+            "right": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "右支更名"
+              ]
+            ],
+            "table": "bench",
+            "choice": "right"
+          },
+          {
+            "automatic": null,
+            "base": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ],
+            "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+            "key": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "左支覆写"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ],
+            "right": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "/wA="
+              ],
+              [
+                "r",
+                "0x1.2000000000000p+1"
+              ]
+            ],
+            "table": "node",
+            "choice": null
+          },
+          {
+            "automatic": "left",
+            "base": null,
+            "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ],
+              [
+                "t",
+                "左支新增"
+              ],
+              [
+                "n"
+              ],
+              [
+                "r",
+                "0x1.0000000000000p+2"
+              ]
+            ],
+            "right": null,
+            "table": "node",
+            "choice": "left"
+          }
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/decisions",
+      "request": {
+        "revision": 0,
+        "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+        "choice": "right"
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+        "choice": "right"
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/decisions",
+      "request": {
+        "revision": 0,
+        "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+        "choice": "right"
+      },
+      "status": 409,
+      "content_type": "application/json",
+      "response": {
+        "code": "stale_revision",
+        "detail": "计划版本已改变，请刷新后再操作。"
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/decisions",
+      "request": {
+        "revision": 1,
+        "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+        "choice": "right"
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "item": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+        "choice": "right"
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/rehearse",
+      "request": {
+        "revision": 1
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "changed": 3,
+        "status": "passed",
+        "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "size": 24576
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/rehearse",
+      "request": {
+        "revision": 1
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "changed": 3,
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "size": 24576,
+        "status": "passed"
+      }
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/seal",
+      "request": {
+        "revision": 1
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "format": "pagefold-certificate-v1",
+        "plan": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "sources": {
+          "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+          "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+          "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+        },
+        "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+        "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+        "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "candidate_size": 24576
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/certificate",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+        "candidate_size": 24576,
+        "decision_digest": "70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e",
+        "format": "pagefold-certificate-v1",
+        "plan": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+        "revision": 1,
+        "schema": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "sources": {
+          "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+          "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+          "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/download",
+      "request": null,
+      "status": 200,
+      "content_type": "application/vnd.sqlite3",
+      "response_sha256": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+      "response_size": 24576
+    },
+    {
+      "method": "POST",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/archive",
+      "request": {
+        "revision": 1
+      },
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "revision": 1,
+        "state": "archived"
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+        "sources": {
+          "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+          "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+          "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+        },
+        "revision": 1,
+        "state": "archived",
+        "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+        "unresolved": 0,
+        "items": [
+          {
+            "automatic": "right",
+            "base": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ],
+            "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+            "key": [
+              [
+                "t",
+                "south"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "砂层"
+              ]
+            ],
+            "right": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "t",
+                "右支更名"
+              ]
+            ],
+            "table": "bench",
+            "choice": "right"
+          },
+          {
+            "automatic": null,
+            "base": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ],
+            "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+            "key": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "左支覆写"
+              ],
+              [
+                "b",
+                "ABQ="
+              ],
+              [
+                "r",
+                "0x1.8000000000000p+0"
+              ]
+            ],
+            "right": [
+              [
+                "t",
+                "north"
+              ],
+              [
+                "i",
+                "1"
+              ],
+              [
+                "t",
+                "祖本节点"
+              ],
+              [
+                "b",
+                "/wA="
+              ],
+              [
+                "r",
+                "0x1.2000000000000p+1"
+              ]
+            ],
+            "table": "node",
+            "choice": "right"
+          },
+          {
+            "automatic": "left",
+            "base": null,
+            "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+            "key": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ]
+            ],
+            "left": [
+              [
+                "t",
+                "south"
+              ],
+              [
+                "i",
+                "2"
+              ],
+              [
+                "t",
+                "左支新增"
+              ],
+              [
+                "n"
+              ],
+              [
+                "r",
+                "0x1.0000000000000p+2"
+              ]
+            ],
+            "right": null,
+            "table": "node",
+            "choice": "left"
+          }
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "route": "/api/plans/d89aaf4a32e24ce28e6c2d9a086c91e0/attempts",
+      "request": null,
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+          "changed": 3,
+          "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+          "revision": 1,
+          "size": 24576,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "method": "GET",
+      "route": "/plans/d89aaf4a32e24ce28e6c2d9a086c91e0",
+      "request": null,
+      "status": 200,
+      "content_type": "text/html",
+      "response_sha256": "0426b5f2d484ab35a8f2313820d1bd83f4d5bbe228321f15db355b4751f24b09",
+      "response_size": 5202
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+  "label": "umber-handoff",
+  "size": 24576,
+  "catalog": {
+    "signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+    "tables": [
+      {
+        "columns": [
+          "code",
+          "label"
+        ],
+        "foreign_keys": [],
+        "key": [
+          "code"
+        ],
+        "name": "bench",
+        "rows": 2,
+        "types": [
+          "TEXT",
+          "TEXT"
+        ]
+      },
+      {
+        "columns": [
+          "id",
+          "bench",
+          "slot"
+        ],
+        "foreign_keys": [
+          [
+            0,
+            0,
+            "node",
+            "bench",
+            "bench",
+            "NO ACTION",
+            "NO ACTION",
+            "NONE"
+          ],
+          [
+            0,
+            1,
+            "node",
+            "slot",
+            "slot",
+            "NO ACTION",
+            "NO ACTION",
+            "NONE"
+          ]
+        ],
+        "key": [
+          "id"
+        ],
+        "name": "binding",
+        "rows": 1,
+        "types": [
+          "INTEGER",
+          "TEXT",
+          "INTEGER"
+        ]
+      },
+      {
+        "columns": [
+          "bench",
+          "slot",
+          "note",
+          "payload",
+          "weight"
+        ],
+        "foreign_keys": [
+          [
+            0,
+            0,
+            "bench",
+            "bench",
+            "code",
+            "NO ACTION",
+            "NO ACTION",
+            "NONE"
+          ]
+        ],
+        "key": [
+          "bench",
+          "slot"
+        ],
+        "name": "node",
+        "rows": 2,
+        "types": [
+          "TEXT",
+          "INTEGER",
+          "TEXT",
+          "BLOB",
+          "REAL"
+        ]
+      }
+    ]
+  }
+}

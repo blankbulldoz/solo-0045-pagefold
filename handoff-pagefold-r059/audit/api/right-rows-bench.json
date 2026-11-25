@@ -1,0 +1,58 @@
+{
+  "table": {
+    "columns": [
+      "code",
+      "label"
+    ],
+    "foreign_keys": [],
+    "key": [
+      "code"
+    ],
+    "name": "bench",
+    "rows": 2,
+    "types": [
+      "TEXT",
+      "TEXT"
+    ]
+  },
+  "offset": 0,
+  "total": 2,
+  "rows": [
+    {
+      "key": [
+        [
+          "t",
+          "north"
+        ]
+      ],
+      "values": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "t",
+          "玄石"
+        ]
+      ]
+    },
+    {
+      "key": [
+        [
+          "t",
+          "south"
+        ]
+      ],
+      "values": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "t",
+          "右支更名"
+        ]
+      ]
+    }
+  ]
+}

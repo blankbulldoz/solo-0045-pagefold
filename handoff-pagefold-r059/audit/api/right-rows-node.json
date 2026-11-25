@@ -1,0 +1,108 @@
+{
+  "table": {
+    "columns": [
+      "bench",
+      "slot",
+      "note",
+      "payload",
+      "weight"
+    ],
+    "foreign_keys": [
+      [
+        0,
+        0,
+        "bench",
+        "bench",
+        "code",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+      ]
+    ],
+    "key": [
+      "bench",
+      "slot"
+    ],
+    "name": "node",
+    "rows": 2,
+    "types": [
+      "TEXT",
+      "INTEGER",
+      "TEXT",
+      "BLOB",
+      "REAL"
+    ]
+  },
+  "offset": 0,
+  "total": 2,
+  "rows": [
+    {
+      "key": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "values": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "祖本节点"
+        ],
+        [
+          "b",
+          "/wA="
+        ],
+        [
+          "r",
+          "0x1.2000000000000p+1"
+        ]
+      ]
+    },
+    {
+      "key": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "values": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "稳定节点"
+        ],
+        [
+          "b",
+          ""
+        ],
+        [
+          "r",
+          "0x1.8000000000000p+1"
+        ]
+      ]
+    }
+  ]
+}

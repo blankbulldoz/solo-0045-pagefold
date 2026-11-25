@@ -1,0 +1,25 @@
+封存结果复合键/BLOB 查询回执
+================================
+
+数据库：result/merged-r059-right-choice.sqlite
+表：node
+复合主键：(bench TEXT, slot INTEGER)
+查询键：('north', 1)
+
+SQL（无需启动 Pagefold 服务）：
+SELECT bench, slot, note, hex(payload) AS payload_hex, weight
+FROM node
+WHERE bench='north' AND slot=1;
+
+查询值：
+  bench   = 'north'
+  slot    = 1
+  note    = '祖本节点'
+  weight  = 2.25
+  payload = b'\xff\x00'
+  payload length = 2
+  payload hex    = ff00
+  payload base64 = /wA=
+  payload sha256 = ea5dbf9596d187e9500f23e9a680109475341cf4e81f7e043f7d97152c10772f
+
+结论：该 BLOB 是右支值 x'ff00'，不是祖本/左支共有的 x'0014'。

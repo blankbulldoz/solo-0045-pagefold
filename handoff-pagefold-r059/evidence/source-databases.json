@@ -1,0 +1,690 @@
+{
+  "base": {
+    "bench": {
+      "columns": [
+        "code",
+        "label"
+      ],
+      "key": [
+        "code"
+      ],
+      "row_count": 2,
+      "rows_plain": [
+        {
+          "code": "north",
+          "label": "玄石"
+        },
+        {
+          "code": "south",
+          "label": "砂层"
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "t",
+              "玄石"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ]
+        }
+      ]
+    },
+    "binding": {
+      "columns": [
+        "id",
+        "bench",
+        "slot"
+      ],
+      "key": [
+        "id"
+      ],
+      "row_count": 1,
+      "rows_plain": [
+        {
+          "id": 1,
+          "bench": "north",
+          "slot": 1
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ]
+        }
+      ]
+    },
+    "node": {
+      "columns": [
+        "bench",
+        "slot",
+        "note",
+        "payload",
+        "weight"
+      ],
+      "key": [
+        "bench",
+        "slot"
+      ],
+      "row_count": 2,
+      "rows_plain": [
+        {
+          "bench": "north",
+          "slot": 1,
+          "note": "祖本节点",
+          "payload": {
+            "__type__": "blob",
+            "length": 2,
+            "hex": "0014",
+            "base64": "ABQ=",
+            "sha256": "f431a7f47862c05a44c40ef1f447d207ba15d339cef1fb9357564974137c1673",
+            "python_repr": "b'\\x00\\x14'"
+          },
+          "weight": 1.5
+        },
+        {
+          "bench": "south",
+          "slot": 1,
+          "note": "稳定节点",
+          "payload": {
+            "__type__": "blob",
+            "length": 0,
+            "hex": "",
+            "base64": "",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "python_repr": "b''"
+          },
+          "weight": 3.0
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "稳定节点"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "left": {
+    "bench": {
+      "columns": [
+        "code",
+        "label"
+      ],
+      "key": [
+        "code"
+      ],
+      "row_count": 2,
+      "rows_plain": [
+        {
+          "code": "north",
+          "label": "玄石"
+        },
+        {
+          "code": "south",
+          "label": "砂层"
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "t",
+              "玄石"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "砂层"
+            ]
+          ]
+        }
+      ]
+    },
+    "binding": {
+      "columns": [
+        "id",
+        "bench",
+        "slot"
+      ],
+      "key": [
+        "id"
+      ],
+      "row_count": 1,
+      "rows_plain": [
+        {
+          "id": 1,
+          "bench": "north",
+          "slot": 1
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ]
+        }
+      ]
+    },
+    "node": {
+      "columns": [
+        "bench",
+        "slot",
+        "note",
+        "payload",
+        "weight"
+      ],
+      "key": [
+        "bench",
+        "slot"
+      ],
+      "row_count": 3,
+      "rows_plain": [
+        {
+          "bench": "north",
+          "slot": 1,
+          "note": "左支覆写",
+          "payload": {
+            "__type__": "blob",
+            "length": 2,
+            "hex": "0014",
+            "base64": "ABQ=",
+            "sha256": "f431a7f47862c05a44c40ef1f447d207ba15d339cef1fb9357564974137c1673",
+            "python_repr": "b'\\x00\\x14'"
+          },
+          "weight": 1.5
+        },
+        {
+          "bench": "south",
+          "slot": 1,
+          "note": "稳定节点",
+          "payload": {
+            "__type__": "blob",
+            "length": 0,
+            "hex": "",
+            "base64": "",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "python_repr": "b''"
+          },
+          "weight": 3.0
+        },
+        {
+          "bench": "south",
+          "slot": 2,
+          "note": "左支新增",
+          "payload": null,
+          "weight": 4.0
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "左支覆写"
+            ],
+            [
+              "b",
+              "ABQ="
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+0"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "稳定节点"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "2"
+            ],
+            [
+              "t",
+              "左支新增"
+            ],
+            [
+              "n"
+            ],
+            [
+              "r",
+              "0x1.0000000000000p+2"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "right": {
+    "bench": {
+      "columns": [
+        "code",
+        "label"
+      ],
+      "key": [
+        "code"
+      ],
+      "row_count": 2,
+      "rows_plain": [
+        {
+          "code": "north",
+          "label": "玄石"
+        },
+        {
+          "code": "south",
+          "label": "右支更名"
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "t",
+              "玄石"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "t",
+              "右支更名"
+            ]
+          ]
+        }
+      ]
+    },
+    "binding": {
+      "columns": [
+        "id",
+        "bench",
+        "slot"
+      ],
+      "key": [
+        "id"
+      ],
+      "row_count": 1,
+      "rows_plain": [
+        {
+          "id": 1,
+          "bench": "north",
+          "slot": 1
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ]
+        }
+      ]
+    },
+    "node": {
+      "columns": [
+        "bench",
+        "slot",
+        "note",
+        "payload",
+        "weight"
+      ],
+      "key": [
+        "bench",
+        "slot"
+      ],
+      "row_count": 2,
+      "rows_plain": [
+        {
+          "bench": "north",
+          "slot": 1,
+          "note": "祖本节点",
+          "payload": {
+            "__type__": "blob",
+            "length": 2,
+            "hex": "ff00",
+            "base64": "/wA=",
+            "sha256": "ea5dbf9596d187e9500f23e9a680109475341cf4e81f7e043f7d97152c10772f",
+            "python_repr": "b'\\xff\\x00'"
+          },
+          "weight": 2.25
+        },
+        {
+          "bench": "south",
+          "slot": 1,
+          "note": "稳定节点",
+          "payload": {
+            "__type__": "blob",
+            "length": 0,
+            "hex": "",
+            "base64": "",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "python_repr": "b''"
+          },
+          "weight": 3.0
+        }
+      ],
+      "rows_pagefold_atoms": [
+        {
+          "key": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "north"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "祖本节点"
+            ],
+            [
+              "b",
+              "/wA="
+            ],
+            [
+              "r",
+              "0x1.2000000000000p+1"
+            ]
+          ]
+        },
+        {
+          "key": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ]
+          ],
+          "values": [
+            [
+              "t",
+              "south"
+            ],
+            [
+              "i",
+              "1"
+            ],
+            [
+              "t",
+              "稳定节点"
+            ],
+            [
+              "b",
+              ""
+            ],
+            [
+              "r",
+              "0x1.8000000000000p+1"
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

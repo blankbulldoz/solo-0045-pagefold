@@ -1,0 +1,177 @@
+{
+  "id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+  "sources": {
+    "base": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+    "left": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+    "right": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+  },
+  "revision": 1,
+  "state": "archived",
+  "plan_digest": "a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32",
+  "unresolved": 0,
+  "items": [
+    {
+      "automatic": "right",
+      "base": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "t",
+          "砂层"
+        ]
+      ],
+      "id": "836ae6cbe88b89d5ab4061b352a8bba0f34bdb4553b1417311b78d6f50eb4065",
+      "key": [
+        [
+          "t",
+          "south"
+        ]
+      ],
+      "left": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "t",
+          "砂层"
+        ]
+      ],
+      "right": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "t",
+          "右支更名"
+        ]
+      ],
+      "table": "bench",
+      "choice": "right"
+    },
+    {
+      "automatic": null,
+      "base": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "祖本节点"
+        ],
+        [
+          "b",
+          "ABQ="
+        ],
+        [
+          "r",
+          "0x1.8000000000000p+0"
+        ]
+      ],
+      "id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+      "key": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "left": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "左支覆写"
+        ],
+        [
+          "b",
+          "ABQ="
+        ],
+        [
+          "r",
+          "0x1.8000000000000p+0"
+        ]
+      ],
+      "right": [
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "祖本节点"
+        ],
+        [
+          "b",
+          "/wA="
+        ],
+        [
+          "r",
+          "0x1.2000000000000p+1"
+        ]
+      ],
+      "table": "node",
+      "choice": "right"
+    },
+    {
+      "automatic": "left",
+      "base": null,
+      "id": "1ee048a2b874422c6d36d4111f8f45b9673030fa0388f262f92b7c2d85444276",
+      "key": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "2"
+        ]
+      ],
+      "left": [
+        [
+          "t",
+          "south"
+        ],
+        [
+          "i",
+          "2"
+        ],
+        [
+          "t",
+          "左支新增"
+        ],
+        [
+          "n"
+        ],
+        [
+          "r",
+          "0x1.0000000000000p+2"
+        ]
+      ],
+      "right": null,
+      "table": "node",
+      "choice": "left"
+    }
+  ]
+}

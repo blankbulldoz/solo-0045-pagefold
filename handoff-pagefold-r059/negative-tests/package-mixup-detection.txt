@@ -1,0 +1,87 @@
+PACKAGE MIX-UP DETECTION RECORD
+================================
+
+Scenario A: correct package plus a same-schema SQLite dropped into sources/.
+Command: python3 -I <copy>/tools/verify_offline.py
+
+Pagefold r059 离线交接包核对
+root: /tmp/pagefold-handoff-negative/extra-file
+[PASS] 交接清单可解析 — handoff-manifest.json
+[FAIL] 无清单外文件（可发现混放文件） — missing=无; extra=['sources/MIXED-IN-stress-left.sqlite']
+[PASS] 清单内全部 SHA-256/大小一致 — 不一致=无
+[PASS] SHA256SUMS 标准校验和 — 核对 52 项; 异常=无
+[PASS] 凭证和来源角色可读 — roles=['base', 'left', 'right']
+[PASS] 三来源文件哈希绑定凭证角色 — 异常=无
+[PASS] 封存成果存在且摘要匹配凭证 — c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24
+[PASS] 三来源与封存结果模式摘要一致 — schema=2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac; 异常=无
+[PASS] 计划摘要可由初始计划重算 — a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32
+[PASS] 裁决摘要可由裁决记录重算 — 70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e
+[PASS] 计划版本/封存后归档状态 — revision=1, state=archived
+[PASS] 服务端状态备份中的封存记录 — state=archived, revision=1, candidate=c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24
+[FAIL] sources/ 未混进同模式/异模式/不可读 SQLite — 异常=MIXED-IN-stress-left.sqlite
+[PASS] SQLite integrity_check — ok
+[PASS] SQLite foreign_key_check — violations=0
+[PASS] 左支新增复合键 ('south',2) 仍在封存库 — keys=[('north', 1), ('south', 1), ('south', 2)]
+[PASS] 冲突复合键 ('north',1) 采用右支整行/BLOB — key=('north',1), hex=ff00, base64=/wA=
+[PASS] 左支新增业务值完整保留 — ('south',2) note=左支新增,payload=NULL,weight=4.0
+[PASS] 右支自动更名保留 — bench.south.label=右支更名
+[PASS] 外键绑定行仍指向冲突复合键 — binding id=1 -> ('north',1)
+
+来源目录按 SHA-256 角色识别；同模式但摘要不符会标为 foreign_same_schema。
+  - MIXED-IN-stress-left.sqlite: foreign_same_schema
+  - SOURCE-ROLES.json: non_sqlite_ignored
+  - base-quartz.sqlite: trusted_base
+  - left-cerulean.sqlite: trusted_left
+  - right-umber.sqlite: trusted_right
+
+封存结果抽查：
+  SELECT ... FROM node WHERE bench='north' AND slot=1;
+  note='祖本节点'; payload=hex:ff00; weight=2.25
+  node keys=[['north', 1], ['south', 1], ['south', 2]]
+
+结论: FAIL — 2 项未通过
+
+SCENARIO_A_EXIT_CODE=1 (nonzero means rejected as intended)
+
+------------------------------------------------------------
+
+Scenario B: left-cerulean.sqlite filename replaced by same-schema stress-left bytes.
+Command: python3 -I <copy>/tools/verify_offline.py
+
+Pagefold r059 离线交接包核对
+root: /tmp/pagefold-handoff-negative/replaced-left
+[PASS] 交接清单可解析 — handoff-manifest.json
+[PASS] 无清单外文件（可发现混放文件） — missing=无; extra=无
+[FAIL] 清单内全部 SHA-256/大小一致 — 不一致=sources/left-cerulean.sqlite
+[FAIL] SHA256SUMS 标准校验和 — 核对 51 项; 异常=['sources/left-cerulean.sqlite']
+[PASS] 凭证和来源角色可读 — roles=['base', 'left', 'right']
+[FAIL] 三来源文件哈希绑定凭证角色 — 异常=left
+[PASS] 封存成果存在且摘要匹配凭证 — c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24
+[PASS] 三来源与封存结果模式摘要一致 — schema=2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac; 异常=无
+[PASS] 计划摘要可由初始计划重算 — a9d19d0259fa61f4fac8ab9119ecce992be8764d5e66df3b27808e00f4722f32
+[PASS] 裁决摘要可由裁决记录重算 — 70279625b8efa2fdfde2aa8bc5bbb02b30340e6a374417dec55cf51ce8040b6e
+[PASS] 计划版本/封存后归档状态 — revision=1, state=archived
+[PASS] 服务端状态备份中的封存记录 — state=archived, revision=1, candidate=c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24
+[FAIL] sources/ 未混进同模式/异模式/不可读 SQLite — 异常=left-cerulean.sqlite
+[PASS] SQLite integrity_check — ok
+[PASS] SQLite foreign_key_check — violations=0
+[PASS] 左支新增复合键 ('south',2) 仍在封存库 — keys=[('north', 1), ('south', 1), ('south', 2)]
+[PASS] 冲突复合键 ('north',1) 采用右支整行/BLOB — key=('north',1), hex=ff00, base64=/wA=
+[PASS] 左支新增业务值完整保留 — ('south',2) note=左支新增,payload=NULL,weight=4.0
+[PASS] 右支自动更名保留 — bench.south.label=右支更名
+[PASS] 外键绑定行仍指向冲突复合键 — binding id=1 -> ('north',1)
+
+来源目录按 SHA-256 角色识别；同模式但摘要不符会标为 foreign_same_schema。
+  - SOURCE-ROLES.json: non_sqlite_ignored
+  - base-quartz.sqlite: trusted_base
+  - left-cerulean.sqlite: foreign_same_schema
+  - right-umber.sqlite: trusted_right
+
+封存结果抽查：
+  SELECT ... FROM node WHERE bench='north' AND slot=1;
+  note='祖本节点'; payload=hex:ff00; weight=2.25
+  node keys=[['north', 1], ['south', 1], ['south', 2]]
+
+结论: FAIL — 4 项未通过
+
+SCENARIO_B_EXIT_CODE=1 (nonzero means rejected as intended)

@@ -1,0 +1,67 @@
+{
+  "table": {
+    "columns": [
+      "id",
+      "bench",
+      "slot"
+    ],
+    "foreign_keys": [
+      [
+        0,
+        0,
+        "node",
+        "bench",
+        "bench",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+      ],
+      [
+        0,
+        1,
+        "node",
+        "slot",
+        "slot",
+        "NO ACTION",
+        "NO ACTION",
+        "NONE"
+      ]
+    ],
+    "key": [
+      "id"
+    ],
+    "name": "binding",
+    "rows": 1,
+    "types": [
+      "INTEGER",
+      "TEXT",
+      "INTEGER"
+    ]
+  },
+  "offset": 0,
+  "total": 1,
+  "rows": [
+    {
+      "key": [
+        [
+          "i",
+          "1"
+        ]
+      ],
+      "values": [
+        [
+          "i",
+          "1"
+        ],
+        [
+          "t",
+          "north"
+        ],
+        [
+          "i",
+          "1"
+        ]
+      ]
+    }
+  ]
+}

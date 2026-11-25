@@ -1,0 +1,71 @@
+{
+  "scenario_extra_same_schema_file": {
+    "directory": "<temporary-directory>/incoming-mixed",
+    "ok": false,
+    "mixed_in_same_schema": true,
+    "unreadable_sqlite": false,
+    "missing_or_duplicate_roles": [],
+    "missing_roles": [],
+    "duplicate_roles": [],
+    "records": [
+      {
+        "file": "MIXED-IN-stress-left.sqlite",
+        "classification": "foreign_same_schema",
+        "sha256": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "schema_signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "schema_matches_certificate": true
+      },
+      {
+        "file": "base-quartz.sqlite",
+        "classification": "trusted_base",
+        "sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"
+      },
+      {
+        "file": "left-cerulean.sqlite",
+        "classification": "trusted_left",
+        "sha256": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75"
+      },
+      {
+        "file": "right-umber.sqlite",
+        "classification": "trusted_right",
+        "sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      }
+    ]
+  },
+  "scenario_left_role_replaced_by_same_schema_file": {
+    "directory": "<temporary-directory>/incoming-replaced",
+    "ok": false,
+    "mixed_in_same_schema": true,
+    "unreadable_sqlite": false,
+    "missing_or_duplicate_roles": [
+      "left"
+    ],
+    "missing_roles": [
+      "left"
+    ],
+    "duplicate_roles": [],
+    "records": [
+      {
+        "file": "base-quartz.sqlite",
+        "classification": "trusted_base",
+        "sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"
+      },
+      {
+        "file": "left-cerulean.sqlite",
+        "classification": "foreign_same_schema",
+        "sha256": "6b7331fe95f7c5b796f16849218703f3b3030c9c3e4dba9d0b23707c21391662",
+        "schema_signature": "2850b20c7d73163e0e8f153ae064af159f3389cc6d3ed1a5c909218ba29fb6ac",
+        "schema_matches_certificate": true
+      },
+      {
+        "file": "right-umber.sqlite",
+        "classification": "trusted_right",
+        "sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+      }
+    ]
+  }
+}
+
+MIXUP_SELF_TEST=PASS
+
+EXIT_CODE=0

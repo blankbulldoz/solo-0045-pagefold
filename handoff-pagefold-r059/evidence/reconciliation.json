@@ -1,0 +1,48 @@
+{
+  "plan_id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+  "revision": 1,
+  "conflict_item_id": "3d9fecf2f8e0e841605f0984d234e878b149ba4a0758ce68606e4c9543b0c3bf",
+  "decision": "right",
+  "candidate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "certificate_digest": "c9d6dd3673ae91571c1cd52197a3b18bcb082b74a159de777c32f4cfcc6a3d24",
+  "digests_match": true,
+  "changed_item_count": 3,
+  "merged_node_count": 3,
+  "right_node_count": 2,
+  "left_node_count": 3,
+  "left_added_key_present_in_sealed_result": true,
+  "sealed_conflict_row_equals_right_full_row": true,
+  "sealed_conflict_note_is_base_value_not_left_overwrite": true,
+  "sealed_conflict_blob_is_right_ff00": true,
+  "not_whole_right_database": true,
+  "keys_present": {
+    "node": [
+      [
+        "north",
+        1
+      ],
+      [
+        "south",
+        1
+      ],
+      [
+        "south",
+        2
+      ]
+    ]
+  },
+  "left_added_row": {
+    "bench": "south",
+    "slot": 2,
+    "note": "左支新增",
+    "payload": null,
+    "weight": 4.0
+  },
+  "sealed_left_added_row": {
+    "bench": "south",
+    "slot": 2,
+    "note": "左支新增",
+    "payload": null,
+    "weight": 4.0
+  }
+}

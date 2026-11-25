@@ -1,0 +1,30 @@
+{
+  "format": "pagefold-source-roles-v1",
+  "plan_id": "d89aaf4a32e24ce28e6c2d9a086c91e0",
+  "roles": {
+    "base": {
+      "flavor": "quartz",
+      "role_cn": "共同祖本",
+      "file": "sources/base-quartz.sqlite",
+      "sha256": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25",
+      "size": 24576,
+      "image_id": "90438d5a76cd0744920d78acb009df1d19aa23baad0a7ed6775927b53e7a1a25"
+    },
+    "left": {
+      "flavor": "cerulean",
+      "role_cn": "左支：蓝釉分支，含新增行",
+      "file": "sources/left-cerulean.sqlite",
+      "sha256": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75",
+      "size": 24576,
+      "image_id": "ab1bceb83ee5599db0a06e4429977951f26378db082cbffa052f8215a14d6f75"
+    },
+    "right": {
+      "flavor": "umber",
+      "role_cn": "右支：赭石分支，含 BLOB/重量与更名",
+      "file": "sources/right-umber.sqlite",
+      "sha256": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009",
+      "size": 24576,
+      "image_id": "d6a547d0982d6150b30a8a78706c3db162c3d339c41ee918a718e46dce39a009"
+    }
+  }
+}
